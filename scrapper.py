@@ -249,7 +249,7 @@ class Scrap:
 	def pop_up(self):
 		
 		result = messagebox.askquestion("CAPTCHA", "Captcha foi ativado, resolva-o em seu navegador e aperte Sim para continuar", icon='warning')
-		if result == 'yes' and check_captcha(self.driver, 1):
+		if result == 'yes' and self.check_captcha(1):
 			return True
 		else:
 			return False
@@ -361,11 +361,12 @@ class Scrap:
 		chrome_options.add_argument("--disable-features=NetworkService")
 		chrome_options.add_argument("--window-size=1920x1080")
 		chrome_options.add_argument("--disable-features=VizDisplayCompositor")
-
-		driver = webdriver.Chrome(
+		# self.TXT.set("Driver")
+		driver = webdriver.Chrome(	
 			executable_path=ChromeDriverManager().install(), options=chrome_options)
 		self.driver = driver
 		self.set_viewport_size(800, 600)
+		# self.TXT.set("After Driver")
 
 		products =  ['ACUCAR CRISTAL',
 					'ARROZ PARBOILIZADO',
@@ -392,7 +393,7 @@ class Scrap:
 			if start_prod > 0 or start_key > 0:
 			
 				self.TXT.set("Retomando pesquisa anterior ...")
-				start_prod, start_key = backup_check(day, [self.LOCALS_NAME[0], self.LOCALS_NAME[1]])
+				start_prod, start_key = self.backup_check(day, [self.LOCALS_NAME[0], self.LOCALS_NAME[1]])
 
 		# Define endereço a ser visitado
 		driver.get(URL)
@@ -570,7 +571,7 @@ class Scrap:
 
 						except:
 
-							if self.check_captcha(driver, 0):
+							if self.check_captcha(0):
 								
 								# print("Quantidade máxima de paginas abertas.")
 								time.sleep(1)

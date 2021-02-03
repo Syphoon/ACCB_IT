@@ -101,7 +101,7 @@ class Tread(threading.Thread):
 			self.func.run() 
 		except BaseException as e: 
 			
-			exc_type, exc_obj, exc_tb = sys.exc_info()
+			exc_type, exc_obj, exc_tb = sys.exc_iqnfo()
 			fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
 			# print(exc_type, fname, exc_tb.tb_lineno)
 			# print(e)
