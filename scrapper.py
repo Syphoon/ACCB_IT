@@ -365,7 +365,7 @@ class Scrap:
 		driver = webdriver.Chrome(
 			executable_path=ChromeDriverManager().install(), options=chrome_options)
 		self.driver = driver
-		self.set_viewport_size(driver,800, 600)
+		self.set_viewport_size(800, 600)
 
 		products =  ['ACUCAR CRISTAL',
 					'ARROZ PARBOILIZADO',
