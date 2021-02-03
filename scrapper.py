@@ -46,7 +46,7 @@ class Scrap:
 		worksheet = workbook.add_worksheet()
 		formats = workbook.add_format({'border': 2})
 
-		with open(self, 'rt', encoding='latin-1') as f:
+		with open(csvfile, 'rt', encoding='latin-1') as f:
 			reader = csv.reader(f)
 			for r, row in enumerate(reader):
 				for c, col in enumerate(row):
@@ -354,13 +354,13 @@ class Scrap:
 		csvfile = ''
 		
 		chrome_options = Options()
-		chrome_options.add_argument("--headless")
-		chrome_options.add_argument("--no-sandbox")
-		chrome_options.add_argument("--disable-dev-shm-usage")
-		chrome_options.add_argument("--disable-gpu")
-		chrome_options.add_argument("--disable-features=NetworkService")
-		chrome_options.add_argument("--window-size=1920x1080")
-		chrome_options.add_argument("--disable-features=VizDisplayCompositor")
+		# chrome_options.add_argument("--headless")
+		# chrome_options.add_argument("--no-sandbox")
+		# chrome_options.add_argument("--disable-dev-shm-usage")
+		# chrome_options.add_argument("--disable-gpu")
+		# chrome_options.add_argument("--disable-features=NetworkService")
+		# chrome_options.add_argument("--window-size=1920x1080")
+		# chrome_options.add_argument("--disable-features=VizDisplayCompositor")
 		# self.TXT.set("Driver")
 		driver = webdriver.Chrome(	
 			executable_path=ChromeDriverManager().install(), options=chrome_options)
