@@ -472,7 +472,7 @@ class Scrap:
 
 				except:
 
-					self.captcha(driver)
+					self.captcha()
 					driver.get('https://precodahora.ba.gov.br/produtos')
 					time.sleep(2*times)
 
@@ -503,7 +503,7 @@ class Scrap:
 
 					except:
 
-						self.captcha(driver)
+						self.captcha()
 						time.sleep(1)
 							
 					finally:
@@ -519,7 +519,7 @@ class Scrap:
 
 					except:
 
-						self.captcha(driver)
+						self.captcha()
 						time.sleep(1)
 
 					finally:
@@ -549,7 +549,7 @@ class Scrap:
 
 				except:
 
-					self.captcha(driver)
+					self.captcha()
 					time.sleep(2*times)
 
 				finally:
@@ -579,7 +579,7 @@ class Scrap:
 								
 							else:
 										
-								self.captcha(driver)
+								self.captcha()
 
 					with open(csvfile, 'a+', newline='') as file:
 
