@@ -77,6 +77,8 @@ class Tread(threading.Thread):
 	def except_raise(self):
 
 		driver = self.func.get_driver()
+		bar = self.func.get_progess_bar()
+		bar["value"] = 0
 		driver.close()
 		driver.quit()
 		self.pop_up()

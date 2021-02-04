@@ -36,6 +36,10 @@ class Scrap:
 		self.driver = None
 		self.keywords = None
 	
+	def get_progess_bar(self):
+
+		return self.PROGRESS_BAR
+
 	def get_driver(self):
 		
 		return self.driver
@@ -86,7 +90,7 @@ class Scrap:
 
 		except:
 			
-			self.captcha(self.driver)
+			self.captcha()
 			
 		elements = self.driver.find_elements_by_class_name("flex-item2")
 		
@@ -105,7 +109,7 @@ class Scrap:
 
 			except:
 				
-				self.captcha(self.driver)
+				self.captcha()
 				
 				
 			try:
@@ -119,7 +123,7 @@ class Scrap:
 			
 			except:
 				
-				self.captcha(self.driver)
+				self.captcha()
 				
 			# Preço do produto
 			flag = 0
