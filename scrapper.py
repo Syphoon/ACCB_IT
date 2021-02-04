@@ -390,10 +390,10 @@ class Scrap:
 		
 		if self.BACKUP:
 			
+			start_prod, start_key = self.backup_check(day, [self.LOCALS_NAME[0], self.LOCALS_NAME[1]])
 			if start_prod > 0 or start_key > 0:
 			
 				self.TXT.set("Retomando pesquisa anterior ...")
-				start_prod, start_key = self.backup_check(day, [self.LOCALS_NAME[0], self.LOCALS_NAME[1]])
 
 		# Define endereço a ser visitado
 		driver.get(URL)
