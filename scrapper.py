@@ -77,8 +77,6 @@ class Scrap:
 				self.driver.quit()
 				return
 
-			
-
 	def get_driver(self):
 		
 		return self.driver
@@ -291,7 +289,7 @@ class Scrap:
 		
 	def pop_up(self):
 		
-		result = messagebox.askquestion("CAPTCHA", "Captcha foi ativado, resolva-o em seu navegador e aperte Sim para continuar", icon='warning')
+		result = messagebox.askquestion("CAPTCHA", "Captcha foi ativado, abra o site do preço da hora e resolva-o em seu navegador ( aperte Sim para continuar )", icon='warning')
 		if result == 'yes' and self.check_captcha(1):
 			return True
 		else:
