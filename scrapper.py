@@ -4,6 +4,7 @@ import csv
 import os
 import threading
 import json
+import sys
 from xlsxwriter.workbook import Workbook
 from tkinter import messagebox
 from datetime import date
@@ -21,9 +22,10 @@ except ImportError:
 
 class Scrap:
 	
-	def __init__(self,LOCALS, BUTTON, TK, PROGRESS_BAR, TXT, CITY, LOCALS_NAME, BACKUP):
+	def __init__(self,LOCALS, BUTTON, TK, PROGRESS_BAR, TXT, CITY, LOCALS_NAME, BACKUP, PAUSE_BUTTON):
 
 		self.BUTTON = BUTTON
+		self.PAUSE_BUTTON = PAUSE_BUTTON
 		self.LOCALS = LOCALS
 		self.TK = TK
 		self.PROGRESS_BAR = PROGRESS_BAR
@@ -35,10 +37,47 @@ class Scrap:
 		self.all_file = None
 		self.driver = None
 		self.keywords = None
+		self.ico = None
+		self.stop = False
+		self.exit = False
 	
+	def resource_path(self,relative_path):
+		""" Get absolute path to resource, works for dev and for PyInstaller """
+		try:
+			# PyInstaller creates a temp folder and stores path in _MEIPASS
+			base_path = sys._MEIPASS
+		except Exception:
+			base_path = os.path.abspath(".")
+
+		self.ico = os.path.join(base_path, relative_path)
+
 	def get_progess_bar(self):
 
 		return self.PROGRESS_BAR
+
+	def exit_thread(self, thread, change_frame, frame, frame_bar, show_message):
+
+		self.stop = True
+		while True:
+
+			if self.exit:
+
+				# print("Pausando pesquisa ...")
+				# FRAME MAIN
+				self.BUTTON.config(text="INICIAR PESQUISA")
+				self.BUTTON["state"] = "normal"
+				change_frame(frame_bar, frame)
+				
+				# FRAME BAR
+				self.TXT.set("Aguardando inicio de pesquisa ...")
+				# self.PAUSE_BUTTON["state"] = "normal"
+				show_message("A pesquisa foi parada, todo o progresso foi salvo na pasta do município e sua respectiva data")
+				
+				self.driver.close()
+				self.driver.quit()
+				return
+
+			
 
 	def get_driver(self):
 		
@@ -356,7 +395,8 @@ class Scrap:
 		start_key = 0
 		restart = True
 		csvfile = ''
-		
+
+		self.resource_path("logo.ico")
 		chrome_options = Options()
 		chrome_options.add_argument("--headless")
 		chrome_options.add_argument("--no-sandbox")
@@ -365,12 +405,10 @@ class Scrap:
 		chrome_options.add_argument("--disable-features=NetworkService")
 		chrome_options.add_argument("--window-size=1920x1080")
 		chrome_options.add_argument("--disable-features=VizDisplayCompositor")
-		# self.TXT.set("Driver")
 		driver = webdriver.Chrome(	
 			executable_path=ChromeDriverManager().install(), options=chrome_options)
 		self.driver = driver
 		self.set_viewport_size(800, 600)
-		# self.TXT.set("After Driver")
 
 		products =  ['ACUCAR CRISTAL',
 					'ARROZ PARBOILIZADO',
@@ -412,7 +450,7 @@ class Scrap:
 			toaster = ToastNotifier()
 			toaster.show_toast("Pesquisa iniciada.",
 						" ",
-						icon_path="logo.ico",
+						icon_path=self.ico,
 						duration = 10)
 		
 		self.TXT.set("Iniciando arquivos ...")
@@ -452,8 +490,16 @@ class Scrap:
 				writer.writerow(
 					["PRODUTO", "ESTABELECIMENTO", "KEYWORD", "PREÇO"])
 			
+		self.PAUSE_BUTTON["state"] = "normal"
+
 		for index, product in enumerate(products):
-			
+
+
+			if self.stop:
+
+				self.exit = True
+				return
+				
 			keyword = keywords[index]
 			if index == 0 and start_key > 0:
 				
@@ -465,6 +511,11 @@ class Scrap:
 			for key, word in enumerate(keyword):
 				
 				self.backup_save(index + start_prod, day, key + start_key, 0, [self.LOCALS_NAME[0], self.LOCALS_NAME[1]], self.CITY, [self.LOCALS[0], self.LOCALS[1]])
+
+				if self.stop:
+
+					self.exit = True
+					return
 				
 				time.sleep(3*times)
 				
@@ -544,7 +595,10 @@ class Scrap:
 
 					time.sleep(3*times)
 				
+				if self.stop:
 
+					self.exit = True
+					return
 				# Espera a página atualizar, ou seja, terminar a pesquisa. O proceso é reconhecido como terminado quando a classe flex-item2 está presente, que é a classe utilizada para estilizar os elementos listados
 				try:
 
@@ -561,6 +615,11 @@ class Scrap:
 					flag = 0
 					while True:
 
+						if self.stop:
+
+							self.exit = True
+							return
+
 						try:
 
 							WebDriverWait(driver, 5*times).until(
@@ -569,7 +628,7 @@ class Scrap:
 							driver.find_element_by_id('updateResults').click()
 							flag = flag + 1
 
-							if flag == 4:
+							if flag == 3:
 
 								break
 
@@ -585,6 +644,11 @@ class Scrap:
 										
 								self.captcha()
 
+					if self.stop:
+
+							self.exit = True
+							return
+					
 					with open(csvfile, 'a+', newline='') as file:
 
 						writer = csv.writer(file, delimiter=',')
@@ -598,12 +662,12 @@ class Scrap:
 				self.PROGRESS_BAR['value'] = x
 				time.sleep(0.01)
 				
-			if os.name == 'nt' and index == len(products)/2:
+			if os.name == 'nt' and (index - len(products_backup))  == len(products_backup)/2:
 
 				toaster = ToastNotifier()
 				toaster.show_toast("Pesquisa na metade ...",
 							" ",
-							icon_path="logo.ico",
+							icon_path=self.ico,
 							duration = 10)
 		
 		time.sleep(1)
@@ -617,7 +681,7 @@ class Scrap:
 			
 		self.csv_to_xlsx(csvfile)
 		self.BUTTON.config(text="INICIAR PESQUISA")
-		self.BUTTON["state"] = TK.NORMAL
+		self.BUTTON["state"] = "normal"
 		self.TXT.set("Aguardando inicio de pesquisa ...")
 		
 		if os.name == 'nt':
@@ -625,7 +689,7 @@ class Scrap:
 			toaster = ToastNotifier()
 			toaster.show_toast("Pesquisa encerrada.",
 					" ",
-					icon_path="logo.ico",
+					icon_path=self.ico,
 					duration = 10)
 			
 		driver.close()
