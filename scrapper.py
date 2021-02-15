@@ -5,6 +5,7 @@ import os
 import threading
 import json
 import sys
+import urllib.request
 from xlsxwriter.workbook import Workbook
 from tkinter import messagebox
 from datetime import date
@@ -22,7 +23,7 @@ except ImportError:
 
 class Scrap:
 	
-	def __init__(self,LOCALS, BUTTON, TK, PROGRESS_BAR, TXT, CITY, LOCALS_NAME, BACKUP, PAUSE_BUTTON):
+	def __init__(self,LOCALS, BUTTON, TK, PROGRESS_BAR, TXT, CITY, LOCALS_NAME, BACKUP, PAUSE_BUTTON, INTERFACE=None):
 
 		self.BUTTON = BUTTON
 		self.PAUSE_BUTTON = PAUSE_BUTTON
@@ -33,6 +34,7 @@ class Scrap:
 		self.CITY = CITY
 		self.LOCALS_NAME = LOCALS_NAME
 		self.BACKUP = BACKUP
+		self.INTERFACE = INTERFACE
 		self.csvfile = None
 		self.all_file = None
 		self.driver = None
@@ -41,7 +43,16 @@ class Scrap:
 		self.stop = False
 		self.exit = False
 	
-	def resource_path(self,relative_path):
+	def connect(self):
+		
+		host='https://www.youtube.com'
+		try:
+			urllib.request.urlopen(host) 
+			return True
+		except:
+			return False
+	
+	def resource_path(self, relative_path):
 		""" Get absolute path to resource, works for dev and for PyInstaller """
 		try:
 			# PyInstaller creates a temp folder and stores path in _MEIPASS
@@ -58,24 +69,43 @@ class Scrap:
 	def exit_thread(self, thread, change_frame, frame, frame_bar, show_message):
 
 		self.stop = True
-		while True:
-
-			if self.exit:
-
-				# print("Pausando pesquisa ...")
-				# FRAME MAIN
-				self.BUTTON.config(text="INICIAR PESQUISA")
-				self.BUTTON["state"] = "normal"
-				change_frame(frame_bar, frame)
+		if thread != None:
 				
-				# FRAME BAR
-				self.TXT.set("Aguardando inicio de pesquisa ...")
-				# self.PAUSE_BUTTON["state"] = "normal"
-				show_message("A pesquisa foi parada, todo o progresso foi salvo na pasta do município e sua respectiva data")
-				
-				self.driver.close()
-				self.driver.quit()
-				return
+			while True:
+
+				if self.exit:
+
+					# print("Pausando pesquisa ...")
+					# FRAME MAIN
+					self.BUTTON.config(text="INICIAR PESQUISA")
+					self.BUTTON["state"] = "normal"
+					change_frame(frame_bar, frame)
+					
+					# FRAME BAR
+					self.TXT.set("Aguardando inicio de pesquisa ...")
+					self.PROGRESS_BAR['value'] = 0
+					# self.PAUSE_BUTTON["state"] = "normal"
+					show_message("A pesquisa foi parada, todo o progresso foi salvo na pasta do município e sua respectiva data")
+					
+					self.driver.close()
+					self.driver.quit()
+					return
+
+		else: 
+
+			# FRAME MAIN
+			self.BUTTON.config(text="INICIAR PESQUISA")
+			self.BUTTON["state"] = "normal"
+			# FRAME BAR
+			self.PROGRESS_BAR['value'] = 0
+			self.TXT.set("Aguardando inicio de pesquisa ...")
+			# POP UP			
+			self.INTERFACE.change_frame(self.INTERFACE.frame_bar, self.INTERFACE.frame)
+			self.INTERFACE.show_message("Ocorreu um erro de rede durante a pesquisa e não foi possível reinicia-la automaticamente, inicie a pesquisa manualmente !")
+			# DRIVER
+			self.driver.close()
+			self.driver.quit()
+			return
 
 	def get_driver(self):
 		
@@ -297,11 +327,17 @@ class Scrap:
 
 	def captcha(self):
 		
-		while True:
-
-			if self.pop_up():
+		# Se eu tenho conexão o captcha foi ativado, se não, é erro de rede.
+		if self.connect():
 				
-				break        
+			while True:
+
+				if self.pop_up():
+					
+					break        
+		else:
+
+			self.exit_thread(None, None, None, None, None)
 
 	def backup_check(self, t_date, estab):
 
@@ -396,6 +432,7 @@ class Scrap:
 
 		self.resource_path("logo.ico")
 		chrome_options = Options()
+		# DISABLES DEVTOOLS LISTENING ON 
 		chrome_options.add_argument("--headless")
 		chrome_options.add_argument("--no-sandbox")
 		chrome_options.add_argument("--disable-dev-shm-usage")
@@ -407,6 +444,7 @@ class Scrap:
 			executable_path=ChromeDriverManager().install(), options=chrome_options)
 		self.driver = driver
 		self.set_viewport_size(800, 600)
+		os.system('cls' if os.name=='nt' else 'clear')
 
 		products =  ['ACUCAR CRISTAL',
 					'ARROZ PARBOILIZADO',
@@ -492,6 +530,10 @@ class Scrap:
 
 		for index, product in enumerate(products):
 
+			if  not self.connect():
+
+				self.exit_thread(None,None,None,None,None)
+				return
 
 			if self.stop:
 
@@ -508,6 +550,11 @@ class Scrap:
 			
 			for key, word in enumerate(keyword):
 				
+				if not self.connect():
+
+					self.exit_thread(None,None,None,None,None)
+					return
+ 
 				self.backup_save(index + start_prod, day, key + start_key, 0, [self.LOCALS_NAME[0], self.LOCALS_NAME[1]], self.CITY, [self.LOCALS[0], self.LOCALS[1]])
 
 				if self.stop:
@@ -668,6 +715,11 @@ class Scrap:
 							icon_path=self.ico,
 							duration = 10)
 		
+		if self.stop:
+
+			self.exit = True
+			return
+
 		time.sleep(1)
 		for x in range(100,-1,-1):
 			
@@ -681,6 +733,8 @@ class Scrap:
 		self.BUTTON.config(text="INICIAR PESQUISA")
 		self.BUTTON["state"] = "normal"
 		self.TXT.set("Aguardando inicio de pesquisa ...")
+		self.INTERFACE.change_frame(self.INTERFACE.frame_bar, self.INTERFACE.frame)
+
 		
 		if os.name == 'nt':
 

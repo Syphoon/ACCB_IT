@@ -1,10 +1,11 @@
 import os
 import json
 import sys
-import tkinter as tk
 import threading
 import scrapper
 import time
+import urllib.request
+import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 from tkinter.ttk import * 
@@ -14,6 +15,7 @@ try:
     from win10toast import ToastNotifier
 except ImportError:
     pass
+
 
 bg_color = "#141622"
 fg_color = "#fff"
@@ -72,7 +74,7 @@ class Lstbox:
 
 class Tread(threading.Thread):
 
-	def __init__(self, function, text, button, pop_up, ):
+	def __init__(self, function, text, button, pop_up, change_frame, frame, frame_bar):
 
 		super(Tread, self).__init__()
 		self.event = threading.Event()
@@ -81,34 +83,46 @@ class Tread(threading.Thread):
 		self.button = button
 		self.exc = None            
 		self.pop_up = pop_up
+		self.change_frame = change_frame
+		self.frame = frame
+		self.frame_bar = frame_bar
 	
 	def set_event(self):
 
 		self.event.set()
 	
-	def pop_up_info(self):
+	def pop_up_info(self, message):
 
-		messagebox.showinfo("ERROR","Instale uma versão do google chrome para prosseguir com a pesquisa !", icon='warning')
+		messagebox.showinfo("ERROR", message, icon='warning')
 
 	def except_raise(self):
 
 		driver = self.func.get_driver()
 		bar = self.func.get_progess_bar()
 		bar["value"] = 0
-		if driver != None:
-		
-			driver.close()
-			driver.quit()
-			self.pop_up()
-	
-		else:
-			
-			self.pop_up_info()
 
+		if self.connect():
+
+			if driver != None:
+			
+				driver.close()
+				driver.quit()
+				# self.pop_up()
 		
-		self.text.set("Ocorreu um erro durante a pesquisa, comece novamente !")
-		self.button["state"] = tk.NORMAL
-		self.button.config(text="INICIAR PESQUISA")
+			else:
+				
+				self.pop_up_info("Instale uma versão do google chrome para prosseguir com a pesquisa !")
+
+			
+			self.text.set("Ocorreu um erro durante a pesquisa ... Retomando pesquisa ...")
+			self.run()
+		
+		else:
+
+			self.button["state"] = tk.NORMAL
+			self.button.config(text="INICIAR PESQUISA")
+			self.change_frame(self.frame_bar, self.frame)
+			self.pop_up_info("Conexão de rede perdida, confirme se existe conexão com internet para prosseguir !")
 	
 	def err_log(self, typ, fname, line, e):
 
@@ -119,20 +133,38 @@ class Tread(threading.Thread):
 		
 			json.dump(err, outfile)
 
-	def run(self): 
-			
-		try: 
-			self.func.run() 
-		except BaseException as e: 
-			
-			exc_type, exc_obj, exc_tb = sys.exc_info()
-			fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-			# print(exc_type, fname, exc_tb.tb_lineno)
-			# print(e)
-			self.err_log(str(exc_type), str(fname), str(exc_tb.tb_lineno), str(e))
-			self.exc = e 
-			self.except_raise()
+	def connect(self):
 		
+		host='https://stackoverflow.com'
+		try:
+			urllib.request.urlopen(host) 
+			return True
+		except:
+			return False
+	
+	def run(self): 
+		
+		if	self.connect():
+
+			try: 
+				self.func.run()
+			except BaseException as e: 
+				
+				exc_type, exc_obj, exc_tb = sys.exc_info()
+				fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+				# print(exc_type, fname, exc_tb.tb_lineno)
+				# print(e)
+				self.err_log(str(exc_type), str(fname), str(exc_tb.tb_lineno), str(e))
+				self.exc = e 
+				self.except_raise()
+
+		else:
+
+			self.button["state"] = tk.NORMAL
+			self.button.config(text="INICIAR PESQUISA")
+			self.change_frame(self.frame_bar, self.frame)
+			self.pop_up_info("Conexão de rede inexistente, confirme se existe conexão com internet para prosseguir !")
+
 class Interface:
     
 	def __init__(self):
@@ -166,6 +198,15 @@ class Interface:
     
 		return messagebox.showinfo("Info", message, icon='warning')
 
+	def connect(self):
+		
+		host='https://stackoverflow.com'
+		try:
+			urllib.request.urlopen(host) 
+			return True
+		except:
+			return False
+	
 	def pop_up_info(self):
 
 		messagebox.showinfo("ERROR","Ocorreu um erro durante a pesquisa, comece novamente !", icon='info')
@@ -193,10 +234,10 @@ class Interface:
 		self.button.config(text="PESQUISA EM ANDAMENTO")
 		self.selected.destroy()
 			
-		scrap = scrapper.Scrap(local, self.button, self.tk, self.progress_bar, self.text, self.city_name, local_name, False, self.pause_button)
+		scrap = scrapper.Scrap(local, self.button, self.tk, self.progress_bar, self.text, self.city_name, local_name, False, self.pause_button, self)
 		self.scrap = scrap
 
-		tread = Tread(scrap, self.text, self.button, self.pop_up_info)
+		tread = Tread(scrap, self.text, self.button, self.pop_up_info, self.change_frame, self.frame, self.frame_bar)
 		tread.start() 
 		self.thread = tread
 
@@ -213,6 +254,7 @@ class Interface:
 
 			self.show_message("A pesquisa foi encerrada, todo progresso foi salvo")
 			window.destroy()
+			sys.exit()
 
 	def start_search(self, backup, city_backup, estab, place):
 				
@@ -263,13 +305,13 @@ class Interface:
 
 		LOCALS_IOS = ['ITAO',
 					'DALNORDE',
-					'SUPERMERCADO MANGOSTÃO',
+					'MANGOSTÃO',
 					'GBARBOSA',
-					'JACIANA SUPERMERCADO',
-					'ALANA SUPERMERCADO',
-					'MECARDINHO E FRUTARIA CLAUDINTE',
-					'NENEM SUPERMERCADOS',
-					'SEM NOME',
+					'JACIANA',
+					'ALANNA',
+					'CLAUDINTE',
+					'NENEM',
+					'CESTAO',
 					'ATACADAO']
 
 		if backup:
@@ -281,17 +323,17 @@ class Interface:
 			if city_backup == 'Itabuna':
 
 					
-				scrap = scrapper.Scrap(place, self.button, self.tk, self.progress_bar, self.text, city_backup, estab, True, self.pause_button)
+				scrap = scrapper.Scrap(place, self.button, self.tk, self.progress_bar, self.text, city_backup, estab, True, self.pause_button, self)
 				self.scrap = scrap
-				tread = Tread(scrap, self.text, self.button, self.pop_up_info)
+				tread = Tread(scrap, self.text, self.button, self.pop_up_info, self.change_frame, self.frame, self.frame_bar)
 				tread.start()
 				self.thread = tread
 
 			elif city_backup == 'Ilhéus':
 
+				scrap = scrapper.Scrap(place, self.button, self.tk, self.progress_bar, self.text, city_backup, estab, True, self.pause_button, self)
 				self.scrap = scrap	
-				scrap = scrapper.Scrap(place, self.button, self.tk, self.progress_bar, self.text, city_backup, estab, True, self.pause_button)
-				tread = Tread(scrap, self.text, self.button, self.pop_up_info)
+				tread = Tread(scrap, self.text, self.button, self.pop_up_info, self.change_frame, self.frame, self.frame_bar)
 				tread.start()
 				self.thread = tread
 
@@ -520,7 +562,6 @@ class Interface:
 	
 		window.mainloop()
 		# top.mainloop()
-	
     
 window = Interface()
 window.run()
