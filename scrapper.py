@@ -1,3 +1,4 @@
+""" Script responsável por realizar o scrapping na plataforma do Preço da Hora Bahia. """
 import re
 import time
 import csv
@@ -6,6 +7,7 @@ import threading
 import json
 import sys
 import urllib.request
+import pandas as pd
 from xlsxwriter.workbook import Workbook
 from tkinter import messagebox
 from datetime import date
@@ -23,6 +25,20 @@ except ImportError:
 
 class Scrap:
 	
+	""" 
+		Classe responsável por realizar o scrapping na página do Preço da Hora Bahia.
+
+		Attributes:
+			LOCALS (string): Array de estabelecimentos que será relaizado a pesquisa.  
+			LOCALS_NAME (string): Array de nomes dos estabelecimentos que será relaizado a pesquisa.  
+			BUTTON (tk.Button): Instância do botão da janela inicial da aplicação.
+			PAUSE_BUTTON (tk.Button): Instância do botão da janela de pesquisa da aplicação.  
+			TK (tk.Window): Instância da janela principal da aplicação.  
+			TXT (tk.ProgressBar): Instância da barra de progresso.  
+			BACKUP (boolean): Indica se a pesquisa iniciada é um backup ou não.
+			INTERFACE (Interface.self): Instância da classe Interface.
+	"""
+
 	def __init__(self,LOCALS, BUTTON, TK, PROGRESS_BAR, TXT, CITY, LOCALS_NAME, BACKUP, PAUSE_BUTTON, INTERFACE=None):
 
 		self.BUTTON = BUTTON
@@ -45,6 +61,7 @@ class Scrap:
 	
 	def connect(self):
 		
+		""" Confere a conexão com o host desejado. """
 		host='https://www.youtube.com'
 		try:
 			urllib.request.urlopen(host) 
@@ -53,7 +70,7 @@ class Scrap:
 			return False
 	
 	def resource_path(self, relative_path):
-		""" Get absolute path to resource, works for dev and for PyInstaller """
+		""" Retorna o caminho relativo do ícone dentro da pasta de cache gerada pelo pyinstaller (Pacote usado para gerar o arquivo executável da aplicação). """
 		try:
 			# PyInstaller creates a temp folder and stores path in _MEIPASS
 			base_path = sys._MEIPASS
@@ -64,10 +81,22 @@ class Scrap:
 
 	def get_progess_bar(self):
 
+		""" Retorna a instância da barra de progresso. """
 		return self.PROGRESS_BAR
 
 	def exit_thread(self, thread, change_frame, frame, frame_bar, show_message):
 
+		""" 
+			Pausa a pesquisa caso aconteça um erro de rede ou o usuário pause-a manualmente.  
+
+			Attributes:
+				thread (Tread): Instância da classe Tread.  
+				change_frame (Interface.change_frame): Função responsável por mudar o frame renderizado atualmente.  
+				frame (tk.Frame): Instância da janela principal da aplicação.  
+				frame_bar (tk.Frame): Instância da janela de pesquisa da aplicação.  
+				show_message (Interface.show_message): Função que mostra uma mensagem x em pop up.  
+		
+		"""
 		self.stop = True
 		if thread != None:
 				
@@ -108,11 +137,35 @@ class Scrap:
 			return
 
 	def get_driver(self):
-		
+		""" Retorna a instância do 'driver', objeto responsável por navegar automaticamente o browser. """
 		return self.driver
+
+	def remove_duplicates(self, file_name):
+		
+		""" Remove entradas duplicadas do arquivo final xlsx. """
+		file_df = pd.read_excel(file_name + ".xlsx", skiprows=1, index_col=0)
+
+		# Mantem somente a primeira duplicata
+		pd_first = file_df.drop_duplicates(subset=["PRODUTO", "ESTABELECIMENTO", "PRECO"], keep="first")
+		size = pd_first['PRODUTO'].count()
+		writer = pd.ExcelWriter(file_name + ".xlsx", engine='xlsxwriter')
+		pd_first = pd_first.to_excel(writer, sheet_name = "Pesquisa",  index=False, startrow=0, startcol=1)
+
+		workbook  = writer.book
+		worksheet = writer.sheets['Pesquisa']
+		formats = workbook.add_format({'border': 2})
+
+		worksheet.set_column(1, size, None, formats)
+		worksheet.set_column(1, 1, 35)
+		worksheet.set_column(2, 2, 55)
+		worksheet.set_column(3, 3, 23)
+		worksheet.set_column(4, 4, 12)
+
+		writer.save()
 
 	def csv_to_xlsx(self,csvfile):
 		
+		""" Converte um arquivo csv em um arquivo xlsx. """
 		workbook = Workbook(csvfile[:-4] + '.xlsx')
 		worksheet = workbook.add_worksheet()
 		formats = workbook.add_format({'border': 2})
@@ -136,6 +189,7 @@ class Scrap:
 
 	def set_viewport_size(self, width, height):
 
+		""" Muda o tamanho da janela do navegador. """
 		window_size = self.driver.execute_script("""
 			return [window.outerWidth - window.innerWidth + arguments[0],
 			window.outerHeight - window.innerHeight + arguments[1]];
@@ -143,7 +197,15 @@ class Scrap:
 		self.driver.set_window_size(*window_size)
 
 	def get_data(self, writer, product, keyword):
+		""" 
+			Filtra os dados da janela atual aberta do navegador e os salva no arquivo CSV.  
 
+			Attributes:
+				writer (file): Instância de um 'escritor' de arquivo.  
+				product (string): Produto atual da pesquisa.  
+				keyword (string): Palavra chave atual sendo pesquisa.
+
+		"""
 		local = self.LOCALS
 		local_name = self.LOCALS_NAME
 		found = True
@@ -200,7 +262,7 @@ class Scrap:
 				product_price = product_info[2].get_attribute('innerHTML')
 				flag = 1
 			
-			pattern = re.compile("(?<=>)\s\w..\d?(\d).\d\d")
+			pattern = re.compile(r"(?<=>)\s\w..\d?(\d).\d\d")
 			product_size = len(product_price)
 			product_price = product_price.replace('\n', '')
 			product_price = product_price.replace(',', '.')
@@ -228,7 +290,7 @@ class Scrap:
 				index = 3
 				
 
-			pattern = re.compile("(?<=>).\w.*\w")
+			pattern = re.compile(r"(?<=>).\w.*\w")
 			product_adress = product_info[index].get_attribute('innerHTML')
 			product_adress = pattern.search(product_adress).group()
 			product_adress = product_adress[1:len(product_adress)]
@@ -293,6 +355,7 @@ class Scrap:
 
 	def check_captcha(self, request):
 		
+		""" Função que confere se o captcha foi resolvido com sucesso pelo usuário. """
 		excpt = True
 		if request == 1:
 			
@@ -318,7 +381,7 @@ class Scrap:
 				return False
 		
 	def pop_up(self):
-		
+		""" Mostra uma mensagem x em pop up para o usuário. """
 		result = messagebox.askquestion("CAPTCHA", "Captcha foi ativado, abra o site do preço da hora e resolva-o em seu navegador ( aperte Sim para continuar )", icon='warning')
 		if result == 'yes' and self.check_captcha(1):
 			return True
@@ -327,6 +390,7 @@ class Scrap:
 
 	def captcha(self):
 		
+		""" Trata por erro de rede e inicia um loop para conferir se o usuário resolveu o captcha. """
 		# Se eu tenho conexão o captcha foi ativado, se não, é erro de rede.
 		if self.connect():
 				
@@ -340,7 +404,7 @@ class Scrap:
 			self.exit_thread(None, None, None, None, None)
 
 	def backup_check(self, t_date, estab):
-
+		""" Retorna os parâmetros de backup caso a pesquisa esteja sendo iniciada por um backup. """
 		try:
 		
 			product = 0
@@ -392,6 +456,17 @@ class Scrap:
 
 	def backup_save(self,prod, date, keyword, done, estab, city, place):
 		
+		""" 
+			Salva o estado atual da pesquisa em um arquivo JSON no local de execução da aplicação.  
+			Attributes:
+				prod (int): Índice do produto atual da pesquisa.  
+				date (string): Data da pesquisa realizada.  
+				keyword (int): Índice da palavra chave atual da pesquisa.  
+				done (int):  Indica se a pesquisa terminou ou não.  
+				estab (string): Array dos estabelecimentos sendo pesquisados.  
+				place (string): Array dos nomes dos estabelecimentos sendo pesquisados.  
+				city (string): Cidade que a pesquisa está sendo realizada.  
+		"""
 		
 		data = {}
 		data['backup'] = []
@@ -402,6 +477,10 @@ class Scrap:
 
 	def get_keywords(self):
 		
+		"""
+		Retorna o array das palavras chaves em ordem.  
+		"""
+
 		keywords = []
 		keywords.append(['ACUCAR CRISTAL', 'ACUCAR CRISTAL 1KG'])
 		keywords.append(['ARROZ PARBOILIZADO', 'ARROZ PARBOILIZADO 1KG'])
@@ -420,6 +499,16 @@ class Scrap:
 
 	def run(self):
 
+		"""
+		Realiza a pesquisa na plataforma do Preço da Hora Bahia.
+
+		Attributes:
+			csvfile (string): Caminho para o arquivo CSV.  
+			all_file (string): Caminho para o arquivo CSV Todos.  
+			driver (selenium.Driver): Instância do objeto responsável por realizar a automação do browser.  
+			start_prod (int): Indíce de inicio do produto caso seja uma pesquisa por backup.  
+			start_key (int): Indíce de inicio de palavra chave caso seja uma pesquisa por backup.  
+		"""
 		first  = 0
 		URL = 'https://precodahora.ba.gov.br/'
 		times = 5
@@ -499,7 +588,9 @@ class Scrap:
 		csvfile = dic + '/' + self.LOCALS_NAME[0] + ' ' + self.LOCALS_NAME[1] + '.csv' 
 		all_file = dic + '/' + 'TODOS ' + self.LOCALS_NAME[0] + ' ' + self.LOCALS_NAME[1]  + '.csv'
 		self.csvfile = csvfile		
+		self.csvfile_name =  dic + '/' + self.LOCALS_NAME[0] + ' ' + self.LOCALS_NAME[1]		
 		self.all_file = all_file		
+		self.all_file_name = dic + '/' + 'TODOS ' + self.LOCALS_NAME[0] + ' ' + self.LOCALS_NAME[1]		
 
 		# Se arquivo já existe, não preciso inicia-lo
 		if start_prod != 0 or self.BACKUP:
@@ -518,13 +609,13 @@ class Scrap:
 
 				writer = csv.writer(file, delimiter=',')
 				writer.writerow(
-					["PRODUTO", "ESTABELECIMENTO", "KEYWORD", "PREÇO"])
+					["PRODUTO", "ESTABELECIMENTO", "KEYWORD", "PRECO"])
 
 			with open(all_file, 'w+', newline='') as file:
 
 				writer = csv.writer(file, delimiter=',')
 				writer.writerow(
-					["PRODUTO", "ESTABELECIMENTO", "KEYWORD", "PREÇO"])
+					["PRODUTO", "ESTABELECIMENTO", "KEYWORD", "PRECO"])
 			
 		self.PAUSE_BUTTON["state"] = "normal"
 
@@ -730,6 +821,9 @@ class Scrap:
 		start_prod = 0
 			
 		self.csv_to_xlsx(csvfile)
+		self.remove_duplicates(self.csvfile_name)
+		self.remove_duplicates(self.all_file_name)
+		
 		self.BUTTON.config(text="INICIAR PESQUISA")
 		self.BUTTON["state"] = "normal"
 		self.TXT.set("Aguardando inicio de pesquisa ...")

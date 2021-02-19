@@ -1,0 +1,2162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>ACCB_IT.interface API documentation</title>
+<meta name="description" content="Inicialização da pesquisa e sua interface GUI" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>ACCB_IT.interface</code></h1>
+</header>
+<section id="section-intro">
+<p>Inicialização da pesquisa e sua interface GUI</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;Inicialização da pesquisa e sua interface GUI&#34;&#34;&#34;
+
+import os
+import json
+import sys
+import threading
+import scrapper
+import time
+import urllib.request
+import tkinter as tk
+from tkinter import *
+from tkinter import messagebox
+from tkinter.ttk import * 
+from tkinter import ttk
+from datetime import datetime
+try:
+    from win10toast import ToastNotifier
+except ImportError:
+    pass
+
+bg_color = &#34;#141622&#34;
+&#34;&#34;&#34; Cor de fundo geral da aplicação. &#34;&#34;&#34;
+fg_color = &#34;#fff&#34;
+&#34;&#34;&#34; Cor de fonte geral da aplicação. &#34;&#34;&#34;
+
+class Lstbox: 
+
+        &#34;&#34;&#34; 
+                Por conta da forma que os elementos são instânciados dentro pelo tkinter, foi necessário separar esta janela em uma classe para facilitar o controle de dados.
+
+                Attributes:
+                        root (tkinter.window): Janela principal da aplicação.  
+                        local (string): Array de estabelecimentos a serem listados.  
+                        start_button (tkinter.button): Botão de inicio de pesquisa, necessário para controle de estado da aplicação.    
+                        selection (tuple): Indexes dos estabelecimentos selecionados. 
+        &#34;&#34;&#34;
+    
+        def __init__(self, root, local, start_button):
+
+                self.root = root
+                self.start_button = start_button
+                self.listbox = Listbox(self.root, selectmode=MULTIPLE, 
+                                                                activestyle = &#39;dotbox&#39;,  
+                                                                font = &#34;Times 11&#34;, 
+                                                                relief=tk.FLAT,
+                                                                borderwidth=0, 
+                                                                highlightthickness=0,
+                                                                fg=fg_color,
+                                                                bg=bg_color)
+
+                self.listbox.pack(expand=1, fill=&#34;both&#34;)
+                self.listbox.bind(&#34;&lt;&lt;ListboxSelect&gt;&gt;&#34;, self.callback)
+                for index, place in enumerate(local):
+
+                        self.listbox.insert(END, place)
+
+                self.selection = self.listbox.curselection()
+
+                self.start_button[&#34;state&#34;] = tk.DISABLED
+                                        
+                threading.Thread(target=lambda:self.root.mainloop())
+
+        def callback(self, a):
+
+                &#34;&#34;&#34; Callback para tratar o evento de click do usuário, gerenciando o estado do botão de inicio de pesquisa. &#34;&#34;&#34;
+                if len(self.listbox.curselection()) == 2:
+                        
+                        self.start_button[&#34;state&#34;] = tk.NORMAL
+                        
+                elif len(self.listbox.curselection()) &lt; 2:
+                        
+                        self.start_button[&#34;state&#34;] = tk.DISABLED
+                        
+                if len(self.listbox.curselection()) &gt; 2:
+                        for i in self.listbox.curselection():
+                                if i not in self.selection:
+                                        self.listbox.selection_clear(i)
+                self.selection = self.listbox.curselection()
+    
+        def get_selected(self):
+
+                &#34;&#34;&#34; Retorna os estabelecimentos selecionados.&#34;&#34;&#34;
+                return self.selection
+
+        def destroy(self):
+
+                &#34;&#34;&#34; Destroi a janela principal do programa.  &#34;&#34;&#34;
+                self.root.destroy()
+
+class Tread(threading.Thread):
+
+        &#34;&#34;&#34; 
+                Classe responsável por chamar o metodo run da Classe Scrap, iniciando um thread separado do main e tratando os seus erros.
+
+                Attributes:
+                        function (Scrap): Intância da classe Scrap.  
+                        text (tkinter.label): Label responsável pela mensagem da aba de pesquisa.  
+                        pop_up (Interface.pop_up): Função que mostra mensagem de erro generica.  
+                        change_frame (Interface.change_frame): Função que troca entre as janelas de pesquisa e inicial.   
+                        frame (tkinter.frame): Janela principal da aplicação.  
+                        frame_bar (tkinter.frame): Janela de pesquisa da aplicação.  
+        &#34;&#34;&#34;
+
+        def __init__(self, function, text, button, pop_up, change_frame, frame, frame_bar):
+
+                super(Tread, self).__init__()
+                self.event = threading.Event()
+                self.func = function
+                self.text = text 
+                self.button = button
+                self.exc = None            
+                self.pop_up = pop_up
+                self.change_frame = change_frame
+                self.frame = frame
+                self.frame_bar = frame_bar
+        
+        def pop_up_info(self, message):
+
+                &#34;&#34;&#34; Mostra em pop_up a mensagem desejada. &#34;&#34;&#34;
+                messagebox.showinfo(&#34;ERROR&#34;, message, icon=&#39;warning&#39;)
+
+        def except_raise(self):
+
+                &#34;&#34;&#34;
+                        Quando um erro é detectado este método é chamado, tratando o tipo de erro. O erro pode ser de conexão ou um erro de 
+                        falta de requisitos para executar a aplicação (Instalação do google chrome).
+                &#34;&#34;&#34;
+                driver = self.func.get_driver()
+                bar = self.func.get_progess_bar()
+                bar[&#34;value&#34;] = 0
+
+                if self.connect():
+
+                        if driver != None:
+                        
+                                driver.close()
+                                driver.quit()
+                                # self.pop_up()
+                
+                        else:
+                                
+                                self.pop_up_info(&#34;Instale uma versão do google chrome para prosseguir com a pesquisa !&#34;)
+
+                        
+                        self.text.set(&#34;Ocorreu um erro durante a pesquisa ... Retomando pesquisa ...&#34;)
+                        self.run()
+                
+                else:
+
+                        self.button[&#34;state&#34;] = tk.NORMAL
+                        self.button.config(text=&#34;INICIAR PESQUISA&#34;)
+                        self.change_frame(self.frame_bar, self.frame)
+                        self.pop_up_info(&#34;Conexão de rede perdida, confirme se existe conexão com internet para prosseguir !&#34;)
+        
+        def err_log(self, typ, fname, line, e):
+                &#34;&#34;&#34; Gera o arquivo de log de erro, err.js no local de execução da aplicação. &#34;&#34;&#34;
+                err = {}
+                err[&#39;err&#39;] = []
+                err[&#39;err&#39;].append({&#34;Tipo&#34;: typ, &#34;Arquivo&#34;: fname, &#34;Linha&#34;: line, &#34;Erro&#34;: e})
+                with open(&#39;err.json&#39;, &#39;w+&#39;) as outfile:
+                
+                        json.dump(err, outfile)
+
+        def connect(self):
+                
+                &#34;&#34;&#34; Realiza um teste de conexão com o link desejado. &#34;&#34;&#34;
+                host=&#39;https://stackoverflow.com&#39;
+                try:
+                        urllib.request.urlopen(host) 
+                        return True
+                except:
+                        return False
+        
+        def run(self): 
+                
+                &#34;&#34;&#34; Executa o método run da Classe Scrap e trata para erro de rede. &#34;&#34;&#34;
+                if      self.connect():
+
+                        try: 
+                                self.func.run()
+                        except BaseException as e: 
+                                
+                                exc_type, exc_obj, exc_tb = sys.exc_info()
+                                fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                                # print(exc_type, fname, exc_tb.tb_lineno)
+                                # print(e)
+                                self.err_log(str(exc_type), str(fname), str(exc_tb.tb_lineno), str(e))
+                                self.exc = e 
+                                self.except_raise()
+
+                else:
+
+                        self.button[&#34;state&#34;] = tk.NORMAL
+                        self.button.config(text=&#34;INICIAR PESQUISA&#34;)
+                        self.change_frame(self.frame_bar, self.frame)
+                        self.pop_up_info(&#34;Conexão de rede inexistente, confirme se existe conexão com internet para prosseguir !&#34;)
+
+class Interface:
+
+        &#34;&#34;&#34; 
+                Classe da interface GUI da aplicação.
+
+                Attributes:
+                        button (tk.Button): Instância do objeto tk.Button, responsável pelo inicio da pesquisa.  
+                        pause_button (tk.Button): Instância do objeto tk.Button, responsável por pausar a pesquisa.  
+                        text (tk.Label): Label responsável pela mensagem da aba de pesquisa.  
+                        tk (tk.Window): Janela principal da aplicação.  
+                        city (string): Array de strings contendo as cidades a serem selecionadas.  
+                        city_name (string): Array de strings contendo os nomes das cidades a serem selecionadas.  
+                        selected (tuple): Tupla contendo os indíces das cidades selecionadas.  
+                        ico (string): Caminho do ícone da aplicação.  
+                        frame (tk.Frame): Janela principal da aplicação.  
+                        frame_bar (tk.Frame): Janela de pesquisa da aplicação.  
+                        thread (Tread): Instância da classe Tread.  
+        &#34;&#34;&#34;
+        def __init__(self):
+
+                self.button = None
+                self.tk = None
+                self.text = None
+                self.city = None
+                self.city_name = None
+                self.selected = None
+                self.progress_bar = None
+                self.selected = None
+                self.ico = None
+                self.frame = None
+                self.frame_bar = None
+                self.scrap = None
+                self.thread = None
+                self.pause_button = None
+    
+        def resource_path(self,relative_path):
+                &#34;&#34;&#34; Retorna o caminho relativo do ícone dentro da pasta de cache gerada pelo pyinstaller (Pacote usado para gerar o arquivo executável da aplicação). &#34;&#34;&#34;
+                try:
+                        base_path = sys._MEIPASS
+                except Exception:
+                        base_path = os.path.abspath(&#34;.&#34;)
+
+                self.ico = os.path.join(base_path, relative_path)
+
+        def show_message(self, message):
+                &#34;&#34;&#34; Mostra uma determinada mensagem informativa em pop up. &#34;&#34;&#34;
+                return messagebox.showinfo(&#34;Info&#34;, message, icon=&#39;warning&#39;)
+
+        def connect(self):
+                
+                host=&#39;https://stackoverflow.com&#39;
+                try:
+                        urllib.request.urlopen(host) 
+                        return True
+                except:
+                        return False
+        
+        def pop_up_info(self):
+                
+                &#34;&#34;&#34; Mostra uma mensagem de erro em pop up. &#34;&#34;&#34;
+                messagebox.showinfo(&#34;ERROR&#34;,&#34;Ocorreu um erro durante a pesquisa, comece novamente !&#34;, icon=&#39;warning&#39;)
+    
+        def pop_up(self):
+                
+                &#34;&#34;&#34; Mostra uma mensagem de alerta em pop up. &#34;&#34;&#34;
+                result = messagebox.askquestion(&#34;Backup&#34;,&#34;Uma pesquisa foi interrompida, deseja retoma-la ?&#34;, icon=&#39;info&#39;)
+
+                if result == &#39;yes&#39;:
+                        return True
+                else:
+                        return False
+
+        def start(self, LOCALS, LOCALS_NAME):
+                &#34;&#34;&#34; Cria a instância da classe tread com os estabelecimentos selecionados. &#34;&#34;&#34;
+                local = []
+                local_name = []
+                index_1 , index_2 = self.selected.get_selected()
+                local.append(LOCALS[index_1])
+                local.append(LOCALS[index_2])
+                local_name.append(LOCALS_NAME[index_1])
+                local_name.append(LOCALS_NAME[index_2])
+                self.text.set(&#34;Iniciando pesquisa ...&#34;)
+                self.button[&#34;state&#34;] = tk.DISABLED
+                self.button.config(text=&#34;PESQUISA EM ANDAMENTO&#34;)
+                self.selected.destroy()
+                        
+                scrap = scrapper.Scrap(local, self.button, self.tk, self.progress_bar, self.text, self.city_name, local_name, False, self.pause_button, self)
+                self.scrap = scrap
+
+                tread = Tread(scrap, self.text, self.button, self.pop_up_info, self.change_frame, self.frame, self.frame_bar)
+                tread.start() 
+                self.thread = tread
+
+                self.change_frame(self.frame, self.frame_bar)
+
+        def on_closing(self, window_name, window):
+                &#34;&#34;&#34; Trata os eventos de encerramento do programa. &#34;&#34;&#34;
+                if window_name == &#39;top&#39;:
+
+                        self.button[&#34;state&#34;] = tk.NORMAL
+                        window.destroy()
+
+                elif messagebox.askokcancel(&#34;Sair&#34;, &#34;Realmente deseja encerrar a pesquisa ?&#34;):
+
+                        self.show_message(&#34;A pesquisa foi encerrada, todo progresso foi salvo&#34;)
+                        window.destroy()
+                        sys.exit()
+
+        def start_search(self, backup, city_backup, estab, place):
+                &#34;&#34;&#34; 
+                        Trata o início da pesquisa, passando adiante os parâmentros de cidade e estabeleciomento selecionados. 
+
+                        Attributes:
+                                backup (boolean): Booleano responsável por dizer se a pesquisa foi iniciada a partir de um backup ou não.  
+                                city_backup (string): Cidade de qual o backup foi iniciado.  
+                                estab (string): Array de estabelecimentos de qual o backup foi iniciado.  
+                                place (string): Array de nomes dos estabelecimentos de qual o backup foi iniciado.  
+
+                &#34;&#34;&#34;             
+                selected = 0
+                product_1 = 0
+                product_2 = 0
+
+                self.button[&#34;state&#34;] = tk.DISABLED
+
+                LOCALS_NAME_ITN = [&#39;Supermercado Itao&#39;,
+                                                        &#39;Compre Aqui&#39;,
+                                                        &#39;Supermercado HiperBompreco&#39;,           
+                                                        &#39;Supermercado Meira&#39;,   
+                                                        &#39;Mercado Mattos&#39;,               
+                                                        &#39;Supermercado Barateiro&#39;,               
+                                                        &#39;Híper Itao&#39;,           
+                                                        &#39;Atacadao Rondelli&#39;,            
+                                                        &#39;Mercado Dois Imaos&#39;,           
+                                                        &#39;Maxx Atacado&#39;,         
+                                                        &#39;Padaria Le &amp; Gi&#39;,              
+                                                        &#39;Compre Bem&#39;,
+                                                        ]
+
+                LOCALS_ITN = [&#39;ITAO&#39;,           
+                                        &#39;COMPRE AQUI&#39;,          
+                                        &#39;BOMPRECO&#39;,     
+                                        &#39;DALNORDE&#39;,             
+                                        &#39;MATTOS&#39;,               
+                                        &#39;SUPERMERCADO BARATEIRO&#39;,               
+                                        &#39;HIPER ITAO&#39;,           
+                                        &#39;RONDELLI&#39;,             
+                                        &#39;IRMAOS&#39;,               
+                                        &#39;MAXXI&#39;,        
+                                        &#39;NOVO BARATEIRO&#39;,       
+                                        &#39;COMPRE BEM&#39;]
+
+                LOCALS_NAME_IOS = [ &#39;Itao Supermercado&#39;,                
+                                                        &#39;Supermercado Meira&#39;,           
+                                                        &#39;Supermercado Mangostao&#39;,               
+                                                        &#39;Gbarbosa&#39;,             
+                                                        &#39;Jaciana Supermercado&#39;,                 
+                                                        &#39;Alana Supermercado&#39;,           
+                                                        &#39;Mercadinho e Frutaria Claudinete&#39;,             
+                                                        &#39;Nenem Supermercados&#39;,                  
+                                                        &#39;Cestao da Economia&#39;,           
+                                                        &#39;Atacadao&#39;,
+                                                        ]
+
+                LOCALS_IOS = [&#39;ITAO&#39;,
+                                        &#39;DALNORDE&#39;,
+                                        &#39;MANGOSTÃO&#39;,
+                                        &#39;GBARBOSA&#39;,
+                                        &#39;JACIANA&#39;,
+                                        &#39;ALANNA&#39;,
+                                        &#39;CLAUDINTE&#39;,
+                                        &#39;NENEM&#39;,
+                                        &#39;CESTAO&#39;,
+                                        &#39;ATACADAO&#39;]
+
+                if backup:
+
+                        self.text.set(&#34;Iniciando pesquisa ...&#34;)
+                        self.button.config(text=&#34;PESQUISA EM ANDAMENTO&#34;)
+                        self.change_frame(self.frame, self.frame_bar)
+
+                        if city_backup == &#39;Itabuna&#39;:
+
+                                        
+                                scrap = scrapper.Scrap(place, self.button, self.tk, self.progress_bar, self.text, city_backup, estab, True, self.pause_button, self)
+                                self.scrap = scrap
+                                tread = Tread(scrap, self.text, self.button, self.pop_up_info, self.change_frame, self.frame, self.frame_bar)
+                                tread.start()
+                                self.thread = tread
+
+                        elif city_backup == &#39;Ilhéus&#39;:
+
+                                scrap = scrapper.Scrap(place, self.button, self.tk, self.progress_bar, self.text, city_backup, estab, True, self.pause_button, self)
+                                self.scrap = scrap      
+                                tread = Tread(scrap, self.text, self.button, self.pop_up_info, self.change_frame, self.frame, self.frame_bar)
+                                tread.start()
+                                self.thread = tread
+
+                else:
+
+                        top = tk.Toplevel()
+                        top.title(&#39;Seleção de Estabelecimentos&#39;)
+                        top.resizable(height=False, width=False)
+                        top.config(padx=15,pady=15, bg=bg_color)
+                        top.protocol(&#34;WM_DELETE_WINDOW&#34;, lambda: self.on_closing(&#39;top&#39;, top))
+
+                        title = tk.Label(top, text=&#34;Selecione dois estabelecimentos para iniciar a pesquisa&#34;, font=&#39;Times 11&#39; , fg=fg_color, bg=bg_color)
+                        title.pack(pady=5)
+                        
+                        if os.name == &#39;nt&#39;:
+                                top.iconbitmap(self.ico)
+
+                        width = 350
+                        heigth = 360
+
+                        x = (top.winfo_screenwidth() // 2) - (width // 2)
+                        y = (top.winfo_screenheight() // 2) - (heigth // 2)
+                        top.geometry(&#39;{}x{}+{}+{}&#39;.format(width, heigth, x + width, y))
+
+                        if self.city.get() == 1:
+
+
+                                start_button = tk.Button(top, text=&#34;INICIAR PESQUISA&#34;, 
+                                font=&#39;Times 10&#39; , 
+                                pady=7, 
+                                padx=7, 
+                                fg = fg_color,
+                                bg = bg_color,
+                                activeforeground=&#34;white&#34;,
+                                activebackground=bg_color,
+                                bd =  5, 
+                                command= lambda: self.start(LOCALS_ITN,LOCALS_NAME_ITN))
+
+                                self.city_name = &#34;Itabuna&#34;
+                                # ITABUNA
+
+                                self.selected = Lstbox(top, LOCALS_NAME_ITN, start_button)
+                                start_button.pack()
+
+                        elif self.city.get() == 2:
+
+                                start_button = tk.Button(top, text=&#34;INICIAR PESQUISA&#34;, 
+                                font=&#39;Times 10&#39; , 
+                                pady=7, 
+                                padx=7, 
+                                fg = fg_color,
+                                bg = bg_color,
+                                activeforeground=&#34;white&#34;,
+                                activebackground=bg_color,
+                                bd =  5, 
+                                command= lambda: self.start(LOCALS_IOS,LOCALS_NAME_IOS))
+
+                                self.city_name = &#34;Ilhéus&#34;
+                                # ILHÉUS
+
+                                self.selected = Lstbox(top, LOCALS_NAME_IOS, start_button)
+                                start_button.pack()
+
+        def backup_check(self):
+                &#34;&#34;&#34; Realiza a checagem de backup, caso o usuário inicie uma pesquisa é retornado um pop up caso tenha uma pesquisa em backup. &#34;&#34;&#34;
+                today = datetime.today()
+                day = today.strftime(&#34;%d-%m-%Y&#34;)
+                
+                try:
+                
+                        finish = 0
+                        date = 0
+                        estab_1 = 0
+                        place_1 = 0
+                        place_2 = 0
+                        estab_2 = 0
+                        city_backup = 0
+                        
+                        with open(&#39;backup.json&#39;) as json_file:
+
+                                data = json.load(json_file)
+                                for backup in data[&#39;backup&#39;]:
+                                        
+                                        date = backup[&#39;date&#39;]    
+                                        finish = backup[&#39;done&#39;]
+                                        estab_1 = backup[&#39;estab_1&#39;]
+                                        estab_2 = backup[&#39;estab_2&#39;]
+                                        place_1 = backup[&#39;place_1&#39;]
+                                        place_2 = backup[&#39;place_2&#39;]
+                                        city_backup = backup[&#39;city&#39;]
+                                        
+                except:
+                        
+                        self.start_search(False, None, None, None)
+                        return
+                
+                if day != date:
+
+                        self.start_search(False, None, None, None)
+                        return
+                        
+                # Pesquisa do estabelecimento nao acabou
+                if finish == 0:
+                        
+                        if self.pop_up():
+                                
+                                self.start_search(True, city_backup, [estab_1, estab_2], [place_1, place_2])
+                                return
+
+                        else:
+                                
+                                self.start_search(False, None, None, None)
+                                return
+                
+                elif finish == 1:
+                        
+                        self.start_search(False, None, None, None)
+                        return
+
+        def change_frame(self,frame,frame_raise):
+                &#34;&#34;&#34; Muda o frame renderizado na aplicação. &#34;&#34;&#34;
+                frame.pack_forget()
+                frame_raise.pack(fill=tk.BOTH, pady=10)
+
+        def pause_search(self):
+                &#34;&#34;&#34; Pausa a pesquisa atual. &#34;&#34;&#34;
+                self.text.set(&#34;Preparando para pausar a pesquisa ...&#34;)
+                self.pause_button[&#34;state&#34;] = tk.DISABLED
+                threading.Thread(target= lambda: self.scrap.exit_thread(self.thread, self.change_frame, self.frame, self.frame_bar, self.show_message)).start()
+
+        def run(self):
+                &#34;&#34;&#34; Inicia a instância da janela principal da aplicação. &#34;&#34;&#34;
+                # Window
+                window = tk.Tk()
+                self.tk = window
+                window.title(&#39;ACCB - Pesquisa Automatica&#39;)
+                window.resizable(height=False, width=False)
+                window.config(bg=bg_color)
+                window.protocol(&#34;WM_DELETE_WINDOW&#34;, lambda: self.on_closing(&#39;window&#39;, window))
+
+                self.resource_path(&#34;logo.ico&#34;)
+                if os.name == &#39;nt&#39;:
+                        window.iconbitmap(self.ico)
+
+                width = 350
+                heigth = 165
+
+                x = (window.winfo_screenwidth() // 2) - (width // 2)
+                y = (window.winfo_screenheight() // 2) - (heigth // 2)
+                window.geometry(&#39;{}x{}+{}+{}&#39;.format(width, heigth, x, y))
+
+                # Frame
+
+                frame = tk.Frame(window, bg=bg_color)
+                frame_bar = tk.Frame(window, bg=bg_color)
+                frame.pack(fill=tk.BOTH, pady=10)
+
+                # Title
+                label_title = tk.Label(frame, text=&#34;Selecione o município e inicie a pesquisa&#34;, font=&#39;Times 11&#39; , fg=fg_color, bg=bg_color)
+                label_title.pack(pady=5)
+
+                # RadioButton
+
+                var = tk.IntVar()
+                var.set(1)
+                radio_1 = tk.Radiobutton(frame, text=&#34;Itabuna&#34;, font=&#39;Times 11&#39;, variable=var,value=1, bg=bg_color, fg=fg_color, activebackground=bg_color, highlightcolor=fg_color, selectcolor=bg_color, activeforeground=fg_color)
+                radio_1.pack()
+
+                radio_2 = tk.Radiobutton(frame, text=&#34;Ilhéus&#34;, font=&#39;Times 11&#39;, variable=var, value=2, bg=bg_color, fg=fg_color, activebackground=bg_color, highlightcolor=fg_color, selectcolor=bg_color, activeforeground=fg_color)
+                radio_2.pack()
+
+                # Button
+        
+                start_button = tk.Button(frame, text=&#34;INICIAR PESQUISA&#34;,
+                # relief=tk.FLAT, 
+                font=&#39;Times 10&#39; , 
+                pady=7, 
+                padx=7, 
+                fg = fg_color,
+                bg = bg_color,
+                activeforeground=&#34;white&#34;,
+                activebackground=bg_color,
+                bd =  5, 
+                command=lambda: self.backup_check())
+                start_button.pack(pady=5)               
+                
+                # top = tk.Toplevel()
+                
+                ## FRAME 2
+  
+                # Label
+                text = tk.StringVar()
+                text.set(&#34;Aguardando inicio de pesquisa ...&#34;)
+                label = tk.Label(frame_bar, textvariable = text, font=&#39;Times 10&#39; , fg=fg_color, bg=bg_color)
+                label.pack(pady=10)
+
+                
+                # Progress Bar
+                progress_bar = ttk.Progressbar(frame_bar, orient=tk.HORIZONTAL, length=260, mode=&#39;determinate&#39;)
+                progress_bar.pack(pady=10)
+
+                # Button
+
+                pause_button = tk.Button(frame_bar, text=&#34;PAUSAR PESQUISA&#34;,
+                font=&#39;Times 10&#39; , 
+                pady=7, 
+                padx=7, 
+                fg = fg_color,
+                bg = bg_color,
+                activeforeground=&#34;white&#34;,
+                activebackground=bg_color,
+                bd =  5, 
+                command=lambda: self.pause_search())
+
+                pause_button.pack(pady=10)
+                pause_button[&#34;state&#34;] = tk.DISABLED             
+                
+                self.city = var
+                self.button = start_button
+                self.progress_bar = progress_bar
+                self.text = text
+                self.frame = frame
+                self.frame_bar = frame_bar
+                self.pause_button = pause_button
+        
+                window.mainloop()
+                # top.mainloop()
+    
+    
+if __name__ == &#39;__main__&#39;:
+    
+        window = Interface()
+        window.run()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-variables">Global variables</h2>
+<dl>
+<dt id="ACCB_IT.interface.bg_color"><code class="name">var <span class="ident">bg_color</span></code></dt>
+<dd>
+<div class="desc"><p>Cor de fundo geral da aplicação.</p></div>
+</dd>
+<dt id="ACCB_IT.interface.fg_color"><code class="name">var <span class="ident">fg_color</span></code></dt>
+<dd>
+<div class="desc"><p>Cor de fonte geral da aplicação.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="ACCB_IT.interface.Interface"><code class="flex name class">
+<span>class <span class="ident">Interface</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Classe da interface GUI da aplicação.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>button</code></strong> :&ensp;<code>tk.Button</code></dt>
+<dd>Instância do objeto tk.Button, responsável pelo inicio da pesquisa.
+</dd>
+<dt><strong><code>pause_button</code></strong> :&ensp;<code>tk.Button</code></dt>
+<dd>Instância do objeto tk.Button, responsável por pausar a pesquisa.
+</dd>
+<dt><strong><code>text</code></strong> :&ensp;<code>tk.Label</code></dt>
+<dd>Label responsável pela mensagem da aba de pesquisa.
+</dd>
+<dt><strong><code>tk</code></strong> :&ensp;<code>tk.Window</code></dt>
+<dd>Janela principal da aplicação.
+</dd>
+<dt><strong><code>city</code></strong> :&ensp;<code>string</code></dt>
+<dd>Array de strings contendo as cidades a serem selecionadas.
+</dd>
+<dt><strong><code>city_name</code></strong> :&ensp;<code>string</code></dt>
+<dd>Array de strings contendo os nomes das cidades a serem selecionadas.
+</dd>
+<dt><strong><code>selected</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>Tupla contendo os indíces das cidades selecionadas.
+</dd>
+<dt><strong><code>ico</code></strong> :&ensp;<code>string</code></dt>
+<dd>Caminho do ícone da aplicação.
+</dd>
+<dt><strong><code>frame</code></strong> :&ensp;<code>tk.Frame</code></dt>
+<dd>Janela principal da aplicação.
+</dd>
+<dt><strong><code>frame_bar</code></strong> :&ensp;<code>tk.Frame</code></dt>
+<dd>Janela de pesquisa da aplicação.
+</dd>
+<dt><strong><code>thread</code></strong> :&ensp;<code><a title="ACCB_IT.interface.Tread" href="#ACCB_IT.interface.Tread">Tread</a></code></dt>
+<dd>Instância da classe Tread.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Interface:
+
+        &#34;&#34;&#34; 
+                Classe da interface GUI da aplicação.
+
+                Attributes:
+                        button (tk.Button): Instância do objeto tk.Button, responsável pelo inicio da pesquisa.  
+                        pause_button (tk.Button): Instância do objeto tk.Button, responsável por pausar a pesquisa.  
+                        text (tk.Label): Label responsável pela mensagem da aba de pesquisa.  
+                        tk (tk.Window): Janela principal da aplicação.  
+                        city (string): Array de strings contendo as cidades a serem selecionadas.  
+                        city_name (string): Array de strings contendo os nomes das cidades a serem selecionadas.  
+                        selected (tuple): Tupla contendo os indíces das cidades selecionadas.  
+                        ico (string): Caminho do ícone da aplicação.  
+                        frame (tk.Frame): Janela principal da aplicação.  
+                        frame_bar (tk.Frame): Janela de pesquisa da aplicação.  
+                        thread (Tread): Instância da classe Tread.  
+        &#34;&#34;&#34;
+        def __init__(self):
+
+                self.button = None
+                self.tk = None
+                self.text = None
+                self.city = None
+                self.city_name = None
+                self.selected = None
+                self.progress_bar = None
+                self.selected = None
+                self.ico = None
+                self.frame = None
+                self.frame_bar = None
+                self.scrap = None
+                self.thread = None
+                self.pause_button = None
+    
+        def resource_path(self,relative_path):
+                &#34;&#34;&#34; Retorna o caminho relativo do ícone dentro da pasta de cache gerada pelo pyinstaller (Pacote usado para gerar o arquivo executável da aplicação). &#34;&#34;&#34;
+                try:
+                        base_path = sys._MEIPASS
+                except Exception:
+                        base_path = os.path.abspath(&#34;.&#34;)
+
+                self.ico = os.path.join(base_path, relative_path)
+
+        def show_message(self, message):
+                &#34;&#34;&#34; Mostra uma determinada mensagem informativa em pop up. &#34;&#34;&#34;
+                return messagebox.showinfo(&#34;Info&#34;, message, icon=&#39;warning&#39;)
+
+        def connect(self):
+                
+                host=&#39;https://stackoverflow.com&#39;
+                try:
+                        urllib.request.urlopen(host) 
+                        return True
+                except:
+                        return False
+        
+        def pop_up_info(self):
+                
+                &#34;&#34;&#34; Mostra uma mensagem de erro em pop up. &#34;&#34;&#34;
+                messagebox.showinfo(&#34;ERROR&#34;,&#34;Ocorreu um erro durante a pesquisa, comece novamente !&#34;, icon=&#39;warning&#39;)
+    
+        def pop_up(self):
+                
+                &#34;&#34;&#34; Mostra uma mensagem de alerta em pop up. &#34;&#34;&#34;
+                result = messagebox.askquestion(&#34;Backup&#34;,&#34;Uma pesquisa foi interrompida, deseja retoma-la ?&#34;, icon=&#39;info&#39;)
+
+                if result == &#39;yes&#39;:
+                        return True
+                else:
+                        return False
+
+        def start(self, LOCALS, LOCALS_NAME):
+                &#34;&#34;&#34; Cria a instância da classe tread com os estabelecimentos selecionados. &#34;&#34;&#34;
+                local = []
+                local_name = []
+                index_1 , index_2 = self.selected.get_selected()
+                local.append(LOCALS[index_1])
+                local.append(LOCALS[index_2])
+                local_name.append(LOCALS_NAME[index_1])
+                local_name.append(LOCALS_NAME[index_2])
+                self.text.set(&#34;Iniciando pesquisa ...&#34;)
+                self.button[&#34;state&#34;] = tk.DISABLED
+                self.button.config(text=&#34;PESQUISA EM ANDAMENTO&#34;)
+                self.selected.destroy()
+                        
+                scrap = scrapper.Scrap(local, self.button, self.tk, self.progress_bar, self.text, self.city_name, local_name, False, self.pause_button, self)
+                self.scrap = scrap
+
+                tread = Tread(scrap, self.text, self.button, self.pop_up_info, self.change_frame, self.frame, self.frame_bar)
+                tread.start() 
+                self.thread = tread
+
+                self.change_frame(self.frame, self.frame_bar)
+
+        def on_closing(self, window_name, window):
+                &#34;&#34;&#34; Trata os eventos de encerramento do programa. &#34;&#34;&#34;
+                if window_name == &#39;top&#39;:
+
+                        self.button[&#34;state&#34;] = tk.NORMAL
+                        window.destroy()
+
+                elif messagebox.askokcancel(&#34;Sair&#34;, &#34;Realmente deseja encerrar a pesquisa ?&#34;):
+
+                        self.show_message(&#34;A pesquisa foi encerrada, todo progresso foi salvo&#34;)
+                        window.destroy()
+                        sys.exit()
+
+        def start_search(self, backup, city_backup, estab, place):
+                &#34;&#34;&#34; 
+                        Trata o início da pesquisa, passando adiante os parâmentros de cidade e estabeleciomento selecionados. 
+
+                        Attributes:
+                                backup (boolean): Booleano responsável por dizer se a pesquisa foi iniciada a partir de um backup ou não.  
+                                city_backup (string): Cidade de qual o backup foi iniciado.  
+                                estab (string): Array de estabelecimentos de qual o backup foi iniciado.  
+                                place (string): Array de nomes dos estabelecimentos de qual o backup foi iniciado.  
+
+                &#34;&#34;&#34;             
+                selected = 0
+                product_1 = 0
+                product_2 = 0
+
+                self.button[&#34;state&#34;] = tk.DISABLED
+
+                LOCALS_NAME_ITN = [&#39;Supermercado Itao&#39;,
+                                                        &#39;Compre Aqui&#39;,
+                                                        &#39;Supermercado HiperBompreco&#39;,           
+                                                        &#39;Supermercado Meira&#39;,   
+                                                        &#39;Mercado Mattos&#39;,               
+                                                        &#39;Supermercado Barateiro&#39;,               
+                                                        &#39;Híper Itao&#39;,           
+                                                        &#39;Atacadao Rondelli&#39;,            
+                                                        &#39;Mercado Dois Imaos&#39;,           
+                                                        &#39;Maxx Atacado&#39;,         
+                                                        &#39;Padaria Le &amp; Gi&#39;,              
+                                                        &#39;Compre Bem&#39;,
+                                                        ]
+
+                LOCALS_ITN = [&#39;ITAO&#39;,           
+                                        &#39;COMPRE AQUI&#39;,          
+                                        &#39;BOMPRECO&#39;,     
+                                        &#39;DALNORDE&#39;,             
+                                        &#39;MATTOS&#39;,               
+                                        &#39;SUPERMERCADO BARATEIRO&#39;,               
+                                        &#39;HIPER ITAO&#39;,           
+                                        &#39;RONDELLI&#39;,             
+                                        &#39;IRMAOS&#39;,               
+                                        &#39;MAXXI&#39;,        
+                                        &#39;NOVO BARATEIRO&#39;,       
+                                        &#39;COMPRE BEM&#39;]
+
+                LOCALS_NAME_IOS = [ &#39;Itao Supermercado&#39;,                
+                                                        &#39;Supermercado Meira&#39;,           
+                                                        &#39;Supermercado Mangostao&#39;,               
+                                                        &#39;Gbarbosa&#39;,             
+                                                        &#39;Jaciana Supermercado&#39;,                 
+                                                        &#39;Alana Supermercado&#39;,           
+                                                        &#39;Mercadinho e Frutaria Claudinete&#39;,             
+                                                        &#39;Nenem Supermercados&#39;,                  
+                                                        &#39;Cestao da Economia&#39;,           
+                                                        &#39;Atacadao&#39;,
+                                                        ]
+
+                LOCALS_IOS = [&#39;ITAO&#39;,
+                                        &#39;DALNORDE&#39;,
+                                        &#39;MANGOSTÃO&#39;,
+                                        &#39;GBARBOSA&#39;,
+                                        &#39;JACIANA&#39;,
+                                        &#39;ALANNA&#39;,
+                                        &#39;CLAUDINTE&#39;,
+                                        &#39;NENEM&#39;,
+                                        &#39;CESTAO&#39;,
+                                        &#39;ATACADAO&#39;]
+
+                if backup:
+
+                        self.text.set(&#34;Iniciando pesquisa ...&#34;)
+                        self.button.config(text=&#34;PESQUISA EM ANDAMENTO&#34;)
+                        self.change_frame(self.frame, self.frame_bar)
+
+                        if city_backup == &#39;Itabuna&#39;:
+
+                                        
+                                scrap = scrapper.Scrap(place, self.button, self.tk, self.progress_bar, self.text, city_backup, estab, True, self.pause_button, self)
+                                self.scrap = scrap
+                                tread = Tread(scrap, self.text, self.button, self.pop_up_info, self.change_frame, self.frame, self.frame_bar)
+                                tread.start()
+                                self.thread = tread
+
+                        elif city_backup == &#39;Ilhéus&#39;:
+
+                                scrap = scrapper.Scrap(place, self.button, self.tk, self.progress_bar, self.text, city_backup, estab, True, self.pause_button, self)
+                                self.scrap = scrap      
+                                tread = Tread(scrap, self.text, self.button, self.pop_up_info, self.change_frame, self.frame, self.frame_bar)
+                                tread.start()
+                                self.thread = tread
+
+                else:
+
+                        top = tk.Toplevel()
+                        top.title(&#39;Seleção de Estabelecimentos&#39;)
+                        top.resizable(height=False, width=False)
+                        top.config(padx=15,pady=15, bg=bg_color)
+                        top.protocol(&#34;WM_DELETE_WINDOW&#34;, lambda: self.on_closing(&#39;top&#39;, top))
+
+                        title = tk.Label(top, text=&#34;Selecione dois estabelecimentos para iniciar a pesquisa&#34;, font=&#39;Times 11&#39; , fg=fg_color, bg=bg_color)
+                        title.pack(pady=5)
+                        
+                        if os.name == &#39;nt&#39;:
+                                top.iconbitmap(self.ico)
+
+                        width = 350
+                        heigth = 360
+
+                        x = (top.winfo_screenwidth() // 2) - (width // 2)
+                        y = (top.winfo_screenheight() // 2) - (heigth // 2)
+                        top.geometry(&#39;{}x{}+{}+{}&#39;.format(width, heigth, x + width, y))
+
+                        if self.city.get() == 1:
+
+
+                                start_button = tk.Button(top, text=&#34;INICIAR PESQUISA&#34;, 
+                                font=&#39;Times 10&#39; , 
+                                pady=7, 
+                                padx=7, 
+                                fg = fg_color,
+                                bg = bg_color,
+                                activeforeground=&#34;white&#34;,
+                                activebackground=bg_color,
+                                bd =  5, 
+                                command= lambda: self.start(LOCALS_ITN,LOCALS_NAME_ITN))
+
+                                self.city_name = &#34;Itabuna&#34;
+                                # ITABUNA
+
+                                self.selected = Lstbox(top, LOCALS_NAME_ITN, start_button)
+                                start_button.pack()
+
+                        elif self.city.get() == 2:
+
+                                start_button = tk.Button(top, text=&#34;INICIAR PESQUISA&#34;, 
+                                font=&#39;Times 10&#39; , 
+                                pady=7, 
+                                padx=7, 
+                                fg = fg_color,
+                                bg = bg_color,
+                                activeforeground=&#34;white&#34;,
+                                activebackground=bg_color,
+                                bd =  5, 
+                                command= lambda: self.start(LOCALS_IOS,LOCALS_NAME_IOS))
+
+                                self.city_name = &#34;Ilhéus&#34;
+                                # ILHÉUS
+
+                                self.selected = Lstbox(top, LOCALS_NAME_IOS, start_button)
+                                start_button.pack()
+
+        def backup_check(self):
+                &#34;&#34;&#34; Realiza a checagem de backup, caso o usuário inicie uma pesquisa é retornado um pop up caso tenha uma pesquisa em backup. &#34;&#34;&#34;
+                today = datetime.today()
+                day = today.strftime(&#34;%d-%m-%Y&#34;)
+                
+                try:
+                
+                        finish = 0
+                        date = 0
+                        estab_1 = 0
+                        place_1 = 0
+                        place_2 = 0
+                        estab_2 = 0
+                        city_backup = 0
+                        
+                        with open(&#39;backup.json&#39;) as json_file:
+
+                                data = json.load(json_file)
+                                for backup in data[&#39;backup&#39;]:
+                                        
+                                        date = backup[&#39;date&#39;]    
+                                        finish = backup[&#39;done&#39;]
+                                        estab_1 = backup[&#39;estab_1&#39;]
+                                        estab_2 = backup[&#39;estab_2&#39;]
+                                        place_1 = backup[&#39;place_1&#39;]
+                                        place_2 = backup[&#39;place_2&#39;]
+                                        city_backup = backup[&#39;city&#39;]
+                                        
+                except:
+                        
+                        self.start_search(False, None, None, None)
+                        return
+                
+                if day != date:
+
+                        self.start_search(False, None, None, None)
+                        return
+                        
+                # Pesquisa do estabelecimento nao acabou
+                if finish == 0:
+                        
+                        if self.pop_up():
+                                
+                                self.start_search(True, city_backup, [estab_1, estab_2], [place_1, place_2])
+                                return
+
+                        else:
+                                
+                                self.start_search(False, None, None, None)
+                                return
+                
+                elif finish == 1:
+                        
+                        self.start_search(False, None, None, None)
+                        return
+
+        def change_frame(self,frame,frame_raise):
+                &#34;&#34;&#34; Muda o frame renderizado na aplicação. &#34;&#34;&#34;
+                frame.pack_forget()
+                frame_raise.pack(fill=tk.BOTH, pady=10)
+
+        def pause_search(self):
+                &#34;&#34;&#34; Pausa a pesquisa atual. &#34;&#34;&#34;
+                self.text.set(&#34;Preparando para pausar a pesquisa ...&#34;)
+                self.pause_button[&#34;state&#34;] = tk.DISABLED
+                threading.Thread(target= lambda: self.scrap.exit_thread(self.thread, self.change_frame, self.frame, self.frame_bar, self.show_message)).start()
+
+        def run(self):
+                &#34;&#34;&#34; Inicia a instância da janela principal da aplicação. &#34;&#34;&#34;
+                # Window
+                window = tk.Tk()
+                self.tk = window
+                window.title(&#39;ACCB - Pesquisa Automatica&#39;)
+                window.resizable(height=False, width=False)
+                window.config(bg=bg_color)
+                window.protocol(&#34;WM_DELETE_WINDOW&#34;, lambda: self.on_closing(&#39;window&#39;, window))
+
+                self.resource_path(&#34;logo.ico&#34;)
+                if os.name == &#39;nt&#39;:
+                        window.iconbitmap(self.ico)
+
+                width = 350
+                heigth = 165
+
+                x = (window.winfo_screenwidth() // 2) - (width // 2)
+                y = (window.winfo_screenheight() // 2) - (heigth // 2)
+                window.geometry(&#39;{}x{}+{}+{}&#39;.format(width, heigth, x, y))
+
+                # Frame
+
+                frame = tk.Frame(window, bg=bg_color)
+                frame_bar = tk.Frame(window, bg=bg_color)
+                frame.pack(fill=tk.BOTH, pady=10)
+
+                # Title
+                label_title = tk.Label(frame, text=&#34;Selecione o município e inicie a pesquisa&#34;, font=&#39;Times 11&#39; , fg=fg_color, bg=bg_color)
+                label_title.pack(pady=5)
+
+                # RadioButton
+
+                var = tk.IntVar()
+                var.set(1)
+                radio_1 = tk.Radiobutton(frame, text=&#34;Itabuna&#34;, font=&#39;Times 11&#39;, variable=var,value=1, bg=bg_color, fg=fg_color, activebackground=bg_color, highlightcolor=fg_color, selectcolor=bg_color, activeforeground=fg_color)
+                radio_1.pack()
+
+                radio_2 = tk.Radiobutton(frame, text=&#34;Ilhéus&#34;, font=&#39;Times 11&#39;, variable=var, value=2, bg=bg_color, fg=fg_color, activebackground=bg_color, highlightcolor=fg_color, selectcolor=bg_color, activeforeground=fg_color)
+                radio_2.pack()
+
+                # Button
+        
+                start_button = tk.Button(frame, text=&#34;INICIAR PESQUISA&#34;,
+                # relief=tk.FLAT, 
+                font=&#39;Times 10&#39; , 
+                pady=7, 
+                padx=7, 
+                fg = fg_color,
+                bg = bg_color,
+                activeforeground=&#34;white&#34;,
+                activebackground=bg_color,
+                bd =  5, 
+                command=lambda: self.backup_check())
+                start_button.pack(pady=5)               
+                
+                # top = tk.Toplevel()
+                
+                ## FRAME 2
+  
+                # Label
+                text = tk.StringVar()
+                text.set(&#34;Aguardando inicio de pesquisa ...&#34;)
+                label = tk.Label(frame_bar, textvariable = text, font=&#39;Times 10&#39; , fg=fg_color, bg=bg_color)
+                label.pack(pady=10)
+
+                
+                # Progress Bar
+                progress_bar = ttk.Progressbar(frame_bar, orient=tk.HORIZONTAL, length=260, mode=&#39;determinate&#39;)
+                progress_bar.pack(pady=10)
+
+                # Button
+
+                pause_button = tk.Button(frame_bar, text=&#34;PAUSAR PESQUISA&#34;,
+                font=&#39;Times 10&#39; , 
+                pady=7, 
+                padx=7, 
+                fg = fg_color,
+                bg = bg_color,
+                activeforeground=&#34;white&#34;,
+                activebackground=bg_color,
+                bd =  5, 
+                command=lambda: self.pause_search())
+
+                pause_button.pack(pady=10)
+                pause_button[&#34;state&#34;] = tk.DISABLED             
+                
+                self.city = var
+                self.button = start_button
+                self.progress_bar = progress_bar
+                self.text = text
+                self.frame = frame
+                self.frame_bar = frame_bar
+                self.pause_button = pause_button
+        
+                window.mainloop()
+                # top.mainloop()</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="ACCB_IT.interface.Interface.backup_check"><code class="name flex">
+<span>def <span class="ident">backup_check</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Realiza a checagem de backup, caso o usuário inicie uma pesquisa é retornado um pop up caso tenha uma pesquisa em backup.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def backup_check(self):
+        &#34;&#34;&#34; Realiza a checagem de backup, caso o usuário inicie uma pesquisa é retornado um pop up caso tenha uma pesquisa em backup. &#34;&#34;&#34;
+        today = datetime.today()
+        day = today.strftime(&#34;%d-%m-%Y&#34;)
+        
+        try:
+        
+                finish = 0
+                date = 0
+                estab_1 = 0
+                place_1 = 0
+                place_2 = 0
+                estab_2 = 0
+                city_backup = 0
+                
+                with open(&#39;backup.json&#39;) as json_file:
+
+                        data = json.load(json_file)
+                        for backup in data[&#39;backup&#39;]:
+                                
+                                date = backup[&#39;date&#39;]    
+                                finish = backup[&#39;done&#39;]
+                                estab_1 = backup[&#39;estab_1&#39;]
+                                estab_2 = backup[&#39;estab_2&#39;]
+                                place_1 = backup[&#39;place_1&#39;]
+                                place_2 = backup[&#39;place_2&#39;]
+                                city_backup = backup[&#39;city&#39;]
+                                
+        except:
+                
+                self.start_search(False, None, None, None)
+                return
+        
+        if day != date:
+
+                self.start_search(False, None, None, None)
+                return
+                
+        # Pesquisa do estabelecimento nao acabou
+        if finish == 0:
+                
+                if self.pop_up():
+                        
+                        self.start_search(True, city_backup, [estab_1, estab_2], [place_1, place_2])
+                        return
+
+                else:
+                        
+                        self.start_search(False, None, None, None)
+                        return
+        
+        elif finish == 1:
+                
+                self.start_search(False, None, None, None)
+                return</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.interface.Interface.change_frame"><code class="name flex">
+<span>def <span class="ident">change_frame</span></span>(<span>self, frame, frame_raise)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Muda o frame renderizado na aplicação.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def change_frame(self,frame,frame_raise):
+        &#34;&#34;&#34; Muda o frame renderizado na aplicação. &#34;&#34;&#34;
+        frame.pack_forget()
+        frame_raise.pack(fill=tk.BOTH, pady=10)</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.interface.Interface.connect"><code class="name flex">
+<span>def <span class="ident">connect</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def connect(self):
+        
+        host=&#39;https://stackoverflow.com&#39;
+        try:
+                urllib.request.urlopen(host) 
+                return True
+        except:
+                return False</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.interface.Interface.on_closing"><code class="name flex">
+<span>def <span class="ident">on_closing</span></span>(<span>self, window_name, window)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Trata os eventos de encerramento do programa.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def on_closing(self, window_name, window):
+        &#34;&#34;&#34; Trata os eventos de encerramento do programa. &#34;&#34;&#34;
+        if window_name == &#39;top&#39;:
+
+                self.button[&#34;state&#34;] = tk.NORMAL
+                window.destroy()
+
+        elif messagebox.askokcancel(&#34;Sair&#34;, &#34;Realmente deseja encerrar a pesquisa ?&#34;):
+
+                self.show_message(&#34;A pesquisa foi encerrada, todo progresso foi salvo&#34;)
+                window.destroy()
+                sys.exit()</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.interface.Interface.pause_search"><code class="name flex">
+<span>def <span class="ident">pause_search</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Pausa a pesquisa atual.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pause_search(self):
+        &#34;&#34;&#34; Pausa a pesquisa atual. &#34;&#34;&#34;
+        self.text.set(&#34;Preparando para pausar a pesquisa ...&#34;)
+        self.pause_button[&#34;state&#34;] = tk.DISABLED
+        threading.Thread(target= lambda: self.scrap.exit_thread(self.thread, self.change_frame, self.frame, self.frame_bar, self.show_message)).start()</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.interface.Interface.pop_up"><code class="name flex">
+<span>def <span class="ident">pop_up</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Mostra uma mensagem de alerta em pop up.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pop_up(self):
+        
+        &#34;&#34;&#34; Mostra uma mensagem de alerta em pop up. &#34;&#34;&#34;
+        result = messagebox.askquestion(&#34;Backup&#34;,&#34;Uma pesquisa foi interrompida, deseja retoma-la ?&#34;, icon=&#39;info&#39;)
+
+        if result == &#39;yes&#39;:
+                return True
+        else:
+                return False</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.interface.Interface.pop_up_info"><code class="name flex">
+<span>def <span class="ident">pop_up_info</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Mostra uma mensagem de erro em pop up.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pop_up_info(self):
+        
+        &#34;&#34;&#34; Mostra uma mensagem de erro em pop up. &#34;&#34;&#34;
+        messagebox.showinfo(&#34;ERROR&#34;,&#34;Ocorreu um erro durante a pesquisa, comece novamente !&#34;, icon=&#39;warning&#39;)</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.interface.Interface.resource_path"><code class="name flex">
+<span>def <span class="ident">resource_path</span></span>(<span>self, relative_path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retorna o caminho relativo do ícone dentro da pasta de cache gerada pelo pyinstaller (Pacote usado para gerar o arquivo executável da aplicação).</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def resource_path(self,relative_path):
+        &#34;&#34;&#34; Retorna o caminho relativo do ícone dentro da pasta de cache gerada pelo pyinstaller (Pacote usado para gerar o arquivo executável da aplicação). &#34;&#34;&#34;
+        try:
+                base_path = sys._MEIPASS
+        except Exception:
+                base_path = os.path.abspath(&#34;.&#34;)
+
+        self.ico = os.path.join(base_path, relative_path)</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.interface.Interface.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Inicia a instância da janela principal da aplicação.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run(self):
+        &#34;&#34;&#34; Inicia a instância da janela principal da aplicação. &#34;&#34;&#34;
+        # Window
+        window = tk.Tk()
+        self.tk = window
+        window.title(&#39;ACCB - Pesquisa Automatica&#39;)
+        window.resizable(height=False, width=False)
+        window.config(bg=bg_color)
+        window.protocol(&#34;WM_DELETE_WINDOW&#34;, lambda: self.on_closing(&#39;window&#39;, window))
+
+        self.resource_path(&#34;logo.ico&#34;)
+        if os.name == &#39;nt&#39;:
+                window.iconbitmap(self.ico)
+
+        width = 350
+        heigth = 165
+
+        x = (window.winfo_screenwidth() // 2) - (width // 2)
+        y = (window.winfo_screenheight() // 2) - (heigth // 2)
+        window.geometry(&#39;{}x{}+{}+{}&#39;.format(width, heigth, x, y))
+
+        # Frame
+
+        frame = tk.Frame(window, bg=bg_color)
+        frame_bar = tk.Frame(window, bg=bg_color)
+        frame.pack(fill=tk.BOTH, pady=10)
+
+        # Title
+        label_title = tk.Label(frame, text=&#34;Selecione o município e inicie a pesquisa&#34;, font=&#39;Times 11&#39; , fg=fg_color, bg=bg_color)
+        label_title.pack(pady=5)
+
+        # RadioButton
+
+        var = tk.IntVar()
+        var.set(1)
+        radio_1 = tk.Radiobutton(frame, text=&#34;Itabuna&#34;, font=&#39;Times 11&#39;, variable=var,value=1, bg=bg_color, fg=fg_color, activebackground=bg_color, highlightcolor=fg_color, selectcolor=bg_color, activeforeground=fg_color)
+        radio_1.pack()
+
+        radio_2 = tk.Radiobutton(frame, text=&#34;Ilhéus&#34;, font=&#39;Times 11&#39;, variable=var, value=2, bg=bg_color, fg=fg_color, activebackground=bg_color, highlightcolor=fg_color, selectcolor=bg_color, activeforeground=fg_color)
+        radio_2.pack()
+
+        # Button
+
+        start_button = tk.Button(frame, text=&#34;INICIAR PESQUISA&#34;,
+        # relief=tk.FLAT, 
+        font=&#39;Times 10&#39; , 
+        pady=7, 
+        padx=7, 
+        fg = fg_color,
+        bg = bg_color,
+        activeforeground=&#34;white&#34;,
+        activebackground=bg_color,
+        bd =  5, 
+        command=lambda: self.backup_check())
+        start_button.pack(pady=5)               
+        
+        # top = tk.Toplevel()
+        
+        ## FRAME 2
+
+        # Label
+        text = tk.StringVar()
+        text.set(&#34;Aguardando inicio de pesquisa ...&#34;)
+        label = tk.Label(frame_bar, textvariable = text, font=&#39;Times 10&#39; , fg=fg_color, bg=bg_color)
+        label.pack(pady=10)
+
+        
+        # Progress Bar
+        progress_bar = ttk.Progressbar(frame_bar, orient=tk.HORIZONTAL, length=260, mode=&#39;determinate&#39;)
+        progress_bar.pack(pady=10)
+
+        # Button
+
+        pause_button = tk.Button(frame_bar, text=&#34;PAUSAR PESQUISA&#34;,
+        font=&#39;Times 10&#39; , 
+        pady=7, 
+        padx=7, 
+        fg = fg_color,
+        bg = bg_color,
+        activeforeground=&#34;white&#34;,
+        activebackground=bg_color,
+        bd =  5, 
+        command=lambda: self.pause_search())
+
+        pause_button.pack(pady=10)
+        pause_button[&#34;state&#34;] = tk.DISABLED             
+        
+        self.city = var
+        self.button = start_button
+        self.progress_bar = progress_bar
+        self.text = text
+        self.frame = frame
+        self.frame_bar = frame_bar
+        self.pause_button = pause_button
+
+        window.mainloop()
+        # top.mainloop()</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.interface.Interface.show_message"><code class="name flex">
+<span>def <span class="ident">show_message</span></span>(<span>self, message)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Mostra uma determinada mensagem informativa em pop up.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def show_message(self, message):
+        &#34;&#34;&#34; Mostra uma determinada mensagem informativa em pop up. &#34;&#34;&#34;
+        return messagebox.showinfo(&#34;Info&#34;, message, icon=&#39;warning&#39;)</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.interface.Interface.start"><code class="name flex">
+<span>def <span class="ident">start</span></span>(<span>self, LOCALS, LOCALS_NAME)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Cria a instância da classe tread com os estabelecimentos selecionados.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def start(self, LOCALS, LOCALS_NAME):
+        &#34;&#34;&#34; Cria a instância da classe tread com os estabelecimentos selecionados. &#34;&#34;&#34;
+        local = []
+        local_name = []
+        index_1 , index_2 = self.selected.get_selected()
+        local.append(LOCALS[index_1])
+        local.append(LOCALS[index_2])
+        local_name.append(LOCALS_NAME[index_1])
+        local_name.append(LOCALS_NAME[index_2])
+        self.text.set(&#34;Iniciando pesquisa ...&#34;)
+        self.button[&#34;state&#34;] = tk.DISABLED
+        self.button.config(text=&#34;PESQUISA EM ANDAMENTO&#34;)
+        self.selected.destroy()
+                
+        scrap = scrapper.Scrap(local, self.button, self.tk, self.progress_bar, self.text, self.city_name, local_name, False, self.pause_button, self)
+        self.scrap = scrap
+
+        tread = Tread(scrap, self.text, self.button, self.pop_up_info, self.change_frame, self.frame, self.frame_bar)
+        tread.start() 
+        self.thread = tread
+
+        self.change_frame(self.frame, self.frame_bar)</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.interface.Interface.start_search"><code class="name flex">
+<span>def <span class="ident">start_search</span></span>(<span>self, backup, city_backup, estab, place)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Trata o início da pesquisa, passando adiante os parâmentros de cidade e estabeleciomento selecionados. </p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>backup</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>Booleano responsável por dizer se a pesquisa foi iniciada a partir de um backup ou não.
+</dd>
+<dt><strong><code>city_backup</code></strong> :&ensp;<code>string</code></dt>
+<dd>Cidade de qual o backup foi iniciado.
+</dd>
+<dt><strong><code>estab</code></strong> :&ensp;<code>string</code></dt>
+<dd>Array de estabelecimentos de qual o backup foi iniciado.
+</dd>
+<dt><strong><code>place</code></strong> :&ensp;<code>string</code></dt>
+<dd>Array de nomes dos estabelecimentos de qual o backup foi iniciado.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def start_search(self, backup, city_backup, estab, place):
+        &#34;&#34;&#34; 
+                Trata o início da pesquisa, passando adiante os parâmentros de cidade e estabeleciomento selecionados. 
+
+                Attributes:
+                        backup (boolean): Booleano responsável por dizer se a pesquisa foi iniciada a partir de um backup ou não.  
+                        city_backup (string): Cidade de qual o backup foi iniciado.  
+                        estab (string): Array de estabelecimentos de qual o backup foi iniciado.  
+                        place (string): Array de nomes dos estabelecimentos de qual o backup foi iniciado.  
+
+        &#34;&#34;&#34;             
+        selected = 0
+        product_1 = 0
+        product_2 = 0
+
+        self.button[&#34;state&#34;] = tk.DISABLED
+
+        LOCALS_NAME_ITN = [&#39;Supermercado Itao&#39;,
+                                                &#39;Compre Aqui&#39;,
+                                                &#39;Supermercado HiperBompreco&#39;,           
+                                                &#39;Supermercado Meira&#39;,   
+                                                &#39;Mercado Mattos&#39;,               
+                                                &#39;Supermercado Barateiro&#39;,               
+                                                &#39;Híper Itao&#39;,           
+                                                &#39;Atacadao Rondelli&#39;,            
+                                                &#39;Mercado Dois Imaos&#39;,           
+                                                &#39;Maxx Atacado&#39;,         
+                                                &#39;Padaria Le &amp; Gi&#39;,              
+                                                &#39;Compre Bem&#39;,
+                                                ]
+
+        LOCALS_ITN = [&#39;ITAO&#39;,           
+                                &#39;COMPRE AQUI&#39;,          
+                                &#39;BOMPRECO&#39;,     
+                                &#39;DALNORDE&#39;,             
+                                &#39;MATTOS&#39;,               
+                                &#39;SUPERMERCADO BARATEIRO&#39;,               
+                                &#39;HIPER ITAO&#39;,           
+                                &#39;RONDELLI&#39;,             
+                                &#39;IRMAOS&#39;,               
+                                &#39;MAXXI&#39;,        
+                                &#39;NOVO BARATEIRO&#39;,       
+                                &#39;COMPRE BEM&#39;]
+
+        LOCALS_NAME_IOS = [ &#39;Itao Supermercado&#39;,                
+                                                &#39;Supermercado Meira&#39;,           
+                                                &#39;Supermercado Mangostao&#39;,               
+                                                &#39;Gbarbosa&#39;,             
+                                                &#39;Jaciana Supermercado&#39;,                 
+                                                &#39;Alana Supermercado&#39;,           
+                                                &#39;Mercadinho e Frutaria Claudinete&#39;,             
+                                                &#39;Nenem Supermercados&#39;,                  
+                                                &#39;Cestao da Economia&#39;,           
+                                                &#39;Atacadao&#39;,
+                                                ]
+
+        LOCALS_IOS = [&#39;ITAO&#39;,
+                                &#39;DALNORDE&#39;,
+                                &#39;MANGOSTÃO&#39;,
+                                &#39;GBARBOSA&#39;,
+                                &#39;JACIANA&#39;,
+                                &#39;ALANNA&#39;,
+                                &#39;CLAUDINTE&#39;,
+                                &#39;NENEM&#39;,
+                                &#39;CESTAO&#39;,
+                                &#39;ATACADAO&#39;]
+
+        if backup:
+
+                self.text.set(&#34;Iniciando pesquisa ...&#34;)
+                self.button.config(text=&#34;PESQUISA EM ANDAMENTO&#34;)
+                self.change_frame(self.frame, self.frame_bar)
+
+                if city_backup == &#39;Itabuna&#39;:
+
+                                
+                        scrap = scrapper.Scrap(place, self.button, self.tk, self.progress_bar, self.text, city_backup, estab, True, self.pause_button, self)
+                        self.scrap = scrap
+                        tread = Tread(scrap, self.text, self.button, self.pop_up_info, self.change_frame, self.frame, self.frame_bar)
+                        tread.start()
+                        self.thread = tread
+
+                elif city_backup == &#39;Ilhéus&#39;:
+
+                        scrap = scrapper.Scrap(place, self.button, self.tk, self.progress_bar, self.text, city_backup, estab, True, self.pause_button, self)
+                        self.scrap = scrap      
+                        tread = Tread(scrap, self.text, self.button, self.pop_up_info, self.change_frame, self.frame, self.frame_bar)
+                        tread.start()
+                        self.thread = tread
+
+        else:
+
+                top = tk.Toplevel()
+                top.title(&#39;Seleção de Estabelecimentos&#39;)
+                top.resizable(height=False, width=False)
+                top.config(padx=15,pady=15, bg=bg_color)
+                top.protocol(&#34;WM_DELETE_WINDOW&#34;, lambda: self.on_closing(&#39;top&#39;, top))
+
+                title = tk.Label(top, text=&#34;Selecione dois estabelecimentos para iniciar a pesquisa&#34;, font=&#39;Times 11&#39; , fg=fg_color, bg=bg_color)
+                title.pack(pady=5)
+                
+                if os.name == &#39;nt&#39;:
+                        top.iconbitmap(self.ico)
+
+                width = 350
+                heigth = 360
+
+                x = (top.winfo_screenwidth() // 2) - (width // 2)
+                y = (top.winfo_screenheight() // 2) - (heigth // 2)
+                top.geometry(&#39;{}x{}+{}+{}&#39;.format(width, heigth, x + width, y))
+
+                if self.city.get() == 1:
+
+
+                        start_button = tk.Button(top, text=&#34;INICIAR PESQUISA&#34;, 
+                        font=&#39;Times 10&#39; , 
+                        pady=7, 
+                        padx=7, 
+                        fg = fg_color,
+                        bg = bg_color,
+                        activeforeground=&#34;white&#34;,
+                        activebackground=bg_color,
+                        bd =  5, 
+                        command= lambda: self.start(LOCALS_ITN,LOCALS_NAME_ITN))
+
+                        self.city_name = &#34;Itabuna&#34;
+                        # ITABUNA
+
+                        self.selected = Lstbox(top, LOCALS_NAME_ITN, start_button)
+                        start_button.pack()
+
+                elif self.city.get() == 2:
+
+                        start_button = tk.Button(top, text=&#34;INICIAR PESQUISA&#34;, 
+                        font=&#39;Times 10&#39; , 
+                        pady=7, 
+                        padx=7, 
+                        fg = fg_color,
+                        bg = bg_color,
+                        activeforeground=&#34;white&#34;,
+                        activebackground=bg_color,
+                        bd =  5, 
+                        command= lambda: self.start(LOCALS_IOS,LOCALS_NAME_IOS))
+
+                        self.city_name = &#34;Ilhéus&#34;
+                        # ILHÉUS
+
+                        self.selected = Lstbox(top, LOCALS_NAME_IOS, start_button)
+                        start_button.pack()</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="ACCB_IT.interface.Lstbox"><code class="flex name class">
+<span>class <span class="ident">Lstbox</span></span>
+<span>(</span><span>root, local, start_button)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Por conta da forma que os elementos são instânciados dentro pelo tkinter, foi necessário separar esta janela em uma classe para facilitar o controle de dados.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>root</code></strong> :&ensp;<code>tkinter.window</code></dt>
+<dd>Janela principal da aplicação.
+</dd>
+<dt><strong><code>local</code></strong> :&ensp;<code>string</code></dt>
+<dd>Array de estabelecimentos a serem listados.
+</dd>
+<dt><strong><code>start_button</code></strong> :&ensp;<code>tkinter.button</code></dt>
+<dd>Botão de inicio de pesquisa, necessário para controle de estado da aplicação.
+</dd>
+<dt><strong><code>selection</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>Indexes dos estabelecimentos selecionados.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Lstbox: 
+
+        &#34;&#34;&#34; 
+                Por conta da forma que os elementos são instânciados dentro pelo tkinter, foi necessário separar esta janela em uma classe para facilitar o controle de dados.
+
+                Attributes:
+                        root (tkinter.window): Janela principal da aplicação.  
+                        local (string): Array de estabelecimentos a serem listados.  
+                        start_button (tkinter.button): Botão de inicio de pesquisa, necessário para controle de estado da aplicação.    
+                        selection (tuple): Indexes dos estabelecimentos selecionados. 
+        &#34;&#34;&#34;
+    
+        def __init__(self, root, local, start_button):
+
+                self.root = root
+                self.start_button = start_button
+                self.listbox = Listbox(self.root, selectmode=MULTIPLE, 
+                                                                activestyle = &#39;dotbox&#39;,  
+                                                                font = &#34;Times 11&#34;, 
+                                                                relief=tk.FLAT,
+                                                                borderwidth=0, 
+                                                                highlightthickness=0,
+                                                                fg=fg_color,
+                                                                bg=bg_color)
+
+                self.listbox.pack(expand=1, fill=&#34;both&#34;)
+                self.listbox.bind(&#34;&lt;&lt;ListboxSelect&gt;&gt;&#34;, self.callback)
+                for index, place in enumerate(local):
+
+                        self.listbox.insert(END, place)
+
+                self.selection = self.listbox.curselection()
+
+                self.start_button[&#34;state&#34;] = tk.DISABLED
+                                        
+                threading.Thread(target=lambda:self.root.mainloop())
+
+        def callback(self, a):
+
+                &#34;&#34;&#34; Callback para tratar o evento de click do usuário, gerenciando o estado do botão de inicio de pesquisa. &#34;&#34;&#34;
+                if len(self.listbox.curselection()) == 2:
+                        
+                        self.start_button[&#34;state&#34;] = tk.NORMAL
+                        
+                elif len(self.listbox.curselection()) &lt; 2:
+                        
+                        self.start_button[&#34;state&#34;] = tk.DISABLED
+                        
+                if len(self.listbox.curselection()) &gt; 2:
+                        for i in self.listbox.curselection():
+                                if i not in self.selection:
+                                        self.listbox.selection_clear(i)
+                self.selection = self.listbox.curselection()
+    
+        def get_selected(self):
+
+                &#34;&#34;&#34; Retorna os estabelecimentos selecionados.&#34;&#34;&#34;
+                return self.selection
+
+        def destroy(self):
+
+                &#34;&#34;&#34; Destroi a janela principal do programa.  &#34;&#34;&#34;
+                self.root.destroy()</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="ACCB_IT.interface.Lstbox.callback"><code class="name flex">
+<span>def <span class="ident">callback</span></span>(<span>self, a)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Callback para tratar o evento de click do usuário, gerenciando o estado do botão de inicio de pesquisa.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def callback(self, a):
+
+        &#34;&#34;&#34; Callback para tratar o evento de click do usuário, gerenciando o estado do botão de inicio de pesquisa. &#34;&#34;&#34;
+        if len(self.listbox.curselection()) == 2:
+                
+                self.start_button[&#34;state&#34;] = tk.NORMAL
+                
+        elif len(self.listbox.curselection()) &lt; 2:
+                
+                self.start_button[&#34;state&#34;] = tk.DISABLED
+                
+        if len(self.listbox.curselection()) &gt; 2:
+                for i in self.listbox.curselection():
+                        if i not in self.selection:
+                                self.listbox.selection_clear(i)
+        self.selection = self.listbox.curselection()</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.interface.Lstbox.destroy"><code class="name flex">
+<span>def <span class="ident">destroy</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Destroi a janela principal do programa.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def destroy(self):
+
+        &#34;&#34;&#34; Destroi a janela principal do programa.  &#34;&#34;&#34;
+        self.root.destroy()</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.interface.Lstbox.get_selected"><code class="name flex">
+<span>def <span class="ident">get_selected</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retorna os estabelecimentos selecionados.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_selected(self):
+
+        &#34;&#34;&#34; Retorna os estabelecimentos selecionados.&#34;&#34;&#34;
+        return self.selection</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="ACCB_IT.interface.Tread"><code class="flex name class">
+<span>class <span class="ident">Tread</span></span>
+<span>(</span><span>function, text, button, pop_up, change_frame, frame, frame_bar)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Classe responsável por chamar o metodo run da Classe Scrap, iniciando um thread separado do main e tratando os seus erros.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>function</code></strong> :&ensp;<code>Scrap</code></dt>
+<dd>Intância da classe Scrap.
+</dd>
+<dt><strong><code>text</code></strong> :&ensp;<code>tkinter.label</code></dt>
+<dd>Label responsável pela mensagem da aba de pesquisa.
+</dd>
+<dt><strong><code>pop_up</code></strong> :&ensp;<code><a title="ACCB_IT.interface.Interface.pop_up" href="#ACCB_IT.interface.Interface.pop_up">Interface.pop_up()</a></code></dt>
+<dd>Função que mostra mensagem de erro generica.
+</dd>
+<dt><strong><code>change_frame</code></strong> :&ensp;<code><a title="ACCB_IT.interface.Interface.change_frame" href="#ACCB_IT.interface.Interface.change_frame">Interface.change_frame()</a></code></dt>
+<dd>Função que troca entre as janelas de pesquisa e inicial.
+</dd>
+<dt><strong><code>frame</code></strong> :&ensp;<code>tkinter.frame</code></dt>
+<dd>Janela principal da aplicação.
+</dd>
+<dt><strong><code>frame_bar</code></strong> :&ensp;<code>tkinter.frame</code></dt>
+<dd>Janela de pesquisa da aplicação.
+</dd>
+</dl>
+</div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Tread(threading.Thread):
+
+        &#34;&#34;&#34; 
+                Classe responsável por chamar o metodo run da Classe Scrap, iniciando um thread separado do main e tratando os seus erros.
+
+                Attributes:
+                        function (Scrap): Intância da classe Scrap.  
+                        text (tkinter.label): Label responsável pela mensagem da aba de pesquisa.  
+                        pop_up (Interface.pop_up): Função que mostra mensagem de erro generica.  
+                        change_frame (Interface.change_frame): Função que troca entre as janelas de pesquisa e inicial.   
+                        frame (tkinter.frame): Janela principal da aplicação.  
+                        frame_bar (tkinter.frame): Janela de pesquisa da aplicação.  
+        &#34;&#34;&#34;
+
+        def __init__(self, function, text, button, pop_up, change_frame, frame, frame_bar):
+
+                super(Tread, self).__init__()
+                self.event = threading.Event()
+                self.func = function
+                self.text = text 
+                self.button = button
+                self.exc = None            
+                self.pop_up = pop_up
+                self.change_frame = change_frame
+                self.frame = frame
+                self.frame_bar = frame_bar
+        
+        def pop_up_info(self, message):
+
+                &#34;&#34;&#34; Mostra em pop_up a mensagem desejada. &#34;&#34;&#34;
+                messagebox.showinfo(&#34;ERROR&#34;, message, icon=&#39;warning&#39;)
+
+        def except_raise(self):
+
+                &#34;&#34;&#34;
+                        Quando um erro é detectado este método é chamado, tratando o tipo de erro. O erro pode ser de conexão ou um erro de 
+                        falta de requisitos para executar a aplicação (Instalação do google chrome).
+                &#34;&#34;&#34;
+                driver = self.func.get_driver()
+                bar = self.func.get_progess_bar()
+                bar[&#34;value&#34;] = 0
+
+                if self.connect():
+
+                        if driver != None:
+                        
+                                driver.close()
+                                driver.quit()
+                                # self.pop_up()
+                
+                        else:
+                                
+                                self.pop_up_info(&#34;Instale uma versão do google chrome para prosseguir com a pesquisa !&#34;)
+
+                        
+                        self.text.set(&#34;Ocorreu um erro durante a pesquisa ... Retomando pesquisa ...&#34;)
+                        self.run()
+                
+                else:
+
+                        self.button[&#34;state&#34;] = tk.NORMAL
+                        self.button.config(text=&#34;INICIAR PESQUISA&#34;)
+                        self.change_frame(self.frame_bar, self.frame)
+                        self.pop_up_info(&#34;Conexão de rede perdida, confirme se existe conexão com internet para prosseguir !&#34;)
+        
+        def err_log(self, typ, fname, line, e):
+                &#34;&#34;&#34; Gera o arquivo de log de erro, err.js no local de execução da aplicação. &#34;&#34;&#34;
+                err = {}
+                err[&#39;err&#39;] = []
+                err[&#39;err&#39;].append({&#34;Tipo&#34;: typ, &#34;Arquivo&#34;: fname, &#34;Linha&#34;: line, &#34;Erro&#34;: e})
+                with open(&#39;err.json&#39;, &#39;w+&#39;) as outfile:
+                
+                        json.dump(err, outfile)
+
+        def connect(self):
+                
+                &#34;&#34;&#34; Realiza um teste de conexão com o link desejado. &#34;&#34;&#34;
+                host=&#39;https://stackoverflow.com&#39;
+                try:
+                        urllib.request.urlopen(host) 
+                        return True
+                except:
+                        return False
+        
+        def run(self): 
+                
+                &#34;&#34;&#34; Executa o método run da Classe Scrap e trata para erro de rede. &#34;&#34;&#34;
+                if      self.connect():
+
+                        try: 
+                                self.func.run()
+                        except BaseException as e: 
+                                
+                                exc_type, exc_obj, exc_tb = sys.exc_info()
+                                fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                                # print(exc_type, fname, exc_tb.tb_lineno)
+                                # print(e)
+                                self.err_log(str(exc_type), str(fname), str(exc_tb.tb_lineno), str(e))
+                                self.exc = e 
+                                self.except_raise()
+
+                else:
+
+                        self.button[&#34;state&#34;] = tk.NORMAL
+                        self.button.config(text=&#34;INICIAR PESQUISA&#34;)
+                        self.change_frame(self.frame_bar, self.frame)
+                        self.pop_up_info(&#34;Conexão de rede inexistente, confirme se existe conexão com internet para prosseguir !&#34;)</code></pre>
+</details>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="ACCB_IT.interface.Tread.connect"><code class="name flex">
+<span>def <span class="ident">connect</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Realiza um teste de conexão com o link desejado.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def connect(self):
+        
+        &#34;&#34;&#34; Realiza um teste de conexão com o link desejado. &#34;&#34;&#34;
+        host=&#39;https://stackoverflow.com&#39;
+        try:
+                urllib.request.urlopen(host) 
+                return True
+        except:
+                return False</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.interface.Tread.err_log"><code class="name flex">
+<span>def <span class="ident">err_log</span></span>(<span>self, typ, fname, line, e)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Gera o arquivo de log de erro, err.js no local de execução da aplicação.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def err_log(self, typ, fname, line, e):
+        &#34;&#34;&#34; Gera o arquivo de log de erro, err.js no local de execução da aplicação. &#34;&#34;&#34;
+        err = {}
+        err[&#39;err&#39;] = []
+        err[&#39;err&#39;].append({&#34;Tipo&#34;: typ, &#34;Arquivo&#34;: fname, &#34;Linha&#34;: line, &#34;Erro&#34;: e})
+        with open(&#39;err.json&#39;, &#39;w+&#39;) as outfile:
+        
+                json.dump(err, outfile)</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.interface.Tread.except_raise"><code class="name flex">
+<span>def <span class="ident">except_raise</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Quando um erro é detectado este método é chamado, tratando o tipo de erro. O erro pode ser de conexão ou um erro de
+falta de requisitos para executar a aplicação (Instalação do google chrome).</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def except_raise(self):
+
+        &#34;&#34;&#34;
+                Quando um erro é detectado este método é chamado, tratando o tipo de erro. O erro pode ser de conexão ou um erro de 
+                falta de requisitos para executar a aplicação (Instalação do google chrome).
+        &#34;&#34;&#34;
+        driver = self.func.get_driver()
+        bar = self.func.get_progess_bar()
+        bar[&#34;value&#34;] = 0
+
+        if self.connect():
+
+                if driver != None:
+                
+                        driver.close()
+                        driver.quit()
+                        # self.pop_up()
+        
+                else:
+                        
+                        self.pop_up_info(&#34;Instale uma versão do google chrome para prosseguir com a pesquisa !&#34;)
+
+                
+                self.text.set(&#34;Ocorreu um erro durante a pesquisa ... Retomando pesquisa ...&#34;)
+                self.run()
+        
+        else:
+
+                self.button[&#34;state&#34;] = tk.NORMAL
+                self.button.config(text=&#34;INICIAR PESQUISA&#34;)
+                self.change_frame(self.frame_bar, self.frame)
+                self.pop_up_info(&#34;Conexão de rede perdida, confirme se existe conexão com internet para prosseguir !&#34;)</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.interface.Tread.pop_up_info"><code class="name flex">
+<span>def <span class="ident">pop_up_info</span></span>(<span>self, message)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Mostra em pop_up a mensagem desejada.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pop_up_info(self, message):
+
+        &#34;&#34;&#34; Mostra em pop_up a mensagem desejada. &#34;&#34;&#34;
+        messagebox.showinfo(&#34;ERROR&#34;, message, icon=&#39;warning&#39;)</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.interface.Tread.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Executa o método run da Classe Scrap e trata para erro de rede.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run(self): 
+        
+        &#34;&#34;&#34; Executa o método run da Classe Scrap e trata para erro de rede. &#34;&#34;&#34;
+        if      self.connect():
+
+                try: 
+                        self.func.run()
+                except BaseException as e: 
+                        
+                        exc_type, exc_obj, exc_tb = sys.exc_info()
+                        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                        # print(exc_type, fname, exc_tb.tb_lineno)
+                        # print(e)
+                        self.err_log(str(exc_type), str(fname), str(exc_tb.tb_lineno), str(e))
+                        self.exc = e 
+                        self.except_raise()
+
+        else:
+
+                self.button[&#34;state&#34;] = tk.NORMAL
+                self.button.config(text=&#34;INICIAR PESQUISA&#34;)
+                self.change_frame(self.frame_bar, self.frame)
+                self.pop_up_info(&#34;Conexão de rede inexistente, confirme se existe conexão com internet para prosseguir !&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="ACCB_IT" href="index.html">ACCB_IT</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-variables">Global variables</a></h3>
+<ul class="">
+<li><code><a title="ACCB_IT.interface.bg_color" href="#ACCB_IT.interface.bg_color">bg_color</a></code></li>
+<li><code><a title="ACCB_IT.interface.fg_color" href="#ACCB_IT.interface.fg_color">fg_color</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="ACCB_IT.interface.Interface" href="#ACCB_IT.interface.Interface">Interface</a></code></h4>
+<ul class="two-column">
+<li><code><a title="ACCB_IT.interface.Interface.backup_check" href="#ACCB_IT.interface.Interface.backup_check">backup_check</a></code></li>
+<li><code><a title="ACCB_IT.interface.Interface.change_frame" href="#ACCB_IT.interface.Interface.change_frame">change_frame</a></code></li>
+<li><code><a title="ACCB_IT.interface.Interface.connect" href="#ACCB_IT.interface.Interface.connect">connect</a></code></li>
+<li><code><a title="ACCB_IT.interface.Interface.on_closing" href="#ACCB_IT.interface.Interface.on_closing">on_closing</a></code></li>
+<li><code><a title="ACCB_IT.interface.Interface.pause_search" href="#ACCB_IT.interface.Interface.pause_search">pause_search</a></code></li>
+<li><code><a title="ACCB_IT.interface.Interface.pop_up" href="#ACCB_IT.interface.Interface.pop_up">pop_up</a></code></li>
+<li><code><a title="ACCB_IT.interface.Interface.pop_up_info" href="#ACCB_IT.interface.Interface.pop_up_info">pop_up_info</a></code></li>
+<li><code><a title="ACCB_IT.interface.Interface.resource_path" href="#ACCB_IT.interface.Interface.resource_path">resource_path</a></code></li>
+<li><code><a title="ACCB_IT.interface.Interface.run" href="#ACCB_IT.interface.Interface.run">run</a></code></li>
+<li><code><a title="ACCB_IT.interface.Interface.show_message" href="#ACCB_IT.interface.Interface.show_message">show_message</a></code></li>
+<li><code><a title="ACCB_IT.interface.Interface.start" href="#ACCB_IT.interface.Interface.start">start</a></code></li>
+<li><code><a title="ACCB_IT.interface.Interface.start_search" href="#ACCB_IT.interface.Interface.start_search">start_search</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ACCB_IT.interface.Lstbox" href="#ACCB_IT.interface.Lstbox">Lstbox</a></code></h4>
+<ul class="">
+<li><code><a title="ACCB_IT.interface.Lstbox.callback" href="#ACCB_IT.interface.Lstbox.callback">callback</a></code></li>
+<li><code><a title="ACCB_IT.interface.Lstbox.destroy" href="#ACCB_IT.interface.Lstbox.destroy">destroy</a></code></li>
+<li><code><a title="ACCB_IT.interface.Lstbox.get_selected" href="#ACCB_IT.interface.Lstbox.get_selected">get_selected</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="ACCB_IT.interface.Tread" href="#ACCB_IT.interface.Tread">Tread</a></code></h4>
+<ul class="">
+<li><code><a title="ACCB_IT.interface.Tread.connect" href="#ACCB_IT.interface.Tread.connect">connect</a></code></li>
+<li><code><a title="ACCB_IT.interface.Tread.err_log" href="#ACCB_IT.interface.Tread.err_log">err_log</a></code></li>
+<li><code><a title="ACCB_IT.interface.Tread.except_raise" href="#ACCB_IT.interface.Tread.except_raise">except_raise</a></code></li>
+<li><code><a title="ACCB_IT.interface.Tread.pop_up_info" href="#ACCB_IT.interface.Tread.pop_up_info">pop_up_info</a></code></li>
+<li><code><a title="ACCB_IT.interface.Tread.run" href="#ACCB_IT.interface.Tread.run">run</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

@@ -1,3 +1,5 @@
+"""Inicialização da pesquisa e sua interface GUI"""
+
 import os
 import json
 import sys
@@ -16,63 +18,88 @@ try:
 except ImportError:
     pass
 
-
 bg_color = "#141622"
+""" Cor de fundo geral da aplicação. """
 fg_color = "#fff"
+""" Cor de fonte geral da aplicação. """
 
+class Lstbox: 
 
-class Lstbox:
+	""" 
+		Por conta da forma que os elementos são instânciados dentro pelo tkinter, foi necessário separar esta janela em uma classe para facilitar o controle de dados.
+
+		Attributes:
+			root (tkinter.window): Janela principal da aplicação.  
+			local (string): Array de estabelecimentos a serem listados.  
+			start_button (tkinter.button): Botão de inicio de pesquisa, necessário para controle de estado da aplicação.    
+			selection (tuple): Indexes dos estabelecimentos selecionados. 
+	"""
     
-    def __init__(self, root, local, start_button):
-        
-        self.root = root
-        self.start_button = start_button
-        self.listbox = Listbox(self.root, selectmode=MULTIPLE, 
-                                activestyle = 'dotbox',  
-                                font = "Times 11", 
-                                relief=tk.FLAT,
-                                borderwidth=0, 
-                                highlightthickness=0,
-                                fg=fg_color,
+	def __init__(self, root, local, start_button):
+
+		self.root = root
+		self.start_button = start_button
+		self.listbox = Listbox(self.root, selectmode=MULTIPLE, 
+								activestyle = 'dotbox',  
+								font = "Times 11", 
+								relief=tk.FLAT,
+								borderwidth=0, 
+								highlightthickness=0,
+								fg=fg_color,
 								bg=bg_color)
-        
-        self.listbox.pack(expand=1, fill="both")
-        self.listbox.bind("<<ListboxSelect>>", self.callback)
-        for index, place in enumerate(local):
-           
-            self.listbox.insert(END, place)
-        
-        self.selection = self.listbox.curselection()
-        
-        self.start_button["state"] = tk.DISABLED
-                    
-        threading.Thread(target=lambda:self.root.mainloop())
- 
-    def callback(self, a):
-        
-        if len(self.listbox.curselection()) == 2:
-            
-            self.start_button["state"] = tk.NORMAL
-            
-        elif len(self.listbox.curselection()) < 2:
-            
-            self.start_button["state"] = tk.DISABLED
-            
-        if len(self.listbox.curselection()) > 2:
-            for i in self.listbox.curselection():
-                if i not in self.selection:
-                    self.listbox.selection_clear(i)
-        self.selection = self.listbox.curselection()
+
+		self.listbox.pack(expand=1, fill="both")
+		self.listbox.bind("<<ListboxSelect>>", self.callback)
+		for index, place in enumerate(local):
+
+			self.listbox.insert(END, place)
+
+		self.selection = self.listbox.curselection()
+
+		self.start_button["state"] = tk.DISABLED
+					
+		threading.Thread(target=lambda:self.root.mainloop())
+
+	def callback(self, a):
+
+		""" Callback para tratar o evento de click do usuário, gerenciando o estado do botão de inicio de pesquisa. """
+		if len(self.listbox.curselection()) == 2:
+			
+			self.start_button["state"] = tk.NORMAL
+			
+		elif len(self.listbox.curselection()) < 2:
+			
+			self.start_button["state"] = tk.DISABLED
+			
+		if len(self.listbox.curselection()) > 2:
+			for i in self.listbox.curselection():
+				if i not in self.selection:
+					self.listbox.selection_clear(i)
+		self.selection = self.listbox.curselection()
     
-    def get_selected(self):
-        
-        return self.selection
-    
-    def destroy(self):
-        
-        self.root.destroy()
+	def get_selected(self):
+
+		""" Retorna os estabelecimentos selecionados."""
+		return self.selection
+
+	def destroy(self):
+
+		""" Destroi a janela principal do programa.  """
+		self.root.destroy()
 
 class Tread(threading.Thread):
+
+	""" 
+		Classe responsável por chamar o metodo run da Classe Scrap, iniciando um thread separado do main e tratando os seus erros.
+
+		Attributes:
+			function (Scrap): Intância da classe Scrap.  
+			text (tkinter.label): Label responsável pela mensagem da aba de pesquisa.  
+			pop_up (Interface.pop_up): Função que mostra mensagem de erro generica.  
+			change_frame (Interface.change_frame): Função que troca entre as janelas de pesquisa e inicial.   
+			frame (tkinter.frame): Janela principal da aplicação.  
+			frame_bar (tkinter.frame): Janela de pesquisa da aplicação.  
+	"""
 
 	def __init__(self, function, text, button, pop_up, change_frame, frame, frame_bar):
 
@@ -87,16 +114,17 @@ class Tread(threading.Thread):
 		self.frame = frame
 		self.frame_bar = frame_bar
 	
-	def set_event(self):
-
-		self.event.set()
-	
 	def pop_up_info(self, message):
 
+		""" Mostra em pop_up a mensagem desejada. """
 		messagebox.showinfo("ERROR", message, icon='warning')
 
 	def except_raise(self):
 
+		"""
+			Quando um erro é detectado este método é chamado, tratando o tipo de erro. O erro pode ser de conexão ou um erro de 
+			falta de requisitos para executar a aplicação (Instalação do google chrome).
+		"""
 		driver = self.func.get_driver()
 		bar = self.func.get_progess_bar()
 		bar["value"] = 0
@@ -125,7 +153,7 @@ class Tread(threading.Thread):
 			self.pop_up_info("Conexão de rede perdida, confirme se existe conexão com internet para prosseguir !")
 	
 	def err_log(self, typ, fname, line, e):
-
+		""" Gera o arquivo de log de erro, err.js no local de execução da aplicação. """
 		err = {}
 		err['err'] = []
 		err['err'].append({"Tipo": typ, "Arquivo": fname, "Linha": line, "Erro": e})
@@ -135,6 +163,7 @@ class Tread(threading.Thread):
 
 	def connect(self):
 		
+		""" Realiza um teste de conexão com o link desejado. """
 		host='https://stackoverflow.com'
 		try:
 			urllib.request.urlopen(host) 
@@ -144,6 +173,7 @@ class Tread(threading.Thread):
 	
 	def run(self): 
 		
+		""" Executa o método run da Classe Scrap e trata para erro de rede. """
 		if	self.connect():
 
 			try: 
@@ -166,7 +196,23 @@ class Tread(threading.Thread):
 			self.pop_up_info("Conexão de rede inexistente, confirme se existe conexão com internet para prosseguir !")
 
 class Interface:
-    
+
+	""" 
+		Classe da interface GUI da aplicação.
+
+		Attributes:
+			button (tk.Button): Instância do objeto tk.Button, responsável pelo inicio da pesquisa.  
+			pause_button (tk.Button): Instância do objeto tk.Button, responsável por pausar a pesquisa.  
+			text (tk.Label): Label responsável pela mensagem da aba de pesquisa.  
+			tk (tk.Window): Janela principal da aplicação.  
+			city (string): Array de strings contendo as cidades a serem selecionadas.  
+			city_name (string): Array de strings contendo os nomes das cidades a serem selecionadas.  
+			selected (tuple): Tupla contendo os indíces das cidades selecionadas.  
+			ico (string): Caminho do ícone da aplicação.  
+			frame (tk.Frame): Janela principal da aplicação.  
+			frame_bar (tk.Frame): Janela de pesquisa da aplicação.  
+			thread (Tread): Instância da classe Tread.  
+	"""
 	def __init__(self):
 
 		self.button = None
@@ -183,11 +229,10 @@ class Interface:
 		self.scrap = None
 		self.thread = None
 		self.pause_button = None
-
+    
 	def resource_path(self,relative_path):
-		""" Get absolute path to resource, works for dev and for PyInstaller """
+		""" Retorna o caminho relativo do ícone dentro da pasta de cache gerada pelo pyinstaller (Pacote usado para gerar o arquivo executável da aplicação). """
 		try:
-			# PyInstaller creates a temp folder and stores path in _MEIPASS
 			base_path = sys._MEIPASS
 		except Exception:
 			base_path = os.path.abspath(".")
@@ -195,7 +240,7 @@ class Interface:
 		self.ico = os.path.join(base_path, relative_path)
 
 	def show_message(self, message):
-    
+		""" Mostra uma determinada mensagem informativa em pop up. """
 		return messagebox.showinfo("Info", message, icon='warning')
 
 	def connect(self):
@@ -208,12 +253,14 @@ class Interface:
 			return False
 	
 	def pop_up_info(self):
-
-		messagebox.showinfo("ERROR","Ocorreu um erro durante a pesquisa, comece novamente !", icon='info')
+		
+		""" Mostra uma mensagem de erro em pop up. """
+		messagebox.showinfo("ERROR","Ocorreu um erro durante a pesquisa, comece novamente !", icon='warning')
     
 	def pop_up(self):
 		
-		result = messagebox.askquestion("Backup","Uma pesquisa foi interrompida, deseja retoma-la ?", icon='warning')
+		""" Mostra uma mensagem de alerta em pop up. """
+		result = messagebox.askquestion("Backup","Uma pesquisa foi interrompida, deseja retoma-la ?", icon='info')
 
 		if result == 'yes':
 			return True
@@ -221,7 +268,7 @@ class Interface:
 			return False
 
 	def start(self, LOCALS, LOCALS_NAME):
-		
+		""" Cria a instância da classe tread com os estabelecimentos selecionados. """
 		local = []
 		local_name = []
 		index_1 , index_2 = self.selected.get_selected()
@@ -244,7 +291,7 @@ class Interface:
 		self.change_frame(self.frame, self.frame_bar)
 
 	def on_closing(self, window_name, window):
-
+		""" Trata os eventos de encerramento do programa. """
 		if window_name == 'top':
 
 			self.button["state"] = tk.NORMAL
@@ -257,7 +304,16 @@ class Interface:
 			sys.exit()
 
 	def start_search(self, backup, city_backup, estab, place):
-				
+		""" 
+			Trata o início da pesquisa, passando adiante os parâmentros de cidade e estabeleciomento selecionados. 
+
+			Attributes:
+				backup (boolean): Booleano responsável por dizer se a pesquisa foi iniciada a partir de um backup ou não.  
+				city_backup (string): Cidade de qual o backup foi iniciado.  
+				estab (string): Array de estabelecimentos de qual o backup foi iniciado.  
+				place (string): Array de nomes dos estabelecimentos de qual o backup foi iniciado.  
+
+		"""		
 		selected = 0
 		product_1 = 0
 		product_2 = 0
@@ -265,7 +321,7 @@ class Interface:
 		self.button["state"] = tk.DISABLED
 
 		LOCALS_NAME_ITN = ['Supermercado Itao',
-							'Supermercado Carisma',
+							'Compre Aqui',
 							'Supermercado HiperBompreco',		
 							'Supermercado Meira',	
 							'Mercado Mattos',		
@@ -275,7 +331,7 @@ class Interface:
 							'Mercado Dois Imaos',		
 							'Maxx Atacado',		
 							'Padaria Le & Gi',		
-							'Supermercado Compre Bem',
+							'Compre Bem',
 							]
 
 		LOCALS_ITN = ['ITAO',		
@@ -398,7 +454,7 @@ class Interface:
 				start_button.pack()
 
 	def backup_check(self):
-
+		""" Realiza a checagem de backup, caso o usuário inicie uma pesquisa é retornado um pop up caso tenha uma pesquisa em backup. """
 		today = datetime.today()
 		day = today.strftime("%d-%m-%Y")
 		
@@ -454,19 +510,18 @@ class Interface:
 			return
 
 	def change_frame(self,frame,frame_raise):
-
-		# print("Mudando de frame ...")
+		""" Muda o frame renderizado na aplicação. """
 		frame.pack_forget()
 		frame_raise.pack(fill=tk.BOTH, pady=10)
 
 	def pause_search(self):
-		
+		""" Pausa a pesquisa atual. """
 		self.text.set("Preparando para pausar a pesquisa ...")
 		self.pause_button["state"] = tk.DISABLED
 		threading.Thread(target= lambda: self.scrap.exit_thread(self.thread, self.change_frame, self.frame, self.frame_bar, self.show_message)).start()
 
 	def run(self):
-
+		""" Inicia a instância da janela principal da aplicação. """
 		# Window
 		window = tk.Tk()
 		self.tk = window
@@ -563,5 +618,8 @@ class Interface:
 		window.mainloop()
 		# top.mainloop()
     
-window = Interface()
-window.run()
+    
+if __name__ == '__main__':
+    
+	window = Interface()
+	window.run()

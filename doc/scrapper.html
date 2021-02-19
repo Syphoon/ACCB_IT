@@ -1,0 +1,2798 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>ACCB_IT.scrapper API documentation</title>
+<meta name="description" content="Script responsável por realizar o scrapping na plataforma do Preço da Hora Bahia." />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>ACCB_IT.scrapper</code></h1>
+</header>
+<section id="section-intro">
+<p>Script responsável por realizar o scrapping na plataforma do Preço da Hora Bahia.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34; Script responsável por realizar o scrapping na plataforma do Preço da Hora Bahia. &#34;&#34;&#34;
+import re
+import time
+import csv
+import os
+import threading
+import json
+import sys
+import urllib.request
+import pandas as pd
+from xlsxwriter.workbook import Workbook
+from tkinter import messagebox
+from datetime import date
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+try:
+    from win10toast import ToastNotifier
+except ImportError:
+    pass
+
+class Scrap:
+        
+        &#34;&#34;&#34; 
+                Classe responsável por realizar o scrapping na página do Preço da Hora Bahia.
+
+                Attributes:
+                        LOCALS (string): Array de estabelecimentos que será relaizado a pesquisa.  
+                        LOCALS_NAME (string): Array de nomes dos estabelecimentos que será relaizado a pesquisa.  
+                        BUTTON (tk.Button): Instância do botão da janela inicial da aplicação.
+                        PAUSE_BUTTON (tk.Button): Instância do botão da janela de pesquisa da aplicação.  
+                        TK (tk.Window): Instância da janela principal da aplicação.  
+                        TXT (tk.ProgressBar): Instância da barra de progresso.  
+                        BACKUP (boolean): Indica se a pesquisa iniciada é um backup ou não.
+                        INTERFACE (Interface.self): Instância da classe Interface.
+        &#34;&#34;&#34;
+
+        def __init__(self,LOCALS, BUTTON, TK, PROGRESS_BAR, TXT, CITY, LOCALS_NAME, BACKUP, PAUSE_BUTTON, INTERFACE=None):
+
+                self.BUTTON = BUTTON
+                self.PAUSE_BUTTON = PAUSE_BUTTON
+                self.LOCALS = LOCALS
+                self.TK = TK
+                self.PROGRESS_BAR = PROGRESS_BAR
+                self.TXT = TXT
+                self.CITY = CITY
+                self.LOCALS_NAME = LOCALS_NAME
+                self.BACKUP = BACKUP
+                self.INTERFACE = INTERFACE
+                self.csvfile = None
+                self.all_file = None
+                self.driver = None
+                self.keywords = None
+                self.ico = None
+                self.stop = False
+                self.exit = False
+        
+        def connect(self):
+                
+                &#34;&#34;&#34; Confere a conexão com o host desejado. &#34;&#34;&#34;
+                host=&#39;https://www.youtube.com&#39;
+                try:
+                        urllib.request.urlopen(host) 
+                        return True
+                except:
+                        return False
+        
+        def resource_path(self, relative_path):
+                &#34;&#34;&#34; Retorna o caminho relativo do ícone dentro da pasta de cache gerada pelo pyinstaller (Pacote usado para gerar o arquivo executável da aplicação). &#34;&#34;&#34;
+                try:
+                        # PyInstaller creates a temp folder and stores path in _MEIPASS
+                        base_path = sys._MEIPASS
+                except Exception:
+                        base_path = os.path.abspath(&#34;.&#34;)
+
+                self.ico = os.path.join(base_path, relative_path)
+
+        def get_progess_bar(self):
+
+                &#34;&#34;&#34; Retorna a instância da barra de progresso. &#34;&#34;&#34;
+                return self.PROGRESS_BAR
+
+        def exit_thread(self, thread, change_frame, frame, frame_bar, show_message):
+
+                &#34;&#34;&#34; 
+                        Pausa a pesquisa caso aconteça um erro de rede ou o usuário pause-a manualmente.  
+
+                        Attributes:
+                                thread (Tread): Instância da classe Tread.  
+                                change_frame (Interface.change_frame): Função responsável por mudar o frame renderizado atualmente.  
+                                frame (tk.Frame): Instância da janela principal da aplicação.  
+                                frame_bar (tk.Frame): Instância da janela de pesquisa da aplicação.  
+                                show_message (Interface.show_message): Função que mostra uma mensagem x em pop up.  
+                
+                &#34;&#34;&#34;
+                self.stop = True
+                if thread != None:
+                                
+                        while True:
+
+                                if self.exit:
+
+                                        # print(&#34;Pausando pesquisa ...&#34;)
+                                        # FRAME MAIN
+                                        self.BUTTON.config(text=&#34;INICIAR PESQUISA&#34;)
+                                        self.BUTTON[&#34;state&#34;] = &#34;normal&#34;
+                                        change_frame(frame_bar, frame)
+                                        
+                                        # FRAME BAR
+                                        self.TXT.set(&#34;Aguardando inicio de pesquisa ...&#34;)
+                                        self.PROGRESS_BAR[&#39;value&#39;] = 0
+                                        # self.PAUSE_BUTTON[&#34;state&#34;] = &#34;normal&#34;
+                                        show_message(&#34;A pesquisa foi parada, todo o progresso foi salvo na pasta do município e sua respectiva data&#34;)
+                                        
+                                        self.driver.close()
+                                        self.driver.quit()
+                                        return
+
+                else: 
+
+                        # FRAME MAIN
+                        self.BUTTON.config(text=&#34;INICIAR PESQUISA&#34;)
+                        self.BUTTON[&#34;state&#34;] = &#34;normal&#34;
+                        # FRAME BAR
+                        self.PROGRESS_BAR[&#39;value&#39;] = 0
+                        self.TXT.set(&#34;Aguardando inicio de pesquisa ...&#34;)
+                        # POP UP                        
+                        self.INTERFACE.change_frame(self.INTERFACE.frame_bar, self.INTERFACE.frame)
+                        self.INTERFACE.show_message(&#34;Ocorreu um erro de rede durante a pesquisa e não foi possível reinicia-la automaticamente, inicie a pesquisa manualmente !&#34;)
+                        # DRIVER
+                        self.driver.close()
+                        self.driver.quit()
+                        return
+
+        def get_driver(self):
+                &#34;&#34;&#34; Retorna a instância do &#39;driver&#39;, objeto responsável por navegar automaticamente o browser. &#34;&#34;&#34;
+                return self.driver
+
+        def remove_duplicates(self, file_name):
+                
+                &#34;&#34;&#34; Remove entradas duplicadas do arquivo final xlsx. &#34;&#34;&#34;
+                file_df = pd.read_excel(file_name + &#34;.xlsx&#34;, skiprows=1, index_col=0)
+
+                # Mantem somente a primeira duplicata
+                pd_first = file_df.drop_duplicates(subset=[&#34;PRODUTO&#34;, &#34;ESTABELECIMENTO&#34;, &#34;PRECO&#34;], keep=&#34;first&#34;)
+                size = pd_first[&#39;PRODUTO&#39;].count()
+                writer = pd.ExcelWriter(file_name + &#34;.xlsx&#34;, engine=&#39;xlsxwriter&#39;)
+                pd_first = pd_first.to_excel(writer, sheet_name = &#34;Pesquisa&#34;,  index=False, startrow=0, startcol=1)
+
+                workbook  = writer.book
+                worksheet = writer.sheets[&#39;Pesquisa&#39;]
+                formats = workbook.add_format({&#39;border&#39;: 2})
+
+                worksheet.set_column(1, size, None, formats)
+                worksheet.set_column(1, 1, 35)
+                worksheet.set_column(2, 2, 55)
+                worksheet.set_column(3, 3, 23)
+                worksheet.set_column(4, 4, 12)
+
+                writer.save()
+
+        def csv_to_xlsx(self,csvfile):
+                
+                &#34;&#34;&#34; Converte um arquivo csv em um arquivo xlsx. &#34;&#34;&#34;
+                workbook = Workbook(csvfile[:-4] + &#39;.xlsx&#39;)
+                worksheet = workbook.add_worksheet()
+                formats = workbook.add_format({&#39;border&#39;: 2})
+
+                with open(csvfile, &#39;rt&#39;, encoding=&#39;latin-1&#39;) as f:
+                        reader = csv.reader(f)
+                        for r, row in enumerate(reader):
+                                for c, col in enumerate(row):
+                                        
+                                        if r == 3 and c == 3:
+                                                
+                                                worksheet.set_column(r+1, c+1, 15)
+                                        
+                                        else:
+
+                                                worksheet.set_column(r+1, c+1, 33)
+                                        
+                                        worksheet.write(r+1, c+1, col, formats)
+                                        
+                workbook.close()
+
+        def set_viewport_size(self, width, height):
+
+                &#34;&#34;&#34; Muda o tamanho da janela do navegador. &#34;&#34;&#34;
+                window_size = self.driver.execute_script(&#34;&#34;&#34;
+                        return [window.outerWidth - window.innerWidth + arguments[0],
+                        window.outerHeight - window.innerHeight + arguments[1]];
+                        &#34;&#34;&#34;, width, height)
+                self.driver.set_window_size(*window_size)
+
+        def get_data(self, writer, product, keyword):
+                &#34;&#34;&#34; 
+                        Filtra os dados da janela atual aberta do navegador e os salva no arquivo CSV.  
+
+                        Attributes:
+                                writer (file): Instância de um &#39;escritor&#39; de arquivo.  
+                                product (string): Produto atual da pesquisa.  
+                                keyword (string): Palavra chave atual sendo pesquisa.
+
+                &#34;&#34;&#34;
+                local = self.LOCALS
+                local_name = self.LOCALS_NAME
+                found = True
+                found_2 = True
+                elements = []
+                time.sleep(0.5)
+  
+                try:
+                        
+                        elements = self.driver.find_elements_by_class_name(&#34;flex-item2&#34;)
+
+                except:
+                        
+                        self.captcha()
+                        
+                elements = self.driver.find_elements_by_class_name(&#34;flex-item2&#34;)
+                
+                for element in elements:
+
+                        # * Processo de aquisição de dados
+
+                        try:
+                                
+                                # Nome do produto
+                                product_name = element.find_elements_by_tag_name(&#34;strong&#34;)[0]
+                                product_name = product_name.get_attribute(&#39;innerHTML&#39;)
+
+                                # Todas as tags com as informações do bloco do produto
+                                product_info = element.find_elements_by_tag_name(&#34;div&#34;)
+
+                        except:
+                                
+                                self.captcha()
+                                
+                                
+                        try:
+                                
+                                # Nome do produto
+                                product_name = element.find_elements_by_tag_name(&#34;strong&#34;)[0]
+                                product_name = product_name.get_attribute(&#39;innerHTML&#39;)
+
+                                # Todas as tags com as informações do bloco do produto
+                                product_info = element.find_elements_by_tag_name(&#34;div&#34;)
+                        
+                        except:
+                                
+                                self.captcha()
+                                
+                        # Preço do produto
+                        flag = 0
+                        if len(element.find_elements_by_class_name(&#34;sobre-desconto&#34;)) == 0:
+                                product_price = product_info[1].get_attribute(&#39;innerHTML&#39;)
+                        else:
+                                product_price = product_info[2].get_attribute(&#39;innerHTML&#39;)
+                                flag = 1
+                        
+                        pattern = re.compile(r&#34;(?&lt;=&gt;)\s\w..\d?(\d).\d\d&#34;)
+                        product_size = len(product_price)
+                        product_price = product_price.replace(&#39;\n&#39;, &#39;&#39;)
+                        product_price = product_price.replace(&#39;,&#39;, &#39;.&#39;)
+
+                        if product_size &gt; 15:
+                                
+                                if  pattern.search(product_price) != None:
+                                        
+                                        product_price = pattern.search(product_price).group(0)
+
+
+                        # Endereço do produto
+                        size = len(product_info)
+
+                        if size == 9:
+                                index = 3
+                        elif size == 10:
+                                if flag == 1:
+                                        index = 4
+                                else:
+                                        index = 3
+                        elif size == 11:
+                                index = 4
+                        else:
+                                index = 3
+                                
+
+                        pattern = re.compile(r&#34;(?&lt;=&gt;).\w.*\w&#34;)
+                        product_adress = product_info[index].get_attribute(&#39;innerHTML&#39;)
+                        product_adress = pattern.search(product_adress).group()
+                        product_adress = product_adress[1:len(product_adress)]
+
+                        # print(&#34;Size: &#34; + str(size))
+                        # print(local)
+                        # print(product_adress)
+                        
+
+                        if local[0] in str(product_adress):
+
+                                if product in str(product_name):
+                                                
+                                        print(&#39;NORMAL ----------------------- &#39;)
+                                        print(&#39;Preço : &#39; + str(product_price))
+                                        print(&#39;Local : &#39; + str(product_adress))
+                                        print(&#39;Produto : &#39; + str(product_name))
+                                        print(&#39;NORMAL ----------------------- &#39;)
+                                        found = False
+                                        writer.writerow([str(product_name), str(
+                                                product_adress), str(keyword), str(product_price)])
+                                
+                        if local[1] in str(product_adress):
+
+                                if product in str(product_name):
+                                        
+                                        print(&#39;NORMAL ----------------------- &#39;)
+                                        print(&#39;Preço : &#39; + str(product_price))
+                                        print(&#39;Local : &#39; + str(product_adress))
+                                        print(&#39;Produto : &#39; + str(product_name))
+                                        print(&#39;NORMAL ----------------------- &#39;)
+                                        found_2 = False
+                                        writer.writerow([str(product_name), str(
+                                                product_adress), str(keyword), str(product_price)])
+                                
+                        if product in str(product_name):
+                                
+                                print(&#39;Todos ----------------------------&#39;)
+                                print(&#39;Preço : &#39; + str(product_price))
+                                print(&#39;Local : &#39; + str(product_adress))
+                                print(&#39;Produto : &#39; + str(product_name))
+                                print(&#39;Todos ----------------------------&#39;)
+                                
+                                with open(self.all_file, &#39;a+&#39;, newline=&#39;&#39;) as file:
+
+                                        writer_2 = csv.writer(file, delimiter=&#39;,&#39;)
+                                        writer_2.writerow([str(product_name), str(
+                                        product_adress), str(keyword), str(product_price)])
+
+                                self.csv_to_xlsx(self.all_file)
+                                
+
+                if found:
+                        
+                        writer.writerow([str(product), str(local_name[0]),
+                                                        str(keyword), &#34;N/A&#34;])
+                
+                if found_2:
+
+                        writer.writerow([str(product), str(local_name[1]),
+                                                        str(keyword), &#34;N/A&#34;])
+
+        def check_captcha(self, request):
+                
+                &#34;&#34;&#34; Função que confere se o captcha foi resolvido com sucesso pelo usuário. &#34;&#34;&#34;
+                excpt = True
+                if request == 1:
+                        
+                        self.driver.back()
+                
+                time.sleep(1)
+                try:
+
+                        WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.CLASS_NAME, &#34;flash&#34;)))
+
+                except:
+
+                        # print(&#34;Captcha desativado.&#34;)
+                        time.sleep(1)
+                        excpt = False
+                        return True
+
+                finally:
+
+                        if excpt:
+                                
+                                # print(&#34;Captcha ativado.&#34;)
+                                return False
+                
+        def pop_up(self):
+                &#34;&#34;&#34; Mostra uma mensagem x em pop up para o usuário. &#34;&#34;&#34;
+                result = messagebox.askquestion(&#34;CAPTCHA&#34;, &#34;Captcha foi ativado, abra o site do preço da hora e resolva-o em seu navegador ( aperte Sim para continuar )&#34;, icon=&#39;warning&#39;)
+                if result == &#39;yes&#39; and self.check_captcha(1):
+                        return True
+                else:
+                        return False
+
+        def captcha(self):
+                
+                &#34;&#34;&#34; Trata por erro de rede e inicia um loop para conferir se o usuário resolveu o captcha. &#34;&#34;&#34;
+                # Se eu tenho conexão o captcha foi ativado, se não, é erro de rede.
+                if self.connect():
+                                
+                        while True:
+
+                                if self.pop_up():
+                                        
+                                        break        
+                else:
+
+                        self.exit_thread(None, None, None, None, None)
+
+        def backup_check(self, t_date, estab):
+                &#34;&#34;&#34; Retorna os parâmetros de backup caso a pesquisa esteja sendo iniciada por um backup. &#34;&#34;&#34;
+                try:
+                
+                        product = 0
+                        place = 0
+                        finish = 0
+                        keyword = 0
+                        date = 0
+                        estab_1 = 0
+                        estab_2 = 0
+                        
+                        with open(&#39;backup.json&#39;) as json_file:
+
+                                data = json.load(json_file)
+                                for backup in data[&#39;backup&#39;]:
+                                        
+                                        product = backup[&#39;prod&#39;]
+                                        date = backup[&#39;date&#39;]    
+                                        keyword = backup[&#39;keyword&#39;]
+                                        finish = backup[&#39;done&#39;]
+                                        estab_1 = backup[&#39;estab_1&#39;]
+                                        estab_2 = backup[&#39;estab_2&#39;]
+                                        
+                        if estab_1 != estab[0] and estab_2 != estab[1]:
+                                
+                                return(0,0)
+
+                        if t_date != date:
+                        
+                                return (0,0)
+                        
+                        # Pesquisa acabou
+                        if finish == -1:
+                                
+                                return (0,0)
+
+                        # Pesquisa do estabelecimento nao acabou
+                        if finish == 0:
+                                
+                                return (abs(product), abs(keyword))
+
+                        # Pesquisa do estebelcimento acabou
+                        if finish == 1:
+                                
+                                return (abs(product), abs(keyword))
+
+                except:
+                        
+                        return(0,0)
+
+        def backup_save(self,prod, date, keyword, done, estab, city, place):
+                
+                &#34;&#34;&#34; 
+                        Salva o estado atual da pesquisa em um arquivo JSON no local de execução da aplicação.  
+                        Attributes:
+                                prod (int): Índice do produto atual da pesquisa.  
+                                date (string): Data da pesquisa realizada.  
+                                keyword (int): Índice da palavra chave atual da pesquisa.  
+                                done (int):  Indica se a pesquisa terminou ou não.  
+                                estab (string): Array dos estabelecimentos sendo pesquisados.  
+                                place (string): Array dos nomes dos estabelecimentos sendo pesquisados.  
+                                city (string): Cidade que a pesquisa está sendo realizada.  
+                &#34;&#34;&#34;
+                
+                data = {}
+                data[&#39;backup&#39;] = []
+                data[&#39;backup&#39;].append({&#34;prod&#34;: prod, &#34;date&#34;: date, &#34;keyword&#34; : keyword, &#34;done&#34;: done, &#34;estab_1&#34;: estab[0], &#34;estab_2&#34;: estab[1], &#34;city&#34;: city, &#39;place_1&#39;: place[0], &#39;place_2&#39;: place[1]})
+                with open(&#39;backup.json&#39;, &#39;w+&#39;) as outfile:
+                
+                        json.dump(data, outfile)
+
+        def get_keywords(self):
+                
+                &#34;&#34;&#34;
+                Retorna o array das palavras chaves em ordem.  
+                &#34;&#34;&#34;
+
+                keywords = []
+                keywords.append([&#39;ACUCAR CRISTAL&#39;, &#39;ACUCAR CRISTAL 1KG&#39;])
+                keywords.append([&#39;ARROZ PARBOILIZADO&#39;, &#39;ARROZ PARBOILIZADO 1KG&#39;])
+                keywords.append([&#39;BANANA DA PRATA&#39;, &#39;BANANA PRATA&#39;, &#39;BANANA KG&#39;])
+                keywords.append([&#39;CAFE 250G&#39;, &#39;CAFE MOIDO&#39;])
+                keywords.append([&#39;CHA DE DENTRO&#39;, &#39;COXAO MOLE&#39;, &#39;CARNE BOVINA CHA DE DENTRO&#39;])
+                keywords.append([&#39;FARINHA DE MANDIOCA&#39;, &#39;FARINHA MAND&#39;, &#39;FARINHA MANDIOCA&#39;])
+                keywords.append([&#39;FEIJAO CARIOCA&#39;])
+                keywords.append([&#39;LEITE LIQUIDO&#39;])
+                keywords.append([&#39;MANTEIGA 500G&#39;, &#39;MANTEIGA&#39;])
+                keywords.append([&#39;OLEO DE SOJA&#39;, &#39;OLEO 900ML&#39;, &#39;OLEO&#39;])
+                keywords.append([&#39;PAO FRANCES&#39;, &#39;PAO KG&#39;, &#39;PAO FRANCES KG&#39;])
+                keywords.append([&#39;TOMATE KG&#39;])
+                
+                return keywords
+
+        def run(self):
+
+                &#34;&#34;&#34;
+                Realiza a pesquisa na plataforma do Preço da Hora Bahia.
+
+                Attributes:
+                        csvfile (string): Caminho para o arquivo CSV.  
+                        all_file (string): Caminho para o arquivo CSV Todos.  
+                        driver (selenium.Driver): Instância do objeto responsável por realizar a automação do browser.  
+                        start_prod (int): Indíce de inicio do produto caso seja uma pesquisa por backup.  
+                        start_key (int): Indíce de inicio de palavra chave caso seja uma pesquisa por backup.  
+                &#34;&#34;&#34;
+                first  = 0
+                URL = &#39;https://precodahora.ba.gov.br/&#39;
+                times = 5
+                today = date.today()
+                day = today.strftime(&#34;%d-%m-%Y&#34;)
+                start_prod = 0
+                start_key = 0
+                restart = True
+                csvfile = &#39;&#39;
+
+                self.resource_path(&#34;logo.ico&#34;)
+                chrome_options = Options()
+                # DISABLES DEVTOOLS LISTENING ON 
+                chrome_options.add_argument(&#34;--headless&#34;)
+                chrome_options.add_argument(&#34;--no-sandbox&#34;)
+                chrome_options.add_argument(&#34;--disable-dev-shm-usage&#34;)
+                chrome_options.add_argument(&#34;--disable-gpu&#34;)
+                chrome_options.add_argument(&#34;--disable-features=NetworkService&#34;)
+                chrome_options.add_argument(&#34;--window-size=1920x1080&#34;)
+                chrome_options.add_argument(&#34;--disable-features=VizDisplayCompositor&#34;)
+                driver = webdriver.Chrome(      
+                        executable_path=ChromeDriverManager().install(), options=chrome_options)
+                self.driver = driver
+                self.set_viewport_size(800, 600)
+                os.system(&#39;cls&#39; if os.name==&#39;nt&#39; else &#39;clear&#39;)
+
+                products =  [&#39;ACUCAR CRISTAL&#39;,
+                                        &#39;ARROZ PARBOILIZADO&#39;,
+                                        &#39;BANANA DA PRATA&#39;,
+                                        &#39;CAFE MOIDO&#39;,
+                                        &#39;CHA DE DENTRO&#39;,
+                                        &#39;FARINHA DE MANDIOCA&#39;,
+                                        &#39;FEIJAO CARIOCA&#39;,
+                                        &#39;LEITE LIQUIDO&#39;,
+                                        &#39;MANTEIGA 500G&#39;,
+                                        &#39;OLEO DE SOJA&#39;,
+                                        &#39;PAO FRANCES&#39;,
+                                        &#39;TOMATE KG&#39;]
+
+
+                # Requer polimento do algoritmo para garantir a validade das informações
+                # Teste da ferramenta Selenium com chromedriver
+
+                keywords = self.get_keywords()
+                products_backup = products
+                
+                if self.BACKUP:
+                        
+                        start_prod, start_key = self.backup_check(day, [self.LOCALS_NAME[0], self.LOCALS_NAME[1]])
+                        if start_prod &gt; 0 or start_key &gt; 0:
+                        
+                                self.TXT.set(&#34;Retomando pesquisa anterior ...&#34;)
+
+                # Define endereço a ser visitado
+                driver.get(URL)
+                # * Processo de pesquisa de produto
+                driver.find_element_by_id(&#39;fake-sbar&#39;).click()
+                time.sleep(1*times)
+
+                self.TXT.set(&#34;Pesquisa iniciada ...&#34;)
+                
+                if os.name == &#39;nt&#39;:
+
+                        toaster = ToastNotifier()
+                        toaster.show_toast(&#34;Pesquisa iniciada.&#34;,
+                                                &#34; &#34;,
+                                                icon_path=self.ico,
+                                                duration = 10)
+                
+                self.TXT.set(&#34;Iniciando arquivos ...&#34;)
+                # Cria a pasta de pesquisa
+                dic = self.CITY + &#39; [ &#39; + day + &#39; ]&#39;
+                if not os.path.exists(dic):
+
+                        os.makedirs(dic)
+
+                csvfile = dic + &#39;/&#39; + self.LOCALS_NAME[0] + &#39; &#39; + self.LOCALS_NAME[1] + &#39;.csv&#39; 
+                all_file = dic + &#39;/&#39; + &#39;TODOS &#39; + self.LOCALS_NAME[0] + &#39; &#39; + self.LOCALS_NAME[1]  + &#39;.csv&#39;
+                self.csvfile = csvfile          
+                self.csvfile_name =  dic + &#39;/&#39; + self.LOCALS_NAME[0] + &#39; &#39; + self.LOCALS_NAME[1]                
+                self.all_file = all_file                
+                self.all_file_name = dic + &#39;/&#39; + &#39;TODOS &#39; + self.LOCALS_NAME[0] + &#39; &#39; + self.LOCALS_NAME[1]             
+
+                # Se arquivo já existe, não preciso inicia-lo
+                if start_prod != 0 or self.BACKUP:
+                        
+                        # print(&#34;restart&#34;)
+                        self.PROGRESS_BAR[&#39;value&#39;] = (start_prod) * (100/len(products_backup))
+                        products = products[start_prod:]
+                        keywords = keywords[start_prod:]
+                        restart = False
+                        
+                else: 
+                        
+                        products = products_backup
+                        # Inicia o arquivo csv com as colunas principais
+                        with open(csvfile, &#39;w+&#39;, newline=&#39;&#39;) as file:
+
+                                writer = csv.writer(file, delimiter=&#39;,&#39;)
+                                writer.writerow(
+                                        [&#34;PRODUTO&#34;, &#34;ESTABELECIMENTO&#34;, &#34;KEYWORD&#34;, &#34;PRECO&#34;])
+
+                        with open(all_file, &#39;w+&#39;, newline=&#39;&#39;) as file:
+
+                                writer = csv.writer(file, delimiter=&#39;,&#39;)
+                                writer.writerow(
+                                        [&#34;PRODUTO&#34;, &#34;ESTABELECIMENTO&#34;, &#34;KEYWORD&#34;, &#34;PRECO&#34;])
+                        
+                self.PAUSE_BUTTON[&#34;state&#34;] = &#34;normal&#34;
+
+                for index, product in enumerate(products):
+
+                        if  not self.connect():
+
+                                self.exit_thread(None,None,None,None,None)
+                                return
+
+                        if self.stop:
+
+                                self.exit = True
+                                return
+                                
+                        keyword = keywords[index]
+                        if index == 0 and start_key &gt; 0:
+                                
+                                keyword = keyword[start_key:]
+                        
+                        self.TXT.set(&#34;Pesquisando Produto : &#34; +&#39;[ &#39;+ product + &#39; ]&#39; )
+                        
+                        
+                        for key, word in enumerate(keyword):
+                                
+                                if not self.connect():
+
+                                        self.exit_thread(None,None,None,None,None)
+                                        return
+ 
+                                self.backup_save(index + start_prod, day, key + start_key, 0, [self.LOCALS_NAME[0], self.LOCALS_NAME[1]], self.CITY, [self.LOCALS[0], self.LOCALS[1]])
+
+                                if self.stop:
+
+                                        self.exit = True
+                                        return
+                                
+                                time.sleep(3*times)
+                                
+                                # Barra de pesquisa superior (produtos)
+                                try:
+
+                                        WebDriverWait(driver, 2*times).until(
+                                                EC.presence_of_element_located((By.CLASS_NAME, &#34;sbar-input&#34;)))
+
+                                except:
+
+                                        self.captcha()
+                                        driver.get(&#39;https://precodahora.ba.gov.br/produtos&#39;)
+                                        time.sleep(2*times)
+
+                                finally:
+
+                                        search = driver.find_element_by_id(&#39;top-sbar&#39;)
+
+                                for w in word:
+
+                                        search.send_keys(w)
+                                        time.sleep(0.25)
+
+                                # Realiza a pesquisa (pressiona enter)
+                                search.send_keys(Keys.ENTER)
+
+                                time.sleep(3*times)
+                                driver.page_source.encode(&#39;utf-8&#39;)
+
+                                # * Processo para definir a região desejada para ser realizada a pesquisa
+
+                                if index == 0:
+                                        
+                                        # Botão que abre o modal referente a localização
+                                        try:
+
+                                                WebDriverWait(driver, 2*times).until(
+                                                        EC.presence_of_element_located((By.CLASS_NAME, &#34;location-box&#34;)))
+
+                                        except:
+
+                                                self.captcha()
+                                                time.sleep(1)
+                                                        
+                                        finally:
+
+                                                driver.find_element_by_class_name(&#39;location-box&#39;).click()
+                                                time.sleep(2*times)
+
+                                        # Botão que abre a opção de inserir o CEP
+                                        try:
+
+                                                WebDriverWait(driver, 2*times).until(
+                                                        EC.presence_of_element_located((By.ID, &#34;add-center&#34;)))
+
+                                        except:
+
+                                                self.captcha()
+                                                time.sleep(1)
+
+                                        finally:
+
+                                                driver.find_element_by_id(&#39;add-center&#39;).click()
+                                                time.sleep(2*times)
+
+                                        # Envia o MUNICIPIO desejado para o input
+
+                                        driver.find_element_by_class_name(&#39;sbar-municipio&#39;).send_keys(self.CITY)
+                                        time.sleep(1)
+
+                                        # Pressiona o botão que realiza a pesquisa por MUNICIPIO
+                                        driver.find_element_by_class_name(&#39;set-mun&#39;).click()
+                                        
+                                        time.sleep(1)
+                                        driver.find_element_by_id(&#39;aplicar&#39;).click()
+
+                                        time.sleep(3*times)
+                                
+                                if self.stop:
+
+                                        self.exit = True
+                                        return
+                                # Espera a página atualizar, ou seja, terminar a pesquisa. O proceso é reconhecido como terminado quando a classe flex-item2 está presente, que é a classe utilizada para estilizar os elementos listados
+                                try:
+
+                                        WebDriverWait(driver, 5*times).until(
+                                                EC.presence_of_element_located((By.CLASS_NAME, &#34;flex-item2&#34;)))
+
+                                except:
+
+                                        self.captcha()
+                                        time.sleep(2*times)
+
+                                finally:
+
+                                        flag = 0
+                                        while True:
+
+                                                if self.stop:
+
+                                                        self.exit = True
+                                                        return
+
+                                                try:
+
+                                                        WebDriverWait(driver, 5*times).until(
+                                                                EC.presence_of_element_located((By.ID, &#34;updateResults&#34;)))
+                                                        time.sleep(2*times)
+                                                        driver.find_element_by_id(&#39;updateResults&#39;).click()
+                                                        flag = flag + 1
+
+                                                        if flag == 3:
+
+                                                                break
+
+                                                except:
+
+                                                        if self.check_captcha(0):
+                                                                
+                                                                # print(&#34;Quantidade máxima de paginas abertas.&#34;)
+                                                                time.sleep(1)
+                                                                break
+                                                                
+                                                        else:
+                                                                                
+                                                                self.captcha()
+
+                                        if self.stop:
+
+                                                        self.exit = True
+                                                        return
+                                        
+                                        with open(csvfile, &#39;a+&#39;, newline=&#39;&#39;) as file:
+
+                                                writer = csv.writer(file, delimiter=&#39;,&#39;)
+                                                self.get_data(writer, product, word)
+                                        
+                                        self.csv_to_xlsx(csvfile)
+
+                        max_val = self.PROGRESS_BAR[&#39;value&#39;] + (100/len(products_backup)) + 1
+                        for x in range(int(self.PROGRESS_BAR[&#39;value&#39;]), int(max_val)):
+                        
+                                self.PROGRESS_BAR[&#39;value&#39;] = x
+                                time.sleep(0.01)
+                                
+                        if os.name == &#39;nt&#39; and (index - len(products_backup))  == len(products_backup)/2:
+
+                                toaster = ToastNotifier()
+                                toaster.show_toast(&#34;Pesquisa na metade ...&#34;,
+                                                        &#34; &#34;,
+                                                        icon_path=self.ico,
+                                                        duration = 10)
+                
+                if self.stop:
+
+                        self.exit = True
+                        return
+
+                time.sleep(1)
+                for x in range(100,-1,-1):
+                        
+                        self.PROGRESS_BAR[&#39;value&#39;] = x
+                        time.sleep(0.01)
+                
+                self.backup_save(0, day, 0, 1, [self.LOCALS_NAME[0], self.LOCALS_NAME[1]], self.CITY, [self.LOCALS[0], self.LOCALS[1]])
+                start_prod = 0
+                        
+                self.csv_to_xlsx(csvfile)
+                self.remove_duplicates(self.csvfile_name)
+                self.remove_duplicates(self.all_file_name)
+                
+                self.BUTTON.config(text=&#34;INICIAR PESQUISA&#34;)
+                self.BUTTON[&#34;state&#34;] = &#34;normal&#34;
+                self.TXT.set(&#34;Aguardando inicio de pesquisa ...&#34;)
+                self.INTERFACE.change_frame(self.INTERFACE.frame_bar, self.INTERFACE.frame)
+
+                
+                if os.name == &#39;nt&#39;:
+
+                        toaster = ToastNotifier()
+                        toaster.show_toast(&#34;Pesquisa encerrada.&#34;,
+                                        &#34; &#34;,
+                                        icon_path=self.ico,
+                                        duration = 10)
+                        
+                driver.close()
+                driver.quit()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="ACCB_IT.scrapper.Scrap"><code class="flex name class">
+<span>class <span class="ident">Scrap</span></span>
+<span>(</span><span>LOCALS, BUTTON, TK, PROGRESS_BAR, TXT, CITY, LOCALS_NAME, BACKUP, PAUSE_BUTTON, INTERFACE=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Classe responsável por realizar o scrapping na página do Preço da Hora Bahia.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>LOCALS</code></strong> :&ensp;<code>string</code></dt>
+<dd>Array de estabelecimentos que será relaizado a pesquisa.
+</dd>
+<dt><strong><code>LOCALS_NAME</code></strong> :&ensp;<code>string</code></dt>
+<dd>Array de nomes dos estabelecimentos que será relaizado a pesquisa.
+</dd>
+<dt><strong><code>BUTTON</code></strong> :&ensp;<code>tk.Button</code></dt>
+<dd>Instância do botão da janela inicial da aplicação.</dd>
+<dt><strong><code>PAUSE_BUTTON</code></strong> :&ensp;<code>tk.Button</code></dt>
+<dd>Instância do botão da janela de pesquisa da aplicação.
+</dd>
+<dt><strong><code>TK</code></strong> :&ensp;<code>tk.Window</code></dt>
+<dd>Instância da janela principal da aplicação.
+</dd>
+<dt><strong><code>TXT</code></strong> :&ensp;<code>tk.ProgressBar</code></dt>
+<dd>Instância da barra de progresso.
+</dd>
+<dt><strong><code>BACKUP</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>Indica se a pesquisa iniciada é um backup ou não.</dd>
+<dt><strong><code>INTERFACE</code></strong> :&ensp;<code>Interface.self</code></dt>
+<dd>Instância da classe Interface.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Scrap:
+        
+        &#34;&#34;&#34; 
+                Classe responsável por realizar o scrapping na página do Preço da Hora Bahia.
+
+                Attributes:
+                        LOCALS (string): Array de estabelecimentos que será relaizado a pesquisa.  
+                        LOCALS_NAME (string): Array de nomes dos estabelecimentos que será relaizado a pesquisa.  
+                        BUTTON (tk.Button): Instância do botão da janela inicial da aplicação.
+                        PAUSE_BUTTON (tk.Button): Instância do botão da janela de pesquisa da aplicação.  
+                        TK (tk.Window): Instância da janela principal da aplicação.  
+                        TXT (tk.ProgressBar): Instância da barra de progresso.  
+                        BACKUP (boolean): Indica se a pesquisa iniciada é um backup ou não.
+                        INTERFACE (Interface.self): Instância da classe Interface.
+        &#34;&#34;&#34;
+
+        def __init__(self,LOCALS, BUTTON, TK, PROGRESS_BAR, TXT, CITY, LOCALS_NAME, BACKUP, PAUSE_BUTTON, INTERFACE=None):
+
+                self.BUTTON = BUTTON
+                self.PAUSE_BUTTON = PAUSE_BUTTON
+                self.LOCALS = LOCALS
+                self.TK = TK
+                self.PROGRESS_BAR = PROGRESS_BAR
+                self.TXT = TXT
+                self.CITY = CITY
+                self.LOCALS_NAME = LOCALS_NAME
+                self.BACKUP = BACKUP
+                self.INTERFACE = INTERFACE
+                self.csvfile = None
+                self.all_file = None
+                self.driver = None
+                self.keywords = None
+                self.ico = None
+                self.stop = False
+                self.exit = False
+        
+        def connect(self):
+                
+                &#34;&#34;&#34; Confere a conexão com o host desejado. &#34;&#34;&#34;
+                host=&#39;https://www.youtube.com&#39;
+                try:
+                        urllib.request.urlopen(host) 
+                        return True
+                except:
+                        return False
+        
+        def resource_path(self, relative_path):
+                &#34;&#34;&#34; Retorna o caminho relativo do ícone dentro da pasta de cache gerada pelo pyinstaller (Pacote usado para gerar o arquivo executável da aplicação). &#34;&#34;&#34;
+                try:
+                        # PyInstaller creates a temp folder and stores path in _MEIPASS
+                        base_path = sys._MEIPASS
+                except Exception:
+                        base_path = os.path.abspath(&#34;.&#34;)
+
+                self.ico = os.path.join(base_path, relative_path)
+
+        def get_progess_bar(self):
+
+                &#34;&#34;&#34; Retorna a instância da barra de progresso. &#34;&#34;&#34;
+                return self.PROGRESS_BAR
+
+        def exit_thread(self, thread, change_frame, frame, frame_bar, show_message):
+
+                &#34;&#34;&#34; 
+                        Pausa a pesquisa caso aconteça um erro de rede ou o usuário pause-a manualmente.  
+
+                        Attributes:
+                                thread (Tread): Instância da classe Tread.  
+                                change_frame (Interface.change_frame): Função responsável por mudar o frame renderizado atualmente.  
+                                frame (tk.Frame): Instância da janela principal da aplicação.  
+                                frame_bar (tk.Frame): Instância da janela de pesquisa da aplicação.  
+                                show_message (Interface.show_message): Função que mostra uma mensagem x em pop up.  
+                
+                &#34;&#34;&#34;
+                self.stop = True
+                if thread != None:
+                                
+                        while True:
+
+                                if self.exit:
+
+                                        # print(&#34;Pausando pesquisa ...&#34;)
+                                        # FRAME MAIN
+                                        self.BUTTON.config(text=&#34;INICIAR PESQUISA&#34;)
+                                        self.BUTTON[&#34;state&#34;] = &#34;normal&#34;
+                                        change_frame(frame_bar, frame)
+                                        
+                                        # FRAME BAR
+                                        self.TXT.set(&#34;Aguardando inicio de pesquisa ...&#34;)
+                                        self.PROGRESS_BAR[&#39;value&#39;] = 0
+                                        # self.PAUSE_BUTTON[&#34;state&#34;] = &#34;normal&#34;
+                                        show_message(&#34;A pesquisa foi parada, todo o progresso foi salvo na pasta do município e sua respectiva data&#34;)
+                                        
+                                        self.driver.close()
+                                        self.driver.quit()
+                                        return
+
+                else: 
+
+                        # FRAME MAIN
+                        self.BUTTON.config(text=&#34;INICIAR PESQUISA&#34;)
+                        self.BUTTON[&#34;state&#34;] = &#34;normal&#34;
+                        # FRAME BAR
+                        self.PROGRESS_BAR[&#39;value&#39;] = 0
+                        self.TXT.set(&#34;Aguardando inicio de pesquisa ...&#34;)
+                        # POP UP                        
+                        self.INTERFACE.change_frame(self.INTERFACE.frame_bar, self.INTERFACE.frame)
+                        self.INTERFACE.show_message(&#34;Ocorreu um erro de rede durante a pesquisa e não foi possível reinicia-la automaticamente, inicie a pesquisa manualmente !&#34;)
+                        # DRIVER
+                        self.driver.close()
+                        self.driver.quit()
+                        return
+
+        def get_driver(self):
+                &#34;&#34;&#34; Retorna a instância do &#39;driver&#39;, objeto responsável por navegar automaticamente o browser. &#34;&#34;&#34;
+                return self.driver
+
+        def remove_duplicates(self, file_name):
+                
+                &#34;&#34;&#34; Remove entradas duplicadas do arquivo final xlsx. &#34;&#34;&#34;
+                file_df = pd.read_excel(file_name + &#34;.xlsx&#34;, skiprows=1, index_col=0)
+
+                # Mantem somente a primeira duplicata
+                pd_first = file_df.drop_duplicates(subset=[&#34;PRODUTO&#34;, &#34;ESTABELECIMENTO&#34;, &#34;PRECO&#34;], keep=&#34;first&#34;)
+                size = pd_first[&#39;PRODUTO&#39;].count()
+                writer = pd.ExcelWriter(file_name + &#34;.xlsx&#34;, engine=&#39;xlsxwriter&#39;)
+                pd_first = pd_first.to_excel(writer, sheet_name = &#34;Pesquisa&#34;,  index=False, startrow=0, startcol=1)
+
+                workbook  = writer.book
+                worksheet = writer.sheets[&#39;Pesquisa&#39;]
+                formats = workbook.add_format({&#39;border&#39;: 2})
+
+                worksheet.set_column(1, size, None, formats)
+                worksheet.set_column(1, 1, 35)
+                worksheet.set_column(2, 2, 55)
+                worksheet.set_column(3, 3, 23)
+                worksheet.set_column(4, 4, 12)
+
+                writer.save()
+
+        def csv_to_xlsx(self,csvfile):
+                
+                &#34;&#34;&#34; Converte um arquivo csv em um arquivo xlsx. &#34;&#34;&#34;
+                workbook = Workbook(csvfile[:-4] + &#39;.xlsx&#39;)
+                worksheet = workbook.add_worksheet()
+                formats = workbook.add_format({&#39;border&#39;: 2})
+
+                with open(csvfile, &#39;rt&#39;, encoding=&#39;latin-1&#39;) as f:
+                        reader = csv.reader(f)
+                        for r, row in enumerate(reader):
+                                for c, col in enumerate(row):
+                                        
+                                        if r == 3 and c == 3:
+                                                
+                                                worksheet.set_column(r+1, c+1, 15)
+                                        
+                                        else:
+
+                                                worksheet.set_column(r+1, c+1, 33)
+                                        
+                                        worksheet.write(r+1, c+1, col, formats)
+                                        
+                workbook.close()
+
+        def set_viewport_size(self, width, height):
+
+                &#34;&#34;&#34; Muda o tamanho da janela do navegador. &#34;&#34;&#34;
+                window_size = self.driver.execute_script(&#34;&#34;&#34;
+                        return [window.outerWidth - window.innerWidth + arguments[0],
+                        window.outerHeight - window.innerHeight + arguments[1]];
+                        &#34;&#34;&#34;, width, height)
+                self.driver.set_window_size(*window_size)
+
+        def get_data(self, writer, product, keyword):
+                &#34;&#34;&#34; 
+                        Filtra os dados da janela atual aberta do navegador e os salva no arquivo CSV.  
+
+                        Attributes:
+                                writer (file): Instância de um &#39;escritor&#39; de arquivo.  
+                                product (string): Produto atual da pesquisa.  
+                                keyword (string): Palavra chave atual sendo pesquisa.
+
+                &#34;&#34;&#34;
+                local = self.LOCALS
+                local_name = self.LOCALS_NAME
+                found = True
+                found_2 = True
+                elements = []
+                time.sleep(0.5)
+  
+                try:
+                        
+                        elements = self.driver.find_elements_by_class_name(&#34;flex-item2&#34;)
+
+                except:
+                        
+                        self.captcha()
+                        
+                elements = self.driver.find_elements_by_class_name(&#34;flex-item2&#34;)
+                
+                for element in elements:
+
+                        # * Processo de aquisição de dados
+
+                        try:
+                                
+                                # Nome do produto
+                                product_name = element.find_elements_by_tag_name(&#34;strong&#34;)[0]
+                                product_name = product_name.get_attribute(&#39;innerHTML&#39;)
+
+                                # Todas as tags com as informações do bloco do produto
+                                product_info = element.find_elements_by_tag_name(&#34;div&#34;)
+
+                        except:
+                                
+                                self.captcha()
+                                
+                                
+                        try:
+                                
+                                # Nome do produto
+                                product_name = element.find_elements_by_tag_name(&#34;strong&#34;)[0]
+                                product_name = product_name.get_attribute(&#39;innerHTML&#39;)
+
+                                # Todas as tags com as informações do bloco do produto
+                                product_info = element.find_elements_by_tag_name(&#34;div&#34;)
+                        
+                        except:
+                                
+                                self.captcha()
+                                
+                        # Preço do produto
+                        flag = 0
+                        if len(element.find_elements_by_class_name(&#34;sobre-desconto&#34;)) == 0:
+                                product_price = product_info[1].get_attribute(&#39;innerHTML&#39;)
+                        else:
+                                product_price = product_info[2].get_attribute(&#39;innerHTML&#39;)
+                                flag = 1
+                        
+                        pattern = re.compile(r&#34;(?&lt;=&gt;)\s\w..\d?(\d).\d\d&#34;)
+                        product_size = len(product_price)
+                        product_price = product_price.replace(&#39;\n&#39;, &#39;&#39;)
+                        product_price = product_price.replace(&#39;,&#39;, &#39;.&#39;)
+
+                        if product_size &gt; 15:
+                                
+                                if  pattern.search(product_price) != None:
+                                        
+                                        product_price = pattern.search(product_price).group(0)
+
+
+                        # Endereço do produto
+                        size = len(product_info)
+
+                        if size == 9:
+                                index = 3
+                        elif size == 10:
+                                if flag == 1:
+                                        index = 4
+                                else:
+                                        index = 3
+                        elif size == 11:
+                                index = 4
+                        else:
+                                index = 3
+                                
+
+                        pattern = re.compile(r&#34;(?&lt;=&gt;).\w.*\w&#34;)
+                        product_adress = product_info[index].get_attribute(&#39;innerHTML&#39;)
+                        product_adress = pattern.search(product_adress).group()
+                        product_adress = product_adress[1:len(product_adress)]
+
+                        # print(&#34;Size: &#34; + str(size))
+                        # print(local)
+                        # print(product_adress)
+                        
+
+                        if local[0] in str(product_adress):
+
+                                if product in str(product_name):
+                                                
+                                        print(&#39;NORMAL ----------------------- &#39;)
+                                        print(&#39;Preço : &#39; + str(product_price))
+                                        print(&#39;Local : &#39; + str(product_adress))
+                                        print(&#39;Produto : &#39; + str(product_name))
+                                        print(&#39;NORMAL ----------------------- &#39;)
+                                        found = False
+                                        writer.writerow([str(product_name), str(
+                                                product_adress), str(keyword), str(product_price)])
+                                
+                        if local[1] in str(product_adress):
+
+                                if product in str(product_name):
+                                        
+                                        print(&#39;NORMAL ----------------------- &#39;)
+                                        print(&#39;Preço : &#39; + str(product_price))
+                                        print(&#39;Local : &#39; + str(product_adress))
+                                        print(&#39;Produto : &#39; + str(product_name))
+                                        print(&#39;NORMAL ----------------------- &#39;)
+                                        found_2 = False
+                                        writer.writerow([str(product_name), str(
+                                                product_adress), str(keyword), str(product_price)])
+                                
+                        if product in str(product_name):
+                                
+                                print(&#39;Todos ----------------------------&#39;)
+                                print(&#39;Preço : &#39; + str(product_price))
+                                print(&#39;Local : &#39; + str(product_adress))
+                                print(&#39;Produto : &#39; + str(product_name))
+                                print(&#39;Todos ----------------------------&#39;)
+                                
+                                with open(self.all_file, &#39;a+&#39;, newline=&#39;&#39;) as file:
+
+                                        writer_2 = csv.writer(file, delimiter=&#39;,&#39;)
+                                        writer_2.writerow([str(product_name), str(
+                                        product_adress), str(keyword), str(product_price)])
+
+                                self.csv_to_xlsx(self.all_file)
+                                
+
+                if found:
+                        
+                        writer.writerow([str(product), str(local_name[0]),
+                                                        str(keyword), &#34;N/A&#34;])
+                
+                if found_2:
+
+                        writer.writerow([str(product), str(local_name[1]),
+                                                        str(keyword), &#34;N/A&#34;])
+
+        def check_captcha(self, request):
+                
+                &#34;&#34;&#34; Função que confere se o captcha foi resolvido com sucesso pelo usuário. &#34;&#34;&#34;
+                excpt = True
+                if request == 1:
+                        
+                        self.driver.back()
+                
+                time.sleep(1)
+                try:
+
+                        WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.CLASS_NAME, &#34;flash&#34;)))
+
+                except:
+
+                        # print(&#34;Captcha desativado.&#34;)
+                        time.sleep(1)
+                        excpt = False
+                        return True
+
+                finally:
+
+                        if excpt:
+                                
+                                # print(&#34;Captcha ativado.&#34;)
+                                return False
+                
+        def pop_up(self):
+                &#34;&#34;&#34; Mostra uma mensagem x em pop up para o usuário. &#34;&#34;&#34;
+                result = messagebox.askquestion(&#34;CAPTCHA&#34;, &#34;Captcha foi ativado, abra o site do preço da hora e resolva-o em seu navegador ( aperte Sim para continuar )&#34;, icon=&#39;warning&#39;)
+                if result == &#39;yes&#39; and self.check_captcha(1):
+                        return True
+                else:
+                        return False
+
+        def captcha(self):
+                
+                &#34;&#34;&#34; Trata por erro de rede e inicia um loop para conferir se o usuário resolveu o captcha. &#34;&#34;&#34;
+                # Se eu tenho conexão o captcha foi ativado, se não, é erro de rede.
+                if self.connect():
+                                
+                        while True:
+
+                                if self.pop_up():
+                                        
+                                        break        
+                else:
+
+                        self.exit_thread(None, None, None, None, None)
+
+        def backup_check(self, t_date, estab):
+                &#34;&#34;&#34; Retorna os parâmetros de backup caso a pesquisa esteja sendo iniciada por um backup. &#34;&#34;&#34;
+                try:
+                
+                        product = 0
+                        place = 0
+                        finish = 0
+                        keyword = 0
+                        date = 0
+                        estab_1 = 0
+                        estab_2 = 0
+                        
+                        with open(&#39;backup.json&#39;) as json_file:
+
+                                data = json.load(json_file)
+                                for backup in data[&#39;backup&#39;]:
+                                        
+                                        product = backup[&#39;prod&#39;]
+                                        date = backup[&#39;date&#39;]    
+                                        keyword = backup[&#39;keyword&#39;]
+                                        finish = backup[&#39;done&#39;]
+                                        estab_1 = backup[&#39;estab_1&#39;]
+                                        estab_2 = backup[&#39;estab_2&#39;]
+                                        
+                        if estab_1 != estab[0] and estab_2 != estab[1]:
+                                
+                                return(0,0)
+
+                        if t_date != date:
+                        
+                                return (0,0)
+                        
+                        # Pesquisa acabou
+                        if finish == -1:
+                                
+                                return (0,0)
+
+                        # Pesquisa do estabelecimento nao acabou
+                        if finish == 0:
+                                
+                                return (abs(product), abs(keyword))
+
+                        # Pesquisa do estebelcimento acabou
+                        if finish == 1:
+                                
+                                return (abs(product), abs(keyword))
+
+                except:
+                        
+                        return(0,0)
+
+        def backup_save(self,prod, date, keyword, done, estab, city, place):
+                
+                &#34;&#34;&#34; 
+                        Salva o estado atual da pesquisa em um arquivo JSON no local de execução da aplicação.  
+                        Attributes:
+                                prod (int): Índice do produto atual da pesquisa.  
+                                date (string): Data da pesquisa realizada.  
+                                keyword (int): Índice da palavra chave atual da pesquisa.  
+                                done (int):  Indica se a pesquisa terminou ou não.  
+                                estab (string): Array dos estabelecimentos sendo pesquisados.  
+                                place (string): Array dos nomes dos estabelecimentos sendo pesquisados.  
+                                city (string): Cidade que a pesquisa está sendo realizada.  
+                &#34;&#34;&#34;
+                
+                data = {}
+                data[&#39;backup&#39;] = []
+                data[&#39;backup&#39;].append({&#34;prod&#34;: prod, &#34;date&#34;: date, &#34;keyword&#34; : keyword, &#34;done&#34;: done, &#34;estab_1&#34;: estab[0], &#34;estab_2&#34;: estab[1], &#34;city&#34;: city, &#39;place_1&#39;: place[0], &#39;place_2&#39;: place[1]})
+                with open(&#39;backup.json&#39;, &#39;w+&#39;) as outfile:
+                
+                        json.dump(data, outfile)
+
+        def get_keywords(self):
+                
+                &#34;&#34;&#34;
+                Retorna o array das palavras chaves em ordem.  
+                &#34;&#34;&#34;
+
+                keywords = []
+                keywords.append([&#39;ACUCAR CRISTAL&#39;, &#39;ACUCAR CRISTAL 1KG&#39;])
+                keywords.append([&#39;ARROZ PARBOILIZADO&#39;, &#39;ARROZ PARBOILIZADO 1KG&#39;])
+                keywords.append([&#39;BANANA DA PRATA&#39;, &#39;BANANA PRATA&#39;, &#39;BANANA KG&#39;])
+                keywords.append([&#39;CAFE 250G&#39;, &#39;CAFE MOIDO&#39;])
+                keywords.append([&#39;CHA DE DENTRO&#39;, &#39;COXAO MOLE&#39;, &#39;CARNE BOVINA CHA DE DENTRO&#39;])
+                keywords.append([&#39;FARINHA DE MANDIOCA&#39;, &#39;FARINHA MAND&#39;, &#39;FARINHA MANDIOCA&#39;])
+                keywords.append([&#39;FEIJAO CARIOCA&#39;])
+                keywords.append([&#39;LEITE LIQUIDO&#39;])
+                keywords.append([&#39;MANTEIGA 500G&#39;, &#39;MANTEIGA&#39;])
+                keywords.append([&#39;OLEO DE SOJA&#39;, &#39;OLEO 900ML&#39;, &#39;OLEO&#39;])
+                keywords.append([&#39;PAO FRANCES&#39;, &#39;PAO KG&#39;, &#39;PAO FRANCES KG&#39;])
+                keywords.append([&#39;TOMATE KG&#39;])
+                
+                return keywords
+
+        def run(self):
+
+                &#34;&#34;&#34;
+                Realiza a pesquisa na plataforma do Preço da Hora Bahia.
+
+                Attributes:
+                        csvfile (string): Caminho para o arquivo CSV.  
+                        all_file (string): Caminho para o arquivo CSV Todos.  
+                        driver (selenium.Driver): Instância do objeto responsável por realizar a automação do browser.  
+                        start_prod (int): Indíce de inicio do produto caso seja uma pesquisa por backup.  
+                        start_key (int): Indíce de inicio de palavra chave caso seja uma pesquisa por backup.  
+                &#34;&#34;&#34;
+                first  = 0
+                URL = &#39;https://precodahora.ba.gov.br/&#39;
+                times = 5
+                today = date.today()
+                day = today.strftime(&#34;%d-%m-%Y&#34;)
+                start_prod = 0
+                start_key = 0
+                restart = True
+                csvfile = &#39;&#39;
+
+                self.resource_path(&#34;logo.ico&#34;)
+                chrome_options = Options()
+                # DISABLES DEVTOOLS LISTENING ON 
+                chrome_options.add_argument(&#34;--headless&#34;)
+                chrome_options.add_argument(&#34;--no-sandbox&#34;)
+                chrome_options.add_argument(&#34;--disable-dev-shm-usage&#34;)
+                chrome_options.add_argument(&#34;--disable-gpu&#34;)
+                chrome_options.add_argument(&#34;--disable-features=NetworkService&#34;)
+                chrome_options.add_argument(&#34;--window-size=1920x1080&#34;)
+                chrome_options.add_argument(&#34;--disable-features=VizDisplayCompositor&#34;)
+                driver = webdriver.Chrome(      
+                        executable_path=ChromeDriverManager().install(), options=chrome_options)
+                self.driver = driver
+                self.set_viewport_size(800, 600)
+                os.system(&#39;cls&#39; if os.name==&#39;nt&#39; else &#39;clear&#39;)
+
+                products =  [&#39;ACUCAR CRISTAL&#39;,
+                                        &#39;ARROZ PARBOILIZADO&#39;,
+                                        &#39;BANANA DA PRATA&#39;,
+                                        &#39;CAFE MOIDO&#39;,
+                                        &#39;CHA DE DENTRO&#39;,
+                                        &#39;FARINHA DE MANDIOCA&#39;,
+                                        &#39;FEIJAO CARIOCA&#39;,
+                                        &#39;LEITE LIQUIDO&#39;,
+                                        &#39;MANTEIGA 500G&#39;,
+                                        &#39;OLEO DE SOJA&#39;,
+                                        &#39;PAO FRANCES&#39;,
+                                        &#39;TOMATE KG&#39;]
+
+
+                # Requer polimento do algoritmo para garantir a validade das informações
+                # Teste da ferramenta Selenium com chromedriver
+
+                keywords = self.get_keywords()
+                products_backup = products
+                
+                if self.BACKUP:
+                        
+                        start_prod, start_key = self.backup_check(day, [self.LOCALS_NAME[0], self.LOCALS_NAME[1]])
+                        if start_prod &gt; 0 or start_key &gt; 0:
+                        
+                                self.TXT.set(&#34;Retomando pesquisa anterior ...&#34;)
+
+                # Define endereço a ser visitado
+                driver.get(URL)
+                # * Processo de pesquisa de produto
+                driver.find_element_by_id(&#39;fake-sbar&#39;).click()
+                time.sleep(1*times)
+
+                self.TXT.set(&#34;Pesquisa iniciada ...&#34;)
+                
+                if os.name == &#39;nt&#39;:
+
+                        toaster = ToastNotifier()
+                        toaster.show_toast(&#34;Pesquisa iniciada.&#34;,
+                                                &#34; &#34;,
+                                                icon_path=self.ico,
+                                                duration = 10)
+                
+                self.TXT.set(&#34;Iniciando arquivos ...&#34;)
+                # Cria a pasta de pesquisa
+                dic = self.CITY + &#39; [ &#39; + day + &#39; ]&#39;
+                if not os.path.exists(dic):
+
+                        os.makedirs(dic)
+
+                csvfile = dic + &#39;/&#39; + self.LOCALS_NAME[0] + &#39; &#39; + self.LOCALS_NAME[1] + &#39;.csv&#39; 
+                all_file = dic + &#39;/&#39; + &#39;TODOS &#39; + self.LOCALS_NAME[0] + &#39; &#39; + self.LOCALS_NAME[1]  + &#39;.csv&#39;
+                self.csvfile = csvfile          
+                self.csvfile_name =  dic + &#39;/&#39; + self.LOCALS_NAME[0] + &#39; &#39; + self.LOCALS_NAME[1]                
+                self.all_file = all_file                
+                self.all_file_name = dic + &#39;/&#39; + &#39;TODOS &#39; + self.LOCALS_NAME[0] + &#39; &#39; + self.LOCALS_NAME[1]             
+
+                # Se arquivo já existe, não preciso inicia-lo
+                if start_prod != 0 or self.BACKUP:
+                        
+                        # print(&#34;restart&#34;)
+                        self.PROGRESS_BAR[&#39;value&#39;] = (start_prod) * (100/len(products_backup))
+                        products = products[start_prod:]
+                        keywords = keywords[start_prod:]
+                        restart = False
+                        
+                else: 
+                        
+                        products = products_backup
+                        # Inicia o arquivo csv com as colunas principais
+                        with open(csvfile, &#39;w+&#39;, newline=&#39;&#39;) as file:
+
+                                writer = csv.writer(file, delimiter=&#39;,&#39;)
+                                writer.writerow(
+                                        [&#34;PRODUTO&#34;, &#34;ESTABELECIMENTO&#34;, &#34;KEYWORD&#34;, &#34;PRECO&#34;])
+
+                        with open(all_file, &#39;w+&#39;, newline=&#39;&#39;) as file:
+
+                                writer = csv.writer(file, delimiter=&#39;,&#39;)
+                                writer.writerow(
+                                        [&#34;PRODUTO&#34;, &#34;ESTABELECIMENTO&#34;, &#34;KEYWORD&#34;, &#34;PRECO&#34;])
+                        
+                self.PAUSE_BUTTON[&#34;state&#34;] = &#34;normal&#34;
+
+                for index, product in enumerate(products):
+
+                        if  not self.connect():
+
+                                self.exit_thread(None,None,None,None,None)
+                                return
+
+                        if self.stop:
+
+                                self.exit = True
+                                return
+                                
+                        keyword = keywords[index]
+                        if index == 0 and start_key &gt; 0:
+                                
+                                keyword = keyword[start_key:]
+                        
+                        self.TXT.set(&#34;Pesquisando Produto : &#34; +&#39;[ &#39;+ product + &#39; ]&#39; )
+                        
+                        
+                        for key, word in enumerate(keyword):
+                                
+                                if not self.connect():
+
+                                        self.exit_thread(None,None,None,None,None)
+                                        return
+ 
+                                self.backup_save(index + start_prod, day, key + start_key, 0, [self.LOCALS_NAME[0], self.LOCALS_NAME[1]], self.CITY, [self.LOCALS[0], self.LOCALS[1]])
+
+                                if self.stop:
+
+                                        self.exit = True
+                                        return
+                                
+                                time.sleep(3*times)
+                                
+                                # Barra de pesquisa superior (produtos)
+                                try:
+
+                                        WebDriverWait(driver, 2*times).until(
+                                                EC.presence_of_element_located((By.CLASS_NAME, &#34;sbar-input&#34;)))
+
+                                except:
+
+                                        self.captcha()
+                                        driver.get(&#39;https://precodahora.ba.gov.br/produtos&#39;)
+                                        time.sleep(2*times)
+
+                                finally:
+
+                                        search = driver.find_element_by_id(&#39;top-sbar&#39;)
+
+                                for w in word:
+
+                                        search.send_keys(w)
+                                        time.sleep(0.25)
+
+                                # Realiza a pesquisa (pressiona enter)
+                                search.send_keys(Keys.ENTER)
+
+                                time.sleep(3*times)
+                                driver.page_source.encode(&#39;utf-8&#39;)
+
+                                # * Processo para definir a região desejada para ser realizada a pesquisa
+
+                                if index == 0:
+                                        
+                                        # Botão que abre o modal referente a localização
+                                        try:
+
+                                                WebDriverWait(driver, 2*times).until(
+                                                        EC.presence_of_element_located((By.CLASS_NAME, &#34;location-box&#34;)))
+
+                                        except:
+
+                                                self.captcha()
+                                                time.sleep(1)
+                                                        
+                                        finally:
+
+                                                driver.find_element_by_class_name(&#39;location-box&#39;).click()
+                                                time.sleep(2*times)
+
+                                        # Botão que abre a opção de inserir o CEP
+                                        try:
+
+                                                WebDriverWait(driver, 2*times).until(
+                                                        EC.presence_of_element_located((By.ID, &#34;add-center&#34;)))
+
+                                        except:
+
+                                                self.captcha()
+                                                time.sleep(1)
+
+                                        finally:
+
+                                                driver.find_element_by_id(&#39;add-center&#39;).click()
+                                                time.sleep(2*times)
+
+                                        # Envia o MUNICIPIO desejado para o input
+
+                                        driver.find_element_by_class_name(&#39;sbar-municipio&#39;).send_keys(self.CITY)
+                                        time.sleep(1)
+
+                                        # Pressiona o botão que realiza a pesquisa por MUNICIPIO
+                                        driver.find_element_by_class_name(&#39;set-mun&#39;).click()
+                                        
+                                        time.sleep(1)
+                                        driver.find_element_by_id(&#39;aplicar&#39;).click()
+
+                                        time.sleep(3*times)
+                                
+                                if self.stop:
+
+                                        self.exit = True
+                                        return
+                                # Espera a página atualizar, ou seja, terminar a pesquisa. O proceso é reconhecido como terminado quando a classe flex-item2 está presente, que é a classe utilizada para estilizar os elementos listados
+                                try:
+
+                                        WebDriverWait(driver, 5*times).until(
+                                                EC.presence_of_element_located((By.CLASS_NAME, &#34;flex-item2&#34;)))
+
+                                except:
+
+                                        self.captcha()
+                                        time.sleep(2*times)
+
+                                finally:
+
+                                        flag = 0
+                                        while True:
+
+                                                if self.stop:
+
+                                                        self.exit = True
+                                                        return
+
+                                                try:
+
+                                                        WebDriverWait(driver, 5*times).until(
+                                                                EC.presence_of_element_located((By.ID, &#34;updateResults&#34;)))
+                                                        time.sleep(2*times)
+                                                        driver.find_element_by_id(&#39;updateResults&#39;).click()
+                                                        flag = flag + 1
+
+                                                        if flag == 3:
+
+                                                                break
+
+                                                except:
+
+                                                        if self.check_captcha(0):
+                                                                
+                                                                # print(&#34;Quantidade máxima de paginas abertas.&#34;)
+                                                                time.sleep(1)
+                                                                break
+                                                                
+                                                        else:
+                                                                                
+                                                                self.captcha()
+
+                                        if self.stop:
+
+                                                        self.exit = True
+                                                        return
+                                        
+                                        with open(csvfile, &#39;a+&#39;, newline=&#39;&#39;) as file:
+
+                                                writer = csv.writer(file, delimiter=&#39;,&#39;)
+                                                self.get_data(writer, product, word)
+                                        
+                                        self.csv_to_xlsx(csvfile)
+
+                        max_val = self.PROGRESS_BAR[&#39;value&#39;] + (100/len(products_backup)) + 1
+                        for x in range(int(self.PROGRESS_BAR[&#39;value&#39;]), int(max_val)):
+                        
+                                self.PROGRESS_BAR[&#39;value&#39;] = x
+                                time.sleep(0.01)
+                                
+                        if os.name == &#39;nt&#39; and (index - len(products_backup))  == len(products_backup)/2:
+
+                                toaster = ToastNotifier()
+                                toaster.show_toast(&#34;Pesquisa na metade ...&#34;,
+                                                        &#34; &#34;,
+                                                        icon_path=self.ico,
+                                                        duration = 10)
+                
+                if self.stop:
+
+                        self.exit = True
+                        return
+
+                time.sleep(1)
+                for x in range(100,-1,-1):
+                        
+                        self.PROGRESS_BAR[&#39;value&#39;] = x
+                        time.sleep(0.01)
+                
+                self.backup_save(0, day, 0, 1, [self.LOCALS_NAME[0], self.LOCALS_NAME[1]], self.CITY, [self.LOCALS[0], self.LOCALS[1]])
+                start_prod = 0
+                        
+                self.csv_to_xlsx(csvfile)
+                self.remove_duplicates(self.csvfile_name)
+                self.remove_duplicates(self.all_file_name)
+                
+                self.BUTTON.config(text=&#34;INICIAR PESQUISA&#34;)
+                self.BUTTON[&#34;state&#34;] = &#34;normal&#34;
+                self.TXT.set(&#34;Aguardando inicio de pesquisa ...&#34;)
+                self.INTERFACE.change_frame(self.INTERFACE.frame_bar, self.INTERFACE.frame)
+
+                
+                if os.name == &#39;nt&#39;:
+
+                        toaster = ToastNotifier()
+                        toaster.show_toast(&#34;Pesquisa encerrada.&#34;,
+                                        &#34; &#34;,
+                                        icon_path=self.ico,
+                                        duration = 10)
+                        
+                driver.close()
+                driver.quit()</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="ACCB_IT.scrapper.Scrap.backup_check"><code class="name flex">
+<span>def <span class="ident">backup_check</span></span>(<span>self, t_date, estab)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retorna os parâmetros de backup caso a pesquisa esteja sendo iniciada por um backup.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def backup_check(self, t_date, estab):
+        &#34;&#34;&#34; Retorna os parâmetros de backup caso a pesquisa esteja sendo iniciada por um backup. &#34;&#34;&#34;
+        try:
+        
+                product = 0
+                place = 0
+                finish = 0
+                keyword = 0
+                date = 0
+                estab_1 = 0
+                estab_2 = 0
+                
+                with open(&#39;backup.json&#39;) as json_file:
+
+                        data = json.load(json_file)
+                        for backup in data[&#39;backup&#39;]:
+                                
+                                product = backup[&#39;prod&#39;]
+                                date = backup[&#39;date&#39;]    
+                                keyword = backup[&#39;keyword&#39;]
+                                finish = backup[&#39;done&#39;]
+                                estab_1 = backup[&#39;estab_1&#39;]
+                                estab_2 = backup[&#39;estab_2&#39;]
+                                
+                if estab_1 != estab[0] and estab_2 != estab[1]:
+                        
+                        return(0,0)
+
+                if t_date != date:
+                
+                        return (0,0)
+                
+                # Pesquisa acabou
+                if finish == -1:
+                        
+                        return (0,0)
+
+                # Pesquisa do estabelecimento nao acabou
+                if finish == 0:
+                        
+                        return (abs(product), abs(keyword))
+
+                # Pesquisa do estebelcimento acabou
+                if finish == 1:
+                        
+                        return (abs(product), abs(keyword))
+
+        except:
+                
+                return(0,0)</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.scrapper.Scrap.backup_save"><code class="name flex">
+<span>def <span class="ident">backup_save</span></span>(<span>self, prod, date, keyword, done, estab, city, place)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Salva o estado atual da pesquisa em um arquivo JSON no local de execução da aplicação.
+</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>prod</code></strong> :&ensp;<code>int</code></dt>
+<dd>Índice do produto atual da pesquisa.
+</dd>
+<dt><strong><code>date</code></strong> :&ensp;<code>string</code></dt>
+<dd>Data da pesquisa realizada.
+</dd>
+<dt><strong><code>keyword</code></strong> :&ensp;<code>int</code></dt>
+<dd>Índice da palavra chave atual da pesquisa.
+</dd>
+<dt><strong><code>done</code></strong> :&ensp;<code>int</code></dt>
+<dd>Indica se a pesquisa terminou ou não.
+</dd>
+<dt><strong><code>estab</code></strong> :&ensp;<code>string</code></dt>
+<dd>Array dos estabelecimentos sendo pesquisados.
+</dd>
+<dt><strong><code>place</code></strong> :&ensp;<code>string</code></dt>
+<dd>Array dos nomes dos estabelecimentos sendo pesquisados.
+</dd>
+<dt><strong><code>city</code></strong> :&ensp;<code>string</code></dt>
+<dd>Cidade que a pesquisa está sendo realizada.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def backup_save(self,prod, date, keyword, done, estab, city, place):
+        
+        &#34;&#34;&#34; 
+                Salva o estado atual da pesquisa em um arquivo JSON no local de execução da aplicação.  
+                Attributes:
+                        prod (int): Índice do produto atual da pesquisa.  
+                        date (string): Data da pesquisa realizada.  
+                        keyword (int): Índice da palavra chave atual da pesquisa.  
+                        done (int):  Indica se a pesquisa terminou ou não.  
+                        estab (string): Array dos estabelecimentos sendo pesquisados.  
+                        place (string): Array dos nomes dos estabelecimentos sendo pesquisados.  
+                        city (string): Cidade que a pesquisa está sendo realizada.  
+        &#34;&#34;&#34;
+        
+        data = {}
+        data[&#39;backup&#39;] = []
+        data[&#39;backup&#39;].append({&#34;prod&#34;: prod, &#34;date&#34;: date, &#34;keyword&#34; : keyword, &#34;done&#34;: done, &#34;estab_1&#34;: estab[0], &#34;estab_2&#34;: estab[1], &#34;city&#34;: city, &#39;place_1&#39;: place[0], &#39;place_2&#39;: place[1]})
+        with open(&#39;backup.json&#39;, &#39;w+&#39;) as outfile:
+        
+                json.dump(data, outfile)</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.scrapper.Scrap.captcha"><code class="name flex">
+<span>def <span class="ident">captcha</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Trata por erro de rede e inicia um loop para conferir se o usuário resolveu o captcha.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def captcha(self):
+        
+        &#34;&#34;&#34; Trata por erro de rede e inicia um loop para conferir se o usuário resolveu o captcha. &#34;&#34;&#34;
+        # Se eu tenho conexão o captcha foi ativado, se não, é erro de rede.
+        if self.connect():
+                        
+                while True:
+
+                        if self.pop_up():
+                                
+                                break        
+        else:
+
+                self.exit_thread(None, None, None, None, None)</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.scrapper.Scrap.check_captcha"><code class="name flex">
+<span>def <span class="ident">check_captcha</span></span>(<span>self, request)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Função que confere se o captcha foi resolvido com sucesso pelo usuário.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def check_captcha(self, request):
+        
+        &#34;&#34;&#34; Função que confere se o captcha foi resolvido com sucesso pelo usuário. &#34;&#34;&#34;
+        excpt = True
+        if request == 1:
+                
+                self.driver.back()
+        
+        time.sleep(1)
+        try:
+
+                WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.CLASS_NAME, &#34;flash&#34;)))
+
+        except:
+
+                # print(&#34;Captcha desativado.&#34;)
+                time.sleep(1)
+                excpt = False
+                return True
+
+        finally:
+
+                if excpt:
+                        
+                        # print(&#34;Captcha ativado.&#34;)
+                        return False</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.scrapper.Scrap.connect"><code class="name flex">
+<span>def <span class="ident">connect</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Confere a conexão com o host desejado.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def connect(self):
+        
+        &#34;&#34;&#34; Confere a conexão com o host desejado. &#34;&#34;&#34;
+        host=&#39;https://www.youtube.com&#39;
+        try:
+                urllib.request.urlopen(host) 
+                return True
+        except:
+                return False</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.scrapper.Scrap.csv_to_xlsx"><code class="name flex">
+<span>def <span class="ident">csv_to_xlsx</span></span>(<span>self, csvfile)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Converte um arquivo csv em um arquivo xlsx.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def csv_to_xlsx(self,csvfile):
+        
+        &#34;&#34;&#34; Converte um arquivo csv em um arquivo xlsx. &#34;&#34;&#34;
+        workbook = Workbook(csvfile[:-4] + &#39;.xlsx&#39;)
+        worksheet = workbook.add_worksheet()
+        formats = workbook.add_format({&#39;border&#39;: 2})
+
+        with open(csvfile, &#39;rt&#39;, encoding=&#39;latin-1&#39;) as f:
+                reader = csv.reader(f)
+                for r, row in enumerate(reader):
+                        for c, col in enumerate(row):
+                                
+                                if r == 3 and c == 3:
+                                        
+                                        worksheet.set_column(r+1, c+1, 15)
+                                
+                                else:
+
+                                        worksheet.set_column(r+1, c+1, 33)
+                                
+                                worksheet.write(r+1, c+1, col, formats)
+                                
+        workbook.close()</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.scrapper.Scrap.exit_thread"><code class="name flex">
+<span>def <span class="ident">exit_thread</span></span>(<span>self, thread, change_frame, frame, frame_bar, show_message)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Pausa a pesquisa caso aconteça um erro de rede ou o usuário pause-a manualmente.
+</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>thread</code></strong> :&ensp;<code>Tread</code></dt>
+<dd>Instância da classe Tread.
+</dd>
+<dt><strong><code>change_frame</code></strong> :&ensp;<code>Interface.change_frame</code></dt>
+<dd>Função responsável por mudar o frame renderizado atualmente.
+</dd>
+<dt><strong><code>frame</code></strong> :&ensp;<code>tk.Frame</code></dt>
+<dd>Instância da janela principal da aplicação.
+</dd>
+<dt><strong><code>frame_bar</code></strong> :&ensp;<code>tk.Frame</code></dt>
+<dd>Instância da janela de pesquisa da aplicação.
+</dd>
+<dt><strong><code>show_message</code></strong> :&ensp;<code>Interface.show_message</code></dt>
+<dd>Função que mostra uma mensagem x em pop up.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def exit_thread(self, thread, change_frame, frame, frame_bar, show_message):
+
+        &#34;&#34;&#34; 
+                Pausa a pesquisa caso aconteça um erro de rede ou o usuário pause-a manualmente.  
+
+                Attributes:
+                        thread (Tread): Instância da classe Tread.  
+                        change_frame (Interface.change_frame): Função responsável por mudar o frame renderizado atualmente.  
+                        frame (tk.Frame): Instância da janela principal da aplicação.  
+                        frame_bar (tk.Frame): Instância da janela de pesquisa da aplicação.  
+                        show_message (Interface.show_message): Função que mostra uma mensagem x em pop up.  
+        
+        &#34;&#34;&#34;
+        self.stop = True
+        if thread != None:
+                        
+                while True:
+
+                        if self.exit:
+
+                                # print(&#34;Pausando pesquisa ...&#34;)
+                                # FRAME MAIN
+                                self.BUTTON.config(text=&#34;INICIAR PESQUISA&#34;)
+                                self.BUTTON[&#34;state&#34;] = &#34;normal&#34;
+                                change_frame(frame_bar, frame)
+                                
+                                # FRAME BAR
+                                self.TXT.set(&#34;Aguardando inicio de pesquisa ...&#34;)
+                                self.PROGRESS_BAR[&#39;value&#39;] = 0
+                                # self.PAUSE_BUTTON[&#34;state&#34;] = &#34;normal&#34;
+                                show_message(&#34;A pesquisa foi parada, todo o progresso foi salvo na pasta do município e sua respectiva data&#34;)
+                                
+                                self.driver.close()
+                                self.driver.quit()
+                                return
+
+        else: 
+
+                # FRAME MAIN
+                self.BUTTON.config(text=&#34;INICIAR PESQUISA&#34;)
+                self.BUTTON[&#34;state&#34;] = &#34;normal&#34;
+                # FRAME BAR
+                self.PROGRESS_BAR[&#39;value&#39;] = 0
+                self.TXT.set(&#34;Aguardando inicio de pesquisa ...&#34;)
+                # POP UP                        
+                self.INTERFACE.change_frame(self.INTERFACE.frame_bar, self.INTERFACE.frame)
+                self.INTERFACE.show_message(&#34;Ocorreu um erro de rede durante a pesquisa e não foi possível reinicia-la automaticamente, inicie a pesquisa manualmente !&#34;)
+                # DRIVER
+                self.driver.close()
+                self.driver.quit()
+                return</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.scrapper.Scrap.get_data"><code class="name flex">
+<span>def <span class="ident">get_data</span></span>(<span>self, writer, product, keyword)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Filtra os dados da janela atual aberta do navegador e os salva no arquivo CSV.
+</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>writer</code></strong> :&ensp;<code>file</code></dt>
+<dd>Instância de um 'escritor' de arquivo.
+</dd>
+<dt><strong><code>product</code></strong> :&ensp;<code>string</code></dt>
+<dd>Produto atual da pesquisa.
+</dd>
+<dt><strong><code>keyword</code></strong> :&ensp;<code>string</code></dt>
+<dd>Palavra chave atual sendo pesquisa.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_data(self, writer, product, keyword):
+        &#34;&#34;&#34; 
+                Filtra os dados da janela atual aberta do navegador e os salva no arquivo CSV.  
+
+                Attributes:
+                        writer (file): Instância de um &#39;escritor&#39; de arquivo.  
+                        product (string): Produto atual da pesquisa.  
+                        keyword (string): Palavra chave atual sendo pesquisa.
+
+        &#34;&#34;&#34;
+        local = self.LOCALS
+        local_name = self.LOCALS_NAME
+        found = True
+        found_2 = True
+        elements = []
+        time.sleep(0.5)
+
+        try:
+                
+                elements = self.driver.find_elements_by_class_name(&#34;flex-item2&#34;)
+
+        except:
+                
+                self.captcha()
+                
+        elements = self.driver.find_elements_by_class_name(&#34;flex-item2&#34;)
+        
+        for element in elements:
+
+                # * Processo de aquisição de dados
+
+                try:
+                        
+                        # Nome do produto
+                        product_name = element.find_elements_by_tag_name(&#34;strong&#34;)[0]
+                        product_name = product_name.get_attribute(&#39;innerHTML&#39;)
+
+                        # Todas as tags com as informações do bloco do produto
+                        product_info = element.find_elements_by_tag_name(&#34;div&#34;)
+
+                except:
+                        
+                        self.captcha()
+                        
+                        
+                try:
+                        
+                        # Nome do produto
+                        product_name = element.find_elements_by_tag_name(&#34;strong&#34;)[0]
+                        product_name = product_name.get_attribute(&#39;innerHTML&#39;)
+
+                        # Todas as tags com as informações do bloco do produto
+                        product_info = element.find_elements_by_tag_name(&#34;div&#34;)
+                
+                except:
+                        
+                        self.captcha()
+                        
+                # Preço do produto
+                flag = 0
+                if len(element.find_elements_by_class_name(&#34;sobre-desconto&#34;)) == 0:
+                        product_price = product_info[1].get_attribute(&#39;innerHTML&#39;)
+                else:
+                        product_price = product_info[2].get_attribute(&#39;innerHTML&#39;)
+                        flag = 1
+                
+                pattern = re.compile(r&#34;(?&lt;=&gt;)\s\w..\d?(\d).\d\d&#34;)
+                product_size = len(product_price)
+                product_price = product_price.replace(&#39;\n&#39;, &#39;&#39;)
+                product_price = product_price.replace(&#39;,&#39;, &#39;.&#39;)
+
+                if product_size &gt; 15:
+                        
+                        if  pattern.search(product_price) != None:
+                                
+                                product_price = pattern.search(product_price).group(0)
+
+
+                # Endereço do produto
+                size = len(product_info)
+
+                if size == 9:
+                        index = 3
+                elif size == 10:
+                        if flag == 1:
+                                index = 4
+                        else:
+                                index = 3
+                elif size == 11:
+                        index = 4
+                else:
+                        index = 3
+                        
+
+                pattern = re.compile(r&#34;(?&lt;=&gt;).\w.*\w&#34;)
+                product_adress = product_info[index].get_attribute(&#39;innerHTML&#39;)
+                product_adress = pattern.search(product_adress).group()
+                product_adress = product_adress[1:len(product_adress)]
+
+                # print(&#34;Size: &#34; + str(size))
+                # print(local)
+                # print(product_adress)
+                
+
+                if local[0] in str(product_adress):
+
+                        if product in str(product_name):
+                                        
+                                print(&#39;NORMAL ----------------------- &#39;)
+                                print(&#39;Preço : &#39; + str(product_price))
+                                print(&#39;Local : &#39; + str(product_adress))
+                                print(&#39;Produto : &#39; + str(product_name))
+                                print(&#39;NORMAL ----------------------- &#39;)
+                                found = False
+                                writer.writerow([str(product_name), str(
+                                        product_adress), str(keyword), str(product_price)])
+                        
+                if local[1] in str(product_adress):
+
+                        if product in str(product_name):
+                                
+                                print(&#39;NORMAL ----------------------- &#39;)
+                                print(&#39;Preço : &#39; + str(product_price))
+                                print(&#39;Local : &#39; + str(product_adress))
+                                print(&#39;Produto : &#39; + str(product_name))
+                                print(&#39;NORMAL ----------------------- &#39;)
+                                found_2 = False
+                                writer.writerow([str(product_name), str(
+                                        product_adress), str(keyword), str(product_price)])
+                        
+                if product in str(product_name):
+                        
+                        print(&#39;Todos ----------------------------&#39;)
+                        print(&#39;Preço : &#39; + str(product_price))
+                        print(&#39;Local : &#39; + str(product_adress))
+                        print(&#39;Produto : &#39; + str(product_name))
+                        print(&#39;Todos ----------------------------&#39;)
+                        
+                        with open(self.all_file, &#39;a+&#39;, newline=&#39;&#39;) as file:
+
+                                writer_2 = csv.writer(file, delimiter=&#39;,&#39;)
+                                writer_2.writerow([str(product_name), str(
+                                product_adress), str(keyword), str(product_price)])
+
+                        self.csv_to_xlsx(self.all_file)
+                        
+
+        if found:
+                
+                writer.writerow([str(product), str(local_name[0]),
+                                                str(keyword), &#34;N/A&#34;])
+        
+        if found_2:
+
+                writer.writerow([str(product), str(local_name[1]),
+                                                str(keyword), &#34;N/A&#34;])</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.scrapper.Scrap.get_driver"><code class="name flex">
+<span>def <span class="ident">get_driver</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retorna a instância do 'driver', objeto responsável por navegar automaticamente o browser.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_driver(self):
+        &#34;&#34;&#34; Retorna a instância do &#39;driver&#39;, objeto responsável por navegar automaticamente o browser. &#34;&#34;&#34;
+        return self.driver</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.scrapper.Scrap.get_keywords"><code class="name flex">
+<span>def <span class="ident">get_keywords</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retorna o array das palavras chaves em ordem.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_keywords(self):
+        
+        &#34;&#34;&#34;
+        Retorna o array das palavras chaves em ordem.  
+        &#34;&#34;&#34;
+
+        keywords = []
+        keywords.append([&#39;ACUCAR CRISTAL&#39;, &#39;ACUCAR CRISTAL 1KG&#39;])
+        keywords.append([&#39;ARROZ PARBOILIZADO&#39;, &#39;ARROZ PARBOILIZADO 1KG&#39;])
+        keywords.append([&#39;BANANA DA PRATA&#39;, &#39;BANANA PRATA&#39;, &#39;BANANA KG&#39;])
+        keywords.append([&#39;CAFE 250G&#39;, &#39;CAFE MOIDO&#39;])
+        keywords.append([&#39;CHA DE DENTRO&#39;, &#39;COXAO MOLE&#39;, &#39;CARNE BOVINA CHA DE DENTRO&#39;])
+        keywords.append([&#39;FARINHA DE MANDIOCA&#39;, &#39;FARINHA MAND&#39;, &#39;FARINHA MANDIOCA&#39;])
+        keywords.append([&#39;FEIJAO CARIOCA&#39;])
+        keywords.append([&#39;LEITE LIQUIDO&#39;])
+        keywords.append([&#39;MANTEIGA 500G&#39;, &#39;MANTEIGA&#39;])
+        keywords.append([&#39;OLEO DE SOJA&#39;, &#39;OLEO 900ML&#39;, &#39;OLEO&#39;])
+        keywords.append([&#39;PAO FRANCES&#39;, &#39;PAO KG&#39;, &#39;PAO FRANCES KG&#39;])
+        keywords.append([&#39;TOMATE KG&#39;])
+        
+        return keywords</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.scrapper.Scrap.get_progess_bar"><code class="name flex">
+<span>def <span class="ident">get_progess_bar</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retorna a instância da barra de progresso.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_progess_bar(self):
+
+        &#34;&#34;&#34; Retorna a instância da barra de progresso. &#34;&#34;&#34;
+        return self.PROGRESS_BAR</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.scrapper.Scrap.pop_up"><code class="name flex">
+<span>def <span class="ident">pop_up</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Mostra uma mensagem x em pop up para o usuário.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pop_up(self):
+        &#34;&#34;&#34; Mostra uma mensagem x em pop up para o usuário. &#34;&#34;&#34;
+        result = messagebox.askquestion(&#34;CAPTCHA&#34;, &#34;Captcha foi ativado, abra o site do preço da hora e resolva-o em seu navegador ( aperte Sim para continuar )&#34;, icon=&#39;warning&#39;)
+        if result == &#39;yes&#39; and self.check_captcha(1):
+                return True
+        else:
+                return False</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.scrapper.Scrap.remove_duplicates"><code class="name flex">
+<span>def <span class="ident">remove_duplicates</span></span>(<span>self, file_name)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Remove entradas duplicadas do arquivo final xlsx.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_duplicates(self, file_name):
+        
+        &#34;&#34;&#34; Remove entradas duplicadas do arquivo final xlsx. &#34;&#34;&#34;
+        file_df = pd.read_excel(file_name + &#34;.xlsx&#34;, skiprows=1, index_col=0)
+
+        # Mantem somente a primeira duplicata
+        pd_first = file_df.drop_duplicates(subset=[&#34;PRODUTO&#34;, &#34;ESTABELECIMENTO&#34;, &#34;PRECO&#34;], keep=&#34;first&#34;)
+        size = pd_first[&#39;PRODUTO&#39;].count()
+        writer = pd.ExcelWriter(file_name + &#34;.xlsx&#34;, engine=&#39;xlsxwriter&#39;)
+        pd_first = pd_first.to_excel(writer, sheet_name = &#34;Pesquisa&#34;,  index=False, startrow=0, startcol=1)
+
+        workbook  = writer.book
+        worksheet = writer.sheets[&#39;Pesquisa&#39;]
+        formats = workbook.add_format({&#39;border&#39;: 2})
+
+        worksheet.set_column(1, size, None, formats)
+        worksheet.set_column(1, 1, 35)
+        worksheet.set_column(2, 2, 55)
+        worksheet.set_column(3, 3, 23)
+        worksheet.set_column(4, 4, 12)
+
+        writer.save()</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.scrapper.Scrap.resource_path"><code class="name flex">
+<span>def <span class="ident">resource_path</span></span>(<span>self, relative_path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Retorna o caminho relativo do ícone dentro da pasta de cache gerada pelo pyinstaller (Pacote usado para gerar o arquivo executável da aplicação).</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def resource_path(self, relative_path):
+        &#34;&#34;&#34; Retorna o caminho relativo do ícone dentro da pasta de cache gerada pelo pyinstaller (Pacote usado para gerar o arquivo executável da aplicação). &#34;&#34;&#34;
+        try:
+                # PyInstaller creates a temp folder and stores path in _MEIPASS
+                base_path = sys._MEIPASS
+        except Exception:
+                base_path = os.path.abspath(&#34;.&#34;)
+
+        self.ico = os.path.join(base_path, relative_path)</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.scrapper.Scrap.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Realiza a pesquisa na plataforma do Preço da Hora Bahia.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>csvfile</code></strong> :&ensp;<code>string</code></dt>
+<dd>Caminho para o arquivo CSV.
+</dd>
+<dt><strong><code>all_file</code></strong> :&ensp;<code>string</code></dt>
+<dd>Caminho para o arquivo CSV Todos.
+</dd>
+<dt><strong><code>driver</code></strong> :&ensp;<code>selenium.Driver</code></dt>
+<dd>Instância do objeto responsável por realizar a automação do browser.
+</dd>
+<dt><strong><code>start_prod</code></strong> :&ensp;<code>int</code></dt>
+<dd>Indíce de inicio do produto caso seja uma pesquisa por backup.
+</dd>
+<dt><strong><code>start_key</code></strong> :&ensp;<code>int</code></dt>
+<dd>Indíce de inicio de palavra chave caso seja uma pesquisa por backup.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run(self):
+
+        &#34;&#34;&#34;
+        Realiza a pesquisa na plataforma do Preço da Hora Bahia.
+
+        Attributes:
+                csvfile (string): Caminho para o arquivo CSV.  
+                all_file (string): Caminho para o arquivo CSV Todos.  
+                driver (selenium.Driver): Instância do objeto responsável por realizar a automação do browser.  
+                start_prod (int): Indíce de inicio do produto caso seja uma pesquisa por backup.  
+                start_key (int): Indíce de inicio de palavra chave caso seja uma pesquisa por backup.  
+        &#34;&#34;&#34;
+        first  = 0
+        URL = &#39;https://precodahora.ba.gov.br/&#39;
+        times = 5
+        today = date.today()
+        day = today.strftime(&#34;%d-%m-%Y&#34;)
+        start_prod = 0
+        start_key = 0
+        restart = True
+        csvfile = &#39;&#39;
+
+        self.resource_path(&#34;logo.ico&#34;)
+        chrome_options = Options()
+        # DISABLES DEVTOOLS LISTENING ON 
+        chrome_options.add_argument(&#34;--headless&#34;)
+        chrome_options.add_argument(&#34;--no-sandbox&#34;)
+        chrome_options.add_argument(&#34;--disable-dev-shm-usage&#34;)
+        chrome_options.add_argument(&#34;--disable-gpu&#34;)
+        chrome_options.add_argument(&#34;--disable-features=NetworkService&#34;)
+        chrome_options.add_argument(&#34;--window-size=1920x1080&#34;)
+        chrome_options.add_argument(&#34;--disable-features=VizDisplayCompositor&#34;)
+        driver = webdriver.Chrome(      
+                executable_path=ChromeDriverManager().install(), options=chrome_options)
+        self.driver = driver
+        self.set_viewport_size(800, 600)
+        os.system(&#39;cls&#39; if os.name==&#39;nt&#39; else &#39;clear&#39;)
+
+        products =  [&#39;ACUCAR CRISTAL&#39;,
+                                &#39;ARROZ PARBOILIZADO&#39;,
+                                &#39;BANANA DA PRATA&#39;,
+                                &#39;CAFE MOIDO&#39;,
+                                &#39;CHA DE DENTRO&#39;,
+                                &#39;FARINHA DE MANDIOCA&#39;,
+                                &#39;FEIJAO CARIOCA&#39;,
+                                &#39;LEITE LIQUIDO&#39;,
+                                &#39;MANTEIGA 500G&#39;,
+                                &#39;OLEO DE SOJA&#39;,
+                                &#39;PAO FRANCES&#39;,
+                                &#39;TOMATE KG&#39;]
+
+
+        # Requer polimento do algoritmo para garantir a validade das informações
+        # Teste da ferramenta Selenium com chromedriver
+
+        keywords = self.get_keywords()
+        products_backup = products
+        
+        if self.BACKUP:
+                
+                start_prod, start_key = self.backup_check(day, [self.LOCALS_NAME[0], self.LOCALS_NAME[1]])
+                if start_prod &gt; 0 or start_key &gt; 0:
+                
+                        self.TXT.set(&#34;Retomando pesquisa anterior ...&#34;)
+
+        # Define endereço a ser visitado
+        driver.get(URL)
+        # * Processo de pesquisa de produto
+        driver.find_element_by_id(&#39;fake-sbar&#39;).click()
+        time.sleep(1*times)
+
+        self.TXT.set(&#34;Pesquisa iniciada ...&#34;)
+        
+        if os.name == &#39;nt&#39;:
+
+                toaster = ToastNotifier()
+                toaster.show_toast(&#34;Pesquisa iniciada.&#34;,
+                                        &#34; &#34;,
+                                        icon_path=self.ico,
+                                        duration = 10)
+        
+        self.TXT.set(&#34;Iniciando arquivos ...&#34;)
+        # Cria a pasta de pesquisa
+        dic = self.CITY + &#39; [ &#39; + day + &#39; ]&#39;
+        if not os.path.exists(dic):
+
+                os.makedirs(dic)
+
+        csvfile = dic + &#39;/&#39; + self.LOCALS_NAME[0] + &#39; &#39; + self.LOCALS_NAME[1] + &#39;.csv&#39; 
+        all_file = dic + &#39;/&#39; + &#39;TODOS &#39; + self.LOCALS_NAME[0] + &#39; &#39; + self.LOCALS_NAME[1]  + &#39;.csv&#39;
+        self.csvfile = csvfile          
+        self.csvfile_name =  dic + &#39;/&#39; + self.LOCALS_NAME[0] + &#39; &#39; + self.LOCALS_NAME[1]                
+        self.all_file = all_file                
+        self.all_file_name = dic + &#39;/&#39; + &#39;TODOS &#39; + self.LOCALS_NAME[0] + &#39; &#39; + self.LOCALS_NAME[1]             
+
+        # Se arquivo já existe, não preciso inicia-lo
+        if start_prod != 0 or self.BACKUP:
+                
+                # print(&#34;restart&#34;)
+                self.PROGRESS_BAR[&#39;value&#39;] = (start_prod) * (100/len(products_backup))
+                products = products[start_prod:]
+                keywords = keywords[start_prod:]
+                restart = False
+                
+        else: 
+                
+                products = products_backup
+                # Inicia o arquivo csv com as colunas principais
+                with open(csvfile, &#39;w+&#39;, newline=&#39;&#39;) as file:
+
+                        writer = csv.writer(file, delimiter=&#39;,&#39;)
+                        writer.writerow(
+                                [&#34;PRODUTO&#34;, &#34;ESTABELECIMENTO&#34;, &#34;KEYWORD&#34;, &#34;PRECO&#34;])
+
+                with open(all_file, &#39;w+&#39;, newline=&#39;&#39;) as file:
+
+                        writer = csv.writer(file, delimiter=&#39;,&#39;)
+                        writer.writerow(
+                                [&#34;PRODUTO&#34;, &#34;ESTABELECIMENTO&#34;, &#34;KEYWORD&#34;, &#34;PRECO&#34;])
+                
+        self.PAUSE_BUTTON[&#34;state&#34;] = &#34;normal&#34;
+
+        for index, product in enumerate(products):
+
+                if  not self.connect():
+
+                        self.exit_thread(None,None,None,None,None)
+                        return
+
+                if self.stop:
+
+                        self.exit = True
+                        return
+                        
+                keyword = keywords[index]
+                if index == 0 and start_key &gt; 0:
+                        
+                        keyword = keyword[start_key:]
+                
+                self.TXT.set(&#34;Pesquisando Produto : &#34; +&#39;[ &#39;+ product + &#39; ]&#39; )
+                
+                
+                for key, word in enumerate(keyword):
+                        
+                        if not self.connect():
+
+                                self.exit_thread(None,None,None,None,None)
+                                return
+
+                        self.backup_save(index + start_prod, day, key + start_key, 0, [self.LOCALS_NAME[0], self.LOCALS_NAME[1]], self.CITY, [self.LOCALS[0], self.LOCALS[1]])
+
+                        if self.stop:
+
+                                self.exit = True
+                                return
+                        
+                        time.sleep(3*times)
+                        
+                        # Barra de pesquisa superior (produtos)
+                        try:
+
+                                WebDriverWait(driver, 2*times).until(
+                                        EC.presence_of_element_located((By.CLASS_NAME, &#34;sbar-input&#34;)))
+
+                        except:
+
+                                self.captcha()
+                                driver.get(&#39;https://precodahora.ba.gov.br/produtos&#39;)
+                                time.sleep(2*times)
+
+                        finally:
+
+                                search = driver.find_element_by_id(&#39;top-sbar&#39;)
+
+                        for w in word:
+
+                                search.send_keys(w)
+                                time.sleep(0.25)
+
+                        # Realiza a pesquisa (pressiona enter)
+                        search.send_keys(Keys.ENTER)
+
+                        time.sleep(3*times)
+                        driver.page_source.encode(&#39;utf-8&#39;)
+
+                        # * Processo para definir a região desejada para ser realizada a pesquisa
+
+                        if index == 0:
+                                
+                                # Botão que abre o modal referente a localização
+                                try:
+
+                                        WebDriverWait(driver, 2*times).until(
+                                                EC.presence_of_element_located((By.CLASS_NAME, &#34;location-box&#34;)))
+
+                                except:
+
+                                        self.captcha()
+                                        time.sleep(1)
+                                                
+                                finally:
+
+                                        driver.find_element_by_class_name(&#39;location-box&#39;).click()
+                                        time.sleep(2*times)
+
+                                # Botão que abre a opção de inserir o CEP
+                                try:
+
+                                        WebDriverWait(driver, 2*times).until(
+                                                EC.presence_of_element_located((By.ID, &#34;add-center&#34;)))
+
+                                except:
+
+                                        self.captcha()
+                                        time.sleep(1)
+
+                                finally:
+
+                                        driver.find_element_by_id(&#39;add-center&#39;).click()
+                                        time.sleep(2*times)
+
+                                # Envia o MUNICIPIO desejado para o input
+
+                                driver.find_element_by_class_name(&#39;sbar-municipio&#39;).send_keys(self.CITY)
+                                time.sleep(1)
+
+                                # Pressiona o botão que realiza a pesquisa por MUNICIPIO
+                                driver.find_element_by_class_name(&#39;set-mun&#39;).click()
+                                
+                                time.sleep(1)
+                                driver.find_element_by_id(&#39;aplicar&#39;).click()
+
+                                time.sleep(3*times)
+                        
+                        if self.stop:
+
+                                self.exit = True
+                                return
+                        # Espera a página atualizar, ou seja, terminar a pesquisa. O proceso é reconhecido como terminado quando a classe flex-item2 está presente, que é a classe utilizada para estilizar os elementos listados
+                        try:
+
+                                WebDriverWait(driver, 5*times).until(
+                                        EC.presence_of_element_located((By.CLASS_NAME, &#34;flex-item2&#34;)))
+
+                        except:
+
+                                self.captcha()
+                                time.sleep(2*times)
+
+                        finally:
+
+                                flag = 0
+                                while True:
+
+                                        if self.stop:
+
+                                                self.exit = True
+                                                return
+
+                                        try:
+
+                                                WebDriverWait(driver, 5*times).until(
+                                                        EC.presence_of_element_located((By.ID, &#34;updateResults&#34;)))
+                                                time.sleep(2*times)
+                                                driver.find_element_by_id(&#39;updateResults&#39;).click()
+                                                flag = flag + 1
+
+                                                if flag == 3:
+
+                                                        break
+
+                                        except:
+
+                                                if self.check_captcha(0):
+                                                        
+                                                        # print(&#34;Quantidade máxima de paginas abertas.&#34;)
+                                                        time.sleep(1)
+                                                        break
+                                                        
+                                                else:
+                                                                        
+                                                        self.captcha()
+
+                                if self.stop:
+
+                                                self.exit = True
+                                                return
+                                
+                                with open(csvfile, &#39;a+&#39;, newline=&#39;&#39;) as file:
+
+                                        writer = csv.writer(file, delimiter=&#39;,&#39;)
+                                        self.get_data(writer, product, word)
+                                
+                                self.csv_to_xlsx(csvfile)
+
+                max_val = self.PROGRESS_BAR[&#39;value&#39;] + (100/len(products_backup)) + 1
+                for x in range(int(self.PROGRESS_BAR[&#39;value&#39;]), int(max_val)):
+                
+                        self.PROGRESS_BAR[&#39;value&#39;] = x
+                        time.sleep(0.01)
+                        
+                if os.name == &#39;nt&#39; and (index - len(products_backup))  == len(products_backup)/2:
+
+                        toaster = ToastNotifier()
+                        toaster.show_toast(&#34;Pesquisa na metade ...&#34;,
+                                                &#34; &#34;,
+                                                icon_path=self.ico,
+                                                duration = 10)
+        
+        if self.stop:
+
+                self.exit = True
+                return
+
+        time.sleep(1)
+        for x in range(100,-1,-1):
+                
+                self.PROGRESS_BAR[&#39;value&#39;] = x
+                time.sleep(0.01)
+        
+        self.backup_save(0, day, 0, 1, [self.LOCALS_NAME[0], self.LOCALS_NAME[1]], self.CITY, [self.LOCALS[0], self.LOCALS[1]])
+        start_prod = 0
+                
+        self.csv_to_xlsx(csvfile)
+        self.remove_duplicates(self.csvfile_name)
+        self.remove_duplicates(self.all_file_name)
+        
+        self.BUTTON.config(text=&#34;INICIAR PESQUISA&#34;)
+        self.BUTTON[&#34;state&#34;] = &#34;normal&#34;
+        self.TXT.set(&#34;Aguardando inicio de pesquisa ...&#34;)
+        self.INTERFACE.change_frame(self.INTERFACE.frame_bar, self.INTERFACE.frame)
+
+        
+        if os.name == &#39;nt&#39;:
+
+                toaster = ToastNotifier()
+                toaster.show_toast(&#34;Pesquisa encerrada.&#34;,
+                                &#34; &#34;,
+                                icon_path=self.ico,
+                                duration = 10)
+                
+        driver.close()
+        driver.quit()</code></pre>
+</details>
+</dd>
+<dt id="ACCB_IT.scrapper.Scrap.set_viewport_size"><code class="name flex">
+<span>def <span class="ident">set_viewport_size</span></span>(<span>self, width, height)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Muda o tamanho da janela do navegador.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_viewport_size(self, width, height):
+
+        &#34;&#34;&#34; Muda o tamanho da janela do navegador. &#34;&#34;&#34;
+        window_size = self.driver.execute_script(&#34;&#34;&#34;
+                return [window.outerWidth - window.innerWidth + arguments[0],
+                window.outerHeight - window.innerHeight + arguments[1]];
+                &#34;&#34;&#34;, width, height)
+        self.driver.set_window_size(*window_size)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="ACCB_IT" href="index.html">ACCB_IT</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="ACCB_IT.scrapper.Scrap" href="#ACCB_IT.scrapper.Scrap">Scrap</a></code></h4>
+<ul class="two-column">
+<li><code><a title="ACCB_IT.scrapper.Scrap.backup_check" href="#ACCB_IT.scrapper.Scrap.backup_check">backup_check</a></code></li>
+<li><code><a title="ACCB_IT.scrapper.Scrap.backup_save" href="#ACCB_IT.scrapper.Scrap.backup_save">backup_save</a></code></li>
+<li><code><a title="ACCB_IT.scrapper.Scrap.captcha" href="#ACCB_IT.scrapper.Scrap.captcha">captcha</a></code></li>
+<li><code><a title="ACCB_IT.scrapper.Scrap.check_captcha" href="#ACCB_IT.scrapper.Scrap.check_captcha">check_captcha</a></code></li>
+<li><code><a title="ACCB_IT.scrapper.Scrap.connect" href="#ACCB_IT.scrapper.Scrap.connect">connect</a></code></li>
+<li><code><a title="ACCB_IT.scrapper.Scrap.csv_to_xlsx" href="#ACCB_IT.scrapper.Scrap.csv_to_xlsx">csv_to_xlsx</a></code></li>
+<li><code><a title="ACCB_IT.scrapper.Scrap.exit_thread" href="#ACCB_IT.scrapper.Scrap.exit_thread">exit_thread</a></code></li>
+<li><code><a title="ACCB_IT.scrapper.Scrap.get_data" href="#ACCB_IT.scrapper.Scrap.get_data">get_data</a></code></li>
+<li><code><a title="ACCB_IT.scrapper.Scrap.get_driver" href="#ACCB_IT.scrapper.Scrap.get_driver">get_driver</a></code></li>
+<li><code><a title="ACCB_IT.scrapper.Scrap.get_keywords" href="#ACCB_IT.scrapper.Scrap.get_keywords">get_keywords</a></code></li>
+<li><code><a title="ACCB_IT.scrapper.Scrap.get_progess_bar" href="#ACCB_IT.scrapper.Scrap.get_progess_bar">get_progess_bar</a></code></li>
+<li><code><a title="ACCB_IT.scrapper.Scrap.pop_up" href="#ACCB_IT.scrapper.Scrap.pop_up">pop_up</a></code></li>
+<li><code><a title="ACCB_IT.scrapper.Scrap.remove_duplicates" href="#ACCB_IT.scrapper.Scrap.remove_duplicates">remove_duplicates</a></code></li>
+<li><code><a title="ACCB_IT.scrapper.Scrap.resource_path" href="#ACCB_IT.scrapper.Scrap.resource_path">resource_path</a></code></li>
+<li><code><a title="ACCB_IT.scrapper.Scrap.run" href="#ACCB_IT.scrapper.Scrap.run">run</a></code></li>
+<li><code><a title="ACCB_IT.scrapper.Scrap.set_viewport_size" href="#ACCB_IT.scrapper.Scrap.set_viewport_size">set_viewport_size</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>
