@@ -8,7 +8,7 @@
   <p align="center">
     Projeto desenvolvido para o projeto de iniciação tecnológica
     <br />
-    <a href="https://github.com/Syphoon/ACCB_IT/tree/GUI/doc"><strong>Documentação do código do projeto</strong></a>
+    <a href="https://github.com/Syphoon/ACCB_IT/tree/GUI/doc/index.html"><strong>Documentação do código do projeto</strong></a>
   </p>
 </p>
 
