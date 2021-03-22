@@ -59,6 +59,24 @@ class Scrap:
 		self.stop = False
 		self.exit = False
 	
+	def filter_word(self, product_name, product):
+
+		words = product_name.split(" ")
+
+		found_product = False
+
+		for word in words:
+
+			if  word in product:
+				
+				found_product = True
+			
+			else: 
+				
+				found_product = False
+
+		return(found_product)
+
 	def connect(self):
 		
 		""" Confere a conexão com o host desejado. """
@@ -301,8 +319,8 @@ class Scrap:
 			
 
 			if local[0] in str(product_adress):
-
-				if product in str(product_name):
+				
+				if self.filter_word(product, product_name):
 						
 					print('NORMAL ----------------------- ')
 					print('Preço : ' + str(product_price))
@@ -315,7 +333,7 @@ class Scrap:
 				
 			if local[1] in str(product_adress):
 
-				if product in str(product_name):
+				if self.filter_word(product, product_name):
 					
 					print('NORMAL ----------------------- ')
 					print('Preço : ' + str(product_price))
@@ -326,21 +344,19 @@ class Scrap:
 					writer.writerow([str(product_name), str(
 						product_adress), str(keyword), str(product_price)])
 				
-			if product in str(product_name):
-				
-				print('Todos ----------------------------')
-				print('Preço : ' + str(product_price))
-				print('Local : ' + str(product_adress))
-				print('Produto : ' + str(product_name))
-				print('Todos ----------------------------')
-				
-				with open(self.all_file, 'a+', newline='') as file:
+			
+			print('Todos ----------------------------')
+			print('Preço : ' + str(product_price))
+			print('Local : ' + str(product_adress))
+			print('Produto : ' + str(product_name))
+			print('Todos ----------------------------')
+			with open(self.all_file, 'a+', newline='') as file:
 
-					writer_2 = csv.writer(file, delimiter=',')
-					writer_2.writerow([str(product_name), str(
-					product_adress), str(keyword), str(product_price)])
+				writer_2 = csv.writer(file, delimiter=',')
+				writer_2.writerow([str(product_name), str(
+				product_adress), str(keyword), str(product_price)])
 
-				self.csv_to_xlsx(self.all_file)
+			self.csv_to_xlsx(self.all_file)
 				
 
 		if found:
@@ -353,15 +369,15 @@ class Scrap:
 			writer.writerow([str(product), str(local_name[1]),
 							str(keyword), "N/A"])
 
-	def check_captcha(self, request):
+	def check_captcha(self, request=0):
 		
 		""" Função que confere se o captcha foi resolvido com sucesso pelo usuário. """
 		excpt = True
-		if request == 1:
+		# if request == 1:
 			
-			self.driver.back()
+		# 	self.driver.back()
 		
-		time.sleep(1)
+		# time.sleep(1)
 		try:
 
 			WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.CLASS_NAME, "flash")))
@@ -371,34 +387,48 @@ class Scrap:
 			# print("Captcha desativado.")
 			time.sleep(1)
 			excpt = False
-			return True
+			return False
 
 		finally:
 
 			if excpt:
 				
 				# print("Captcha ativado.")
-				return False
+				
+				return True
 		
 	def pop_up(self):
-		""" Mostra uma mensagem x em pop up para o usuário. """
-		result = messagebox.askquestion("CAPTCHA", "Captcha foi ativado, abra o site do preço da hora e resolva-o em seu navegador ( aperte Sim para continuar )", icon='warning')
-		if result == 'yes' and self.check_captcha(1):
-			return True
-		else:
-			return False
+		""" Mostra uma mensagem em pop up para o usuário. """
+		result = messagebox.showinfo("CAPTCHA", "Captcha foi ativado, abra o site do preço da hora e resolva-o em seu navegador e pressione OK para continuar", icon='warning')
+		if result:
+      
+			self.driver.back()
+		
+		# if result == 'yes' and self.check_captcha(1):
+		# 	return True
+		# else:
+		# 	return False
 
 	def captcha(self):
 		
 		""" Trata por erro de rede e inicia um loop para conferir se o usuário resolveu o captcha. """
 		# Se eu tenho conexão o captcha foi ativado, se não, é erro de rede.
 		if self.connect():
-				
+			
 			while True:
+				# print("CAPTCHA")
 
-				if self.pop_up():
+				if self.check_captcha(1):
+			
+					# print("CAPTCHA TRUE")
+
 					
-					break        
+					self.pop_up()
+
+				else:
+
+					# print("CAPTCHA FALSE")
+					return 
 		else:
 
 			self.exit_thread(None, None, None, None, None)
@@ -511,7 +541,7 @@ class Scrap:
 		"""
 		first  = 0
 		URL = 'https://precodahora.ba.gov.br/'
-		times = 5
+		times = 4
 		today = date.today()
 		day = today.strftime("%d-%m-%Y")
 		start_prod = 0
@@ -537,21 +567,34 @@ class Scrap:
 
 		products =  ['ACUCAR CRISTAL',
 					'ARROZ PARBOILIZADO',
+					'BANANA PRATA',
+					'CAFE MOIDO',
+					'CHA DENTRO',
+					'FARINHA MANDIOCA',
+					'FEIJAO CARIOCA',
+					'LEITE LIQUIDO',
+					'MANTEIGA 500G',
+					'OLEO SOJA',
+					'PAO FRANCES',
+					'TOMATE KG']
+
+		product_name = ['ACUCAR CRISTAL',
+					'ARROZ PARBOILIZADO',
 					'BANANA DA PRATA',
 					'CAFE MOIDO',
 					'CHA DE DENTRO',
 					'FARINHA DE MANDIOCA',
 					'FEIJAO CARIOCA',
 					'LEITE LIQUIDO',
-					'MANTEIGA 500G',
+					'MANTEIGA',
 					'OLEO DE SOJA',
 					'PAO FRANCES',
-					'TOMATE KG']
+					'TOMATE']
 
 
 		# Requer polimento do algoritmo para garantir a validade das informações
 		# Teste da ferramenta Selenium com chromedriver
-
+		
 		keywords = self.get_keywords()
 		products_backup = products
 		
@@ -566,7 +609,7 @@ class Scrap:
 		driver.get(URL)
 		# * Processo de pesquisa de produto
 		driver.find_element_by_id('fake-sbar').click()
-		time.sleep(1*times)
+		time.sleep(times)
 
 		self.TXT.set("Pesquisa iniciada ...")
 		
@@ -636,7 +679,7 @@ class Scrap:
 				
 				keyword = keyword[start_key:]
 			
-			self.TXT.set("Pesquisando Produto : " +'[ '+ product + ' ]' )
+			self.TXT.set("Pesquisando Produto : " +'[ ' + product_name[index + start_prod] + ' ]' )
 			
 			
 			for key, word in enumerate(keyword):
@@ -653,19 +696,18 @@ class Scrap:
 					self.exit = True
 					return
 				
-				time.sleep(3*times)
+				time.sleep(2*times)
 				
 				# Barra de pesquisa superior (produtos)
 				try:
 
-					WebDriverWait(driver, 2*times).until(
+					WebDriverWait(driver, 3*times).until(
 						EC.presence_of_element_located((By.CLASS_NAME, "sbar-input")))
 
 				except:
 
 					self.captcha()
 					driver.get('https://precodahora.ba.gov.br/produtos')
-					time.sleep(2*times)
 
 				finally:
 
@@ -689,7 +731,7 @@ class Scrap:
 					# Botão que abre o modal referente a localização
 					try:
 
-						WebDriverWait(driver, 2*times).until(
+						WebDriverWait(driver, 4*times).until(
 							EC.presence_of_element_located((By.CLASS_NAME, "location-box")))
 
 					except:
@@ -729,7 +771,7 @@ class Scrap:
 					time.sleep(1)
 					driver.find_element_by_id('aplicar').click()
 
-					time.sleep(3*times)
+					time.sleep(2*times)
 				
 				if self.stop:
 
@@ -738,13 +780,13 @@ class Scrap:
 				# Espera a página atualizar, ou seja, terminar a pesquisa. O proceso é reconhecido como terminado quando a classe flex-item2 está presente, que é a classe utilizada para estilizar os elementos listados
 				try:
 
-					WebDriverWait(driver, 5*times).until(
+					WebDriverWait(driver, 4*times).until(
 						EC.presence_of_element_located((By.CLASS_NAME, "flex-item2")))
 
 				except:
 
 					self.captcha()
-					time.sleep(2*times)
+					time.sleep(times)
 
 				finally:
 
@@ -758,7 +800,7 @@ class Scrap:
 
 						try:
 
-							WebDriverWait(driver, 5*times).until(
+							WebDriverWait(driver, 2*times).until(
 								EC.presence_of_element_located((By.ID, "updateResults")))
 							time.sleep(2*times)
 							driver.find_element_by_id('updateResults').click()
@@ -770,10 +812,9 @@ class Scrap:
 
 						except:
 
-							if self.check_captcha(0):
+							if not self.check_captcha(0):
 								
 								# print("Quantidade máxima de paginas abertas.")
-								time.sleep(1)
 								break
 								
 							else:

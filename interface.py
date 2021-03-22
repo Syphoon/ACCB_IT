@@ -84,7 +84,7 @@ class Lstbox:
 
 	def destroy(self):
 
-		""" Destroi a janela principal do programa.  """
+		""" Destroe a janela principal do programa.  """
 		self.root.destroy()
 
 class Tread(threading.Thread):
@@ -101,7 +101,7 @@ class Tread(threading.Thread):
 			frame_bar (tkinter.frame): Janela de pesquisa da aplicação.  
 	"""
 
-	def __init__(self, function, text, button, pop_up, change_frame, frame, frame_bar):
+	def __init__(self, function, text, button, pop_up, change_frame, frame, frame_bar, backup_check):
 
 		super(Tread, self).__init__()
 		self.event = threading.Event()
@@ -113,6 +113,7 @@ class Tread(threading.Thread):
 		self.change_frame = change_frame
 		self.frame = frame
 		self.frame_bar = frame_bar
+		self.backup_check = backup_check
 	
 	def pop_up_info(self, message):
 
@@ -138,12 +139,18 @@ class Tread(threading.Thread):
 				# self.pop_up()
 		
 			else:
-				
+
+				self.button["state"] = tk.NORMAL
+				self.button.config(text="INICIAR PESQUISA")
+				self.change_frame(self.frame_bar, self.frame)
 				self.pop_up_info("Instale uma versão do google chrome para prosseguir com a pesquisa !")
+				os.system('cls' if os.name=='nt' else 'clear')
+				return
 
 			
 			self.text.set("Ocorreu um erro durante a pesquisa ... Retomando pesquisa ...")
-			self.run()
+			# self.run()
+			self.backup_check(True)
 		
 		else:
 
@@ -284,7 +291,7 @@ class Interface:
 		scrap = scrapper.Scrap(local, self.button, self.tk, self.progress_bar, self.text, self.city_name, local_name, False, self.pause_button, self)
 		self.scrap = scrap
 
-		tread = Tread(scrap, self.text, self.button, self.pop_up_info, self.change_frame, self.frame, self.frame_bar)
+		tread = Tread(scrap, self.text, self.button, self.pop_up_info, self.change_frame, self.frame, self.frame_bar, self.backup_check)
 		tread.start() 
 		self.thread = tread
 
@@ -330,7 +337,7 @@ class Interface:
 							'Atacadao Rondelli',		
 							'Mercado Dois Imaos',		
 							'Maxx Atacado',		
-							'Padaria Le & Gi',		
+							'Novo Barateiro',		
 							'Compre Bem',
 							]
 
@@ -338,11 +345,11 @@ class Interface:
 					'COMPRE AQUI',		
 					'BOMPRECO',	
 					'DALNORDE',		
-					'MATTOS',		
+					'MATOS',		
 					'SUPERMERCADO BARATEIRO',		
 					'HIPER ITAO',		
 					'RONDELLI',		
-					'IRMAOS',		
+					'IRMÃOS',		
 					'MAXXI',	
 					'NOVO BARATEIRO',	
 					'COMPRE BEM']
@@ -361,13 +368,13 @@ class Interface:
 
 		LOCALS_IOS = ['ITAO',
 					'DALNORDE',
-					'MANGOSTÃO',
+					'MANGOSTAO',
 					'GBARBOSA',
 					'JACIANA',
-					'ALANNA',
-					'CLAUDINTE',
+					'ALANA',
+					'CLAUDINETE',
 					'NENEM',
-					'CESTAO',
+					'NAO POSSUI',
 					'ATACADAO']
 
 		if backup:
@@ -378,18 +385,17 @@ class Interface:
 
 			if city_backup == 'Itabuna':
 
-					
 				scrap = scrapper.Scrap(place, self.button, self.tk, self.progress_bar, self.text, city_backup, estab, True, self.pause_button, self)
 				self.scrap = scrap
-				tread = Tread(scrap, self.text, self.button, self.pop_up_info, self.change_frame, self.frame, self.frame_bar)
+				tread = Tread(scrap, self.text, self.button, self.pop_up_info, self.change_frame, self.frame, self.frame_bar, self.backup_check)
 				tread.start()
 				self.thread = tread
 
-			elif city_backup == 'Ilhéus':
+			else:
 
 				scrap = scrapper.Scrap(place, self.button, self.tk, self.progress_bar, self.text, city_backup, estab, True, self.pause_button, self)
 				self.scrap = scrap	
-				tread = Tread(scrap, self.text, self.button, self.pop_up_info, self.change_frame, self.frame, self.frame_bar)
+				tread = Tread(scrap, self.text, self.button, self.pop_up_info, self.change_frame, self.frame, self.frame_bar, self.backup_check)
 				tread.start()
 				self.thread = tread
 
@@ -410,9 +416,9 @@ class Interface:
 			width = 350
 			heigth = 360
 
-			x = (top.winfo_screenwidth() // 2) - (width // 2)
-			y = (top.winfo_screenheight() // 2) - (heigth // 2)
-			top.geometry('{}x{}+{}+{}'.format(width, heigth, x + width, y))
+			x = (top.winfo_screenwidth() // 2) - 3*(width // 2)
+			y = (top.winfo_screenheight() // 2) - (120)
+			top.geometry('{}x{}+{}+{}'.format(width, heigth, x, y))
 
 			if self.city.get() == 1:
 
@@ -453,10 +459,14 @@ class Interface:
 				self.selected = Lstbox(top, LOCALS_NAME_IOS, start_button)
 				start_button.pack()
 
-	def backup_check(self):
+	def backup_check(self, tread_check=False):
 		""" Realiza a checagem de backup, caso o usuário inicie uma pesquisa é retornado um pop up caso tenha uma pesquisa em backup. """
 		today = datetime.today()
 		day = today.strftime("%d-%m-%Y")
+		selected_city = "Itabuna"
+		if self.city.get() == 2:
+
+			selected_city = "Ilhéus"
 		
 		try:
 		
@@ -493,17 +503,29 @@ class Interface:
 			
 		# Pesquisa do estabelecimento nao acabou
 		if finish == 0:
-			
-			if self.pop_up():
-				
+
+			if tread_check == True:
+
 				self.start_search(True, city_backup, [estab_1, estab_2], [place_1, place_2])
 				return
+			
+			if city_backup == selected_city:
 
+				if self.pop_up():
+
+					self.start_search(True, city_backup, [estab_1, estab_2], [place_1, place_2])
+					return
+
+				else:
+					
+					self.start_search(False, None, None, None)
+					return
 			else:
-				
+
 				self.start_search(False, None, None, None)
 				return
 		
+		# Pesquisa acabou
 		elif finish == 1:
 			
 			self.start_search(False, None, None, None)
@@ -537,8 +559,9 @@ class Interface:
 		width = 350
 		heigth = 165
 
-		x = (window.winfo_screenwidth() // 2) - (width // 2)
-		y = (window.winfo_screenheight() // 2) - (heigth // 2)
+		# x = (window.winfo_screenwidth() // 2) - (width // 2)
+		x = (window.winfo_screenwidth() // 2) + 3*(width // 2)
+		y = (window.winfo_screenheight() // 2) - 4*(heigth // 2)
 		window.geometry('{}x{}+{}+{}'.format(width, heigth, x, y))
 
 		# Frame
@@ -614,7 +637,12 @@ class Interface:
 		self.frame = frame
 		self.frame_bar = frame_bar
 		self.pause_button = pause_button
-	
+
+		x = (window.winfo_screenwidth() // 2) - 3*(width // 2)
+		
+		
+		threading.Thread(target=lambda:window.geometry('{}x{}+{}+{}'.format(width, heigth, x, y)))
+  
 		window.mainloop()
 		# top.mainloop()
     
