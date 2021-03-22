@@ -545,6 +545,11 @@ class Interface:
 	def run(self):
 		""" Inicia a instância da janela principal da aplicação. """
 		# Window
+		if os.environ.get('DISPLAY','') == '':
+      
+			print('no display found. Using :0.0')
+			os.environ.__setitem__('DISPLAY', ':0.0')
+	
 		window = tk.Tk()
 		self.tk = window
 		window.title('ACCB - Pesquisa Automatica')
