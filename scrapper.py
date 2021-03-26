@@ -538,6 +538,7 @@ class Scrap:
 			driver (selenium.Driver): Instância do objeto responsável por realizar a automação do browser.  
 			start_prod (int): Indíce de inicio do produto caso seja uma pesquisa por backup.  
 			start_key (int): Indíce de inicio de palavra chave caso seja uma pesquisa por backup.  
+
 		"""
 		first  = 0
 		URL = 'https://precodahora.ba.gov.br/'
@@ -563,6 +564,7 @@ class Scrap:
 			executable_path=ChromeDriverManager().install(), options=chrome_options)
 		self.driver = driver
 		self.set_viewport_size(800, 600)
+
 		os.system('cls' if os.name=='nt' else 'clear')
 
 		products =  ['ACUCAR CRISTAL',
@@ -591,9 +593,6 @@ class Scrap:
 					'PAO FRANCES',
 					'TOMATE']
 
-
-		# Requer polimento do algoritmo para garantir a validade das informações
-		# Teste da ferramenta Selenium com chromedriver
 		
 		keywords = self.get_keywords()
 		products_backup = products
@@ -604,9 +603,23 @@ class Scrap:
 			if start_prod > 0 or start_key > 0:
 			
 				self.TXT.set("Retomando pesquisa anterior ...")
+		
 
 		# Define endereço a ser visitado
 		driver.get(URL)
+
+		try:
+
+			WebDriverWait(driver, 5).until(
+				EC.presence_of_element_located((By.ID, "informe-sefaz-error")))
+			
+			driver.find_element_by_id('informe-sefaz-error').click()
+
+		except:
+			
+			print("Pop Up Error")
+			pass 
+
 		# * Processo de pesquisa de produto
 		driver.find_element_by_id('fake-sbar').click()
 		time.sleep(times)
@@ -688,15 +701,27 @@ class Scrap:
 
 					self.exit_thread(None,None,None,None,None)
 					return
- 
+
 				self.backup_save(index + start_prod, day, key + start_key, 0, [self.LOCALS_NAME[0], self.LOCALS_NAME[1]], self.CITY, [self.LOCALS[0], self.LOCALS[1]])
 
 				if self.stop:
 
 					self.exit = True
 					return
+
+					try:
+
+						WebDriverWait(self.driver, 5).until(
+							EC.presence_of_element_located((By.ID, "informe-sefaz-error")))
+						
+						self.driver.find_element_by_id('informe-sefaz-error').click()
+
+					except:
+						
+						print("Pop Up Error")
+						pass
 				
-				time.sleep(2*times)
+				time.sleep(1.5*times)
 				
 				# Barra de pesquisa superior (produtos)
 				try:
