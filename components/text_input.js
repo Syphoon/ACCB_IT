@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {TextInput} from 'react-native';
 
-const UselessTextInput = (props) => {
+const text_input = (props) => {
   const [value, onChangeText] = React.useState(value);
 
   return (
@@ -16,4 +16,4 @@ const UselessTextInput = (props) => {
   );
 };
 
-export default UselessTextInput;
+export default text_input;

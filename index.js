@@ -7,6 +7,7 @@ import Splash from './screens/splash_screen';
 import Login from './screens/login';
 import Coleta from './screens/coleta';
 import Form from './screens/form';
+import Realm from './screens/realm';
 
 const Stack = createStackNavigator();
 
@@ -14,10 +15,10 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Form" component={Form} />
-        <Stack.Screen name="Home" component={Splash} />
+				<Stack.Screen name="Splash" component={Splash} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Coleta" component={Coleta} />
+				<Stack.Screen name="Form" component={Form} />
       </Stack.Navigator>
     </NavigationContainer>
   );
