@@ -205,7 +205,7 @@ export default class Form extends Component {
 						{/* <View style={app.text_list_divider} /> */}
 						<View style={app.text_list_container}>
 							<Text style={{ ...app.text_list_first }}>Data  - </Text>
-							<Text style={{ ...app.text_list }}>{item.coleta_data}</Text>
+							<Text style={{ ...app.text_list }}>{item.coleta_data.split('-').reverse().join('-').replace(/-/g, '/')}</Text>
 						</View>
 						{/* <View style={app.text_list_divider} /> */}
 						{/* <View style={app.text_list_container}>
@@ -214,7 +214,7 @@ export default class Form extends Component {
 						</View> */}
 					</View>
 
-					<View key={item.id}>
+					<View key={item.id} style={{ alignItems: 'center' }}>
 						{this.icon_list(
 							{ coleta_id: item.id, pesquisa_id: item.pesquisa_id, estabelecimento_id: item.estabelecimento_id, estabelecimento_nome: item.estabelecimento_nome },
 							{ name_1: item.coleta_fechada == 0 ? 'unlock' : 'lock', name_2: 'shopping-cart' },
@@ -354,7 +354,8 @@ export default class Form extends Component {
 							onPress={() => navigate('Form', {
 								coleta_id: text.coleta_id,
 								pesquisa_id: text.pesquisa_id,
-								estabelecimento_id: text.estabelecimento_id
+								estabelecimento_id: text.estabelecimento_id,
+								estabelecimento_nome: text.estabelecimento_nome
 							})}
 						/>
 						<Text style={app.container_icon_text}>Iniciar Coleta</Text>

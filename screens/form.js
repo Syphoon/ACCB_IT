@@ -241,6 +241,7 @@ export default class Form extends Component {
 
 	render() {
 		const { navigate } = this.props.navigation;
+		const data = this.state.param;
 
 		return (
 			<SafeAreaView style={{ ...app.four_color, flex: 1 }}>
@@ -254,7 +255,7 @@ export default class Form extends Component {
 					}}>
 					<View style={app.text_wrapper}>
 						<Text style={{ ...app.text_banner, ...app.one_color }}>
-							Selecione um produto para cadastrar seus preços.
+							Você está coletando no estabelecimento {data.estabelecimento_nome}. Selecione um produto para cadastrar seus preços.
 				</Text>
 					</View>
 				</View>

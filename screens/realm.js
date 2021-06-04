@@ -207,7 +207,7 @@ export const get_sync_data = async (type, refresh = false) => {
 
 	// console.log('sync');
 	return axios
-		.get(`https://bc3d5d336cc9.ngrok.io/request_it.php/?&accb_it_sync=${sync}`,
+		.get(`http://192.168.15.17:80/request_it.php/?&accb_it_sync=${sync}`,
 			{
 				timeout: 1000 * 3,
 				headers: {
@@ -296,7 +296,7 @@ export const get_sync_data = async (type, refresh = false) => {
 export const send_prices = async (info) => {
 
 	return axios
-		.post(`https://bc3d5d336cc9.ngrok.io/request_it.php/?&accb_it_prices`,
+		.post(`http://192.168.15.17:80/request_it.php/?&accb_it_prices`,
 			{
 				data: info,
 			},
