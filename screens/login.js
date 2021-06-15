@@ -1,27 +1,58 @@
 import React, {Component} from 'react';
 import { View, Text, SafeAreaView, Image, TouchableOpacity, Alert, TextInput } from 'react-native';
-import Inputs from '../components/text_input';
-import app from '../styles';
-import {heightPercentageToDP} from 'react-native-responsive-screen';
-import { check_backup, loading_screen, get_sync_data, delete_db_info, list_data, save_user, get_data } from './realm'
-import Icon from 'react-native-vector-icons/FontAwesome';
+
 import NetInfo from "@react-native-community/netinfo";
+
+import app from '../styles';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+import Inputs from '../components/text_input';
+import PopUp from '../components/alert';
+import { check_backup, loading_screen, get_sync_data, delete_db_info, list_data, save_user, get_data } from './realm'
 
 export default Login = (props) => {
 
 	const [sync, updateSync] = React.useState(sync);
 	const [username, onChangeTextUser] = React.useState(username);
 	const [password, onChangeTextSenha] = React.useState(password);
+	const [prop, updateProps] = React.useState({
+		props: {
+			type: undefined,
+			message: undefined,
+			icon: undefined,
+			confirm: undefined,
+			modalVisible: false,
+		}
+	})
 	const { replace } = props.navigation;
 	const { navigate } = props.navigation;
 
+	show_alert = (info) => {
+
+		const message = info.message;
+		const icon = info.icon != undefined ? info.icon : undefined;
+		const type = info.type;
+
+		updateProps({ props: { message: message, icon: icon, type: type, modalVisible: true } });
+
+	}
+
+	reset_alert = () => {
+
+		updateProps({ props: { message: undefined, icon: undefined, type: undefined, modalVisible: false } });
+
+	}
 
 	const component_built = async (refresh = false) => {
 
 		// monica
 		// 12345678
-
+		fetch('https://demo7443497.mockable.io/stream/text')
+			.then((response) => response.json())
+			.then((response) => {
+				console.log(response);
+			});
 		// await delete_db_info();
 		let user_data = await get_data('Usuarios');
 		let result = user_data.filtered(`logado == 1`);
@@ -47,38 +78,44 @@ export default Login = (props) => {
 			local_sync = await check_backup('Usuarios');
 		}
 
-		// CONEXÃO COM INTERNET E TIPO
-		if (local_sync == true) {
+		if (sync == undefined || (refresh && local_sync)) {
 
-			NetInfo.fetch().then(async state => {
+			// CONEXÃO COM INTERNET E TIPO
+			if (local_sync == true) {
 
-				// console.log("Tipo da conexão : ", state.type);
-				// console.log("Conexão disponível : ", state.isConnected);
+				NetInfo.fetch().then(async state => {
 
-				internet = state.isConnected;
+					// console.log("Tipo da conexão : ", state.type);
+					// console.log("Conexão disponível : ", state.isConnected);
 
-				if (internet == true) {
+					internet = state.isConnected;
 
-					await get_sync_data("users") == true ? Alert.alert("Sincronização realizada com sucesso !") : Alert.alert("Não foi possível se comunicar com o Banco de Dados ACCB .");
-					// console.log("Refresh " + refresh);
+					if (internet == true) {
 
-					updateSync(false);
+						// await get_sync_data("users") == true ? Alert.alert("Sincronização realizada com sucesso !") : Alert.alert("Não foi possível se comunicar com o Banco de Dados ACCB .");
+						await get_sync_data("users") == true ? show_alert({ message: 'Sincronização realizada com sucesso !', icon: 'check-square', type: 'message' }) : show_alert({ message: 'Não foi possível se comunicar com o Banco de Dados ACCB .', icon: 'times', type: 'message' });
+						// console.log("Refresh " + refresh);
 
-
-				} else {
-
-					Alert.alert("É necessário internet para sincronizar com o banco ACCB.");
-					updateSync(false);
-
-				}
-
-			});
+						updateSync(false);
 
 
-		} else {
+					} else {
 
-			// param => user_data
-			updateSync(false);
+						// Alert.alert("É necessário internet para sincronizar com o banco ACCB.");
+						show_alert({ message: 'É necessário internet para sincronizar com o banco ACCB.', icon: 'times', type: 'message' })
+						updateSync(false);
+
+					}
+
+				});
+
+
+			} else {
+
+				// param => user_data
+				updateSync(false);
+
+			}
 
 		}
 
@@ -104,7 +141,8 @@ export default Login = (props) => {
 
 				} else {
 
-					Alert.alert("Usuário ou senha invalida.");
+					// Alert.alert("Usuário ou senha invalida.");
+					show_alert({ message: 'Usuário ou senha inválidos.', icon: 'times', type: 'message' })
 
 				}
 
@@ -112,7 +150,8 @@ export default Login = (props) => {
 			} catch (e) {
 
 				console.log(e);
-				Alert.alert("Usuário ou senha invalida.");
+				// Alert.alert("Usuário ou senha invalida.");
+				show_alert({ message: 'Usuário ou senha inválidos.', icon: 'times', type: 'message' })
 				return false;
 
 			}
@@ -125,6 +164,10 @@ export default Login = (props) => {
 
 		return (
 			<SafeAreaView style={{ ...app.one_color, flex: 1 }}>
+				<PopUp
+					props={prop.props}
+					closeModal={() => reset_alert()} />
+				<View style={{ ...app.item_side, marginLeft: '5%' }}></View>
 				<View>
 					<TouchableOpacity
 						style={app.refresh_button_login}
@@ -138,7 +181,7 @@ export default Login = (props) => {
 					</TouchableOpacity>
 				</View>
 				<View
-					style={{ ...app.container, marginTop: heightPercentageToDP('15%') }}>
+					style={{ ...app.container, marginTop: hp('15%') }}>
 					<Image styles={app.logo} source={require('../img/logo_2.png')} />
 					<View style={app.text_wrapper}>
 						<Text style={{ ...app.text }}>
@@ -176,6 +219,6 @@ export default Login = (props) => {
 
 	component_built();
 
-	return sync == undefined || sync ? loading_screen() : login_screen();
+	return sync == undefined ? loading_screen() : login_screen();
 
 }

@@ -90,27 +90,56 @@ export const save_user = async (user, id, logged = 0) => {
 	}
 }
 
-export const save_research_state = async (research) => {
+export const save_research_state = async (research, send = false, value = false) => {
 
 	const realm = await Realm();
-	try {
+	if (send) {
 
-		realm.write(() => {
-			realm.create(
-				'Coletas',
-				{
-					id: parseInt(research.id),
-					coleta_fechada: 1,
-				},
-				'modified'
-			);
-		});
+		try {
 
-	} catch (e) {
+			realm.write(() => {
+				realm.create(
+					'Coletas',
+					{
+						id: parseInt(research.id),
+						enviar: value,
+					},
+					'modified'
+				);
+			});
 
-		console.log('Erro ao salvar coletas.' + e);
+		} catch (e) {
+
+			console.log('Erro ao salvar coletas.' + e);
+			return false;
+
+		}
+
+	} else {
+
+		try {
+
+			realm.write(() => {
+				realm.create(
+					'Coletas',
+					{
+						id: parseInt(research.id),
+						coleta_fechada: 1,
+					},
+					'modified'
+				);
+			});
+
+		} catch (e) {
+
+			console.log('Erro ao salvar coletas.' + e);
+			return false;
+
+		}
 
 	}
+
+	return true;
 
 }
 
@@ -133,6 +162,7 @@ export const save_research = async (research) => {
 					bairro_nome: research.bairro_nome,
 					coleta_data: research.coleta_data,
 					coleta_fechada: research.coleta_fechada == null ? 0 : research.coleta_fechada,
+					enviar: false,
 				},
 				'modified'
 			);
@@ -197,6 +227,8 @@ export const delete_db_info = async () => {
 
 }
 
+
+
 export const get_sync_data = async (type, refresh = false) => {
 
 	let sync = type == "users" ? "user" : "collect";
@@ -207,9 +239,9 @@ export const get_sync_data = async (type, refresh = false) => {
 
 	// console.log('sync');
 	return axios
-		.get(`http://192.168.15.17:80/request_it.php/?&accb_it_sync=${sync}`,
+		.get(`https://47ddf6cb360e.ngrok.io/request_it.php/?&accb_it_sync=${sync}`,
 			{
-				timeout: 1000 * 3,
+				timeout: 1000 * 2,
 				headers: {
 					"Content-Type": "application/json"
 				},
@@ -296,7 +328,7 @@ export const get_sync_data = async (type, refresh = false) => {
 export const send_prices = async (info) => {
 
 	return axios
-		.post(`http://192.168.15.17:80/request_it.php/?&accb_it_prices`,
+		.post(`https://47ddf6cb360e.ngrok.io/request_it.php/?&accb_it_prices`,
 			{
 				data: info,
 			},
@@ -308,7 +340,7 @@ export const send_prices = async (info) => {
 		.then(function (response) {
 
 			let message = response.data == 1 ? true : false;
-			console.log(message);
+			// console.log(response.data);
 
 			return message;
 
@@ -325,7 +357,7 @@ export const send_prices = async (info) => {
 
 			}
 
-			return false;
+			return 'Não foi possível se comunicar com o banco de dados ACCB.';
 
 		});
 

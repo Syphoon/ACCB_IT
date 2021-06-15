@@ -15,6 +15,7 @@ export default class Coletas {
 			pesquisa_id: 'int',
 			coleta_data: 'string',
 			coleta_fechada: 'int',
+			enviar: 'bool',
 		},
 	};
 

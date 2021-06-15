@@ -17,6 +17,8 @@ import NetInfo from "@react-native-community/netinfo";
 import app from '../styles';
 import {heightPercentageToDP as wp} from 'react-native-responsive-screen';
 
+import PopUp from '../components/alert';
+
 import { get_data, save_user, check_backup, get_sync_data, delete_db_info, send_prices, save_research_state } from './realm'
 // import {check_backup, loading_screen, get_sync_data, delete_db_info, list_data, save_user, get_data} from './realm'
 
@@ -28,13 +30,20 @@ export default class Form extends Component {
 		this.state = {
 			municipio: 'itabuna',
 			estabelecimento: 'mercado',
-			modalVisible: false,
 			coletas_status: false,
 			cities: [],
 			places: [],
 			places_all: [],
 			places_backup: [],
 			placeholder: [],
+			send_data: undefined,
+			props: {
+				type: undefined,
+				message: undefined,
+				icon: undefined,
+				confirm: undefined,
+				modalVisible: false,
+			}
 		};
 	}
 
@@ -42,7 +51,12 @@ export default class Form extends Component {
 
 		// await delete_db_info();
 		const { replace } = this.props.navigation;
-		let user_data = this.props.route.params;
+		let user_data = await get_data('Usuarios').then(user => {
+
+			user = user.filtered('logado == 1');
+			return user[0];
+
+		});
 		let coleta_info = await get_data("Coletas");
 		let form_data = await get_data("Formularios");
 		let coleta_data = {};
@@ -113,27 +127,39 @@ export default class Form extends Component {
 					// Dependendo da resposta , muda o estado da coleta do aplicativo
 					if (result == true) {
 						await save_research_state({ id: info.coleta_id });
-						Alert.alert(`Coleta enviada com sucesso.`);
+						// Alert.alert(`Coleta enviada com sucesso.`);
 						replace('Coleta', {
 							usuario: user_data.usuario,
 							id: user_data.id,
 							senha: user_data.senha,
 						}
 						);
+						this.show_alert({ message: 'Coleta enviada com sucesso.', icon: 'check-square', type: 'message' })
 
 					} else {
-						Alert.alert('Ocorreu um erro durante a inserção, tente novamente.');
+						// Alert.alert('Ocorreu um erro durante a inserção, tente novamente.');
+						if (typeof result == 'string') {
+
+							this.show_alert({ message: result, icon: 'times', type: 'message' })
+
+						} else {
+
+							this.show_alert({ message: 'Ocorreu um erro durante a inserção, tente novamente.', icon: 'times', type: 'message' })
+
+						}
 					}
 
 				} else {
 
-					Alert.alert('Preencha a coleta antes de sincronizar com o servidor.');
+					// Alert.alert('Preencha a coleta antes de sincronizar com o servidor.');
+					this.show_alert({ message: 'Preencha a coleta antes de sincronizar com o servidor.', icon: 'times', type: 'message' })
 
 				}
 
 			} else {
 
-				Alert.alert("É necessário internet para sincronizar com o banco ACCB.");
+				this.show_alert({ message: 'É necessário internet para sincronizar com o banco ACCB.', icon: 'times', type: 'message' })
+				// Alert.alert("É necessário internet para sincronizar com o banco ACCB.");
 
 			}
 
@@ -182,6 +208,23 @@ export default class Form extends Component {
 	// 	</View>
 
 	// );
+	show_alert = (info) => {
+
+		const message = info.message;
+		const icon = info.icon != undefined ? info.icon : undefined;
+		const type = info.type;
+		const send_data = info.send_data;
+
+		this.setState({ props: { message: message, icon: icon, type: type, modalVisible: true }, send_data: send_data });
+
+	}
+
+	reset_alert = () => {
+
+		this.setState({ props: { message: undefined, icon: undefined, type: undefined, modalVisible: false }, send_data: undefined });
+		console.log(this.state.props);
+	}
+
 	render_places = ({ item }) => {
 
 		if (item.coleta_fechada == 0) {
@@ -214,10 +257,10 @@ export default class Form extends Component {
 						</View> */}
 					</View>
 
-					<View key={item.id} style={{ alignItems: 'center' }}>
+					<View key={item.id} style={{ alignItems: 'center', marginBottom: 10, }}>
 						{this.icon_list(
 							{ coleta_id: item.id, pesquisa_id: item.pesquisa_id, estabelecimento_id: item.estabelecimento_id, estabelecimento_nome: item.estabelecimento_nome },
-							{ name_1: item.coleta_fechada == 0 ? 'unlock' : 'lock', name_2: 'shopping-cart' },
+							{ name_1: 'shopping-cart', send: item.enviar },
 							' ',
 						)}
 					</View>
@@ -277,6 +320,7 @@ export default class Form extends Component {
 					<Picker
 						selectedValue={this.state.estabelecimento}
 						style={app.picker}
+						itemStyle={{ backgroundColor: "white", color: "black", fontFamily: "Ebrima" }}
 						onValueChange={(value) => this.search_place(value)}>
 						<Picker.Item key={'ALL'} label={'Todos'} value={'ALL'} />
 						{place_holders.map((val) => {
@@ -291,6 +335,7 @@ export default class Form extends Component {
 					<Picker
 						selectedValue={this.state.municipio}
 						style={app.picker}
+						itemStyle={{ backgroundColor: "white", color: "black", fontFamily: "Ebrima" }}
 						onValueChange={(value) => this.search_city(value)}>
 						{this.state.coletas_status == false ? <Picker.Item key={'ALL'} label={'Todos'} value={'ALL'} /> :
 
@@ -308,6 +353,13 @@ export default class Form extends Component {
 
 	icon_list = (text, icon, type) => {
 		const { navigate } = this.props.navigation;
+		const send_data = {
+			coleta_id: text.coleta_id,
+			pesquisa_id: text.pesquisa_id,
+			estabelecimento_id: text.estabelecimento_id,
+			estabelecimento_nome: text.estabelecimento_nome
+		}
+
 		// MODAL
 		if (type == 'text') {
 			return (
@@ -333,7 +385,7 @@ export default class Form extends Component {
 					style={{
 						...app.container_icon_button,
 					}}>
-					<View>
+					{/* <View>
 						<Icon.Button
 							style={{ marginLeft: 20 }}
 							color={'#423b3b'}
@@ -342,12 +394,12 @@ export default class Form extends Component {
 							backgroundColor={'rgba(255,255,255,0)'}
 						/>
 						<Text style={app.container_icon_text}>{icon.name_1 == "unlock" ? "Aberta" : "Fechada"}</Text>
-					</View>
+					</View> */}
 					<View>
 						<Icon.Button
 							style={{ marginLeft: 15 }}
-							color={icon.name_1 == "unlock" ? '#3B9CE2' : '#423b3b'}
-							name={icon.name_2}
+							color={'#3B9CE2'}
+							name={icon.name_1}
 							size={wp('5%')}
 							underlayColor={"rgba(0,0,0,.1)"}
 							backgroundColor={'rgba(255,255,255,0)'}
@@ -363,17 +415,12 @@ export default class Form extends Component {
 					<View>
 						<Icon.Button
 							style={{ marginLeft: 15 }}
-							color={icon.name_1 == "unlock" ? '#3B9CE2' : '#423b3b'}
+							color={icon.send === true ? '#3B9CE2' : '#423b3b'}
 							name={"send"}
 							size={wp('5%')}
 							underlayColor={"rgba(0,0,0,.1)"}
 							backgroundColor={'rgba(255,255,255,0)'}
-							onPress={() => this.send_info({
-								coleta_id: text.coleta_id,
-								pesquisa_id: text.pesquisa_id,
-								estabelecimento_id: text.estabelecimento_id,
-								estabelecimento_nome: text.estabelecimento_nome
-							})}
+							onPress={icon.send ? () => this.show_alert({ message: 'Realmente deseja enviar a coleta ? Todos os dados serão removidos do aplicativo após envio.', icon: 'question-circle', type: 'ask', send_data: send_data }) : () => this.show_alert({ message: 'Preencha a coleta antes de envia-la.', icon: 'times', type: 'message' })}
 						/>
 						<Text style={{ ...app.container_icon_text, textAlign: 'center' }}>Enviar</Text>
 					</View>
@@ -386,7 +433,12 @@ export default class Form extends Component {
 
 		// Cidades
 		const { replace } = this.props.navigation;
-		let user_data = this.props.route.params;
+		let user_data = await get_data('Usuarios').then(user => {
+
+			user = user.filtered('logado == 1');
+			return user[0];
+
+		});
 		let data_cities = undefined;
 		let data_estabs = undefined;
 		let all_estabs = [];
@@ -428,7 +480,8 @@ export default class Form extends Component {
 
 					if (flag) {
 
-						Alert.alert("Sincronização realizada com sucesso !");
+						// Alert.alert("Sincronização realizada com sucesso !");
+						this.show_alert({ message: 'Sincronização realizada com sucesso !', icon: 'check-square', type: 'message' })
 						replace("Coleta", {
 							usuario: user_data.usuario,
 							id: user_data.id,
@@ -439,13 +492,15 @@ export default class Form extends Component {
 
 					} else {
 
-						Alert.alert("Não foi possível se comunicar com o Banco de Dados ACCB .")
+						// Alert.alert("Não foi possível se comunicar com o Banco de Dados ACCB .")
+						this.show_alert({ message: 'Não foi possível se comunicar com o Banco de Dados ACCB .', icon: 'times', type: 'message' })
 
 					}
 
 				} else {
 
-					Alert.alert("É necessário internet para sincronizar com o banco ACCB.");
+					// Alert.alert("É necessário internet para sincronizar com o banco ACCB.");
+					this.show_alert({ message: 'É necessário internet para sincronizar com o banco ACCB.', icon: 'times', type: 'message' })
 
 				}
 
@@ -509,10 +564,15 @@ export default class Form extends Component {
 
 	}
 
-	logout = () => {
+	logout = async () => {
 
 		const { replace } = this.props.navigation;
-		let user_data = this.props.route.params;
+		let user_data = await get_data('Usuarios').then(user => {
+
+			user = user.filtered('logado == 1');
+			return user[0];
+
+		});
 
 		console.log(user_data);
 		save_user({ username: user_data.usuario, password: user_data.senha }, user_data.id, 0);
@@ -524,6 +584,10 @@ export default class Form extends Component {
 	render() {
 		return (
 			<SafeAreaView style={{ ...app.four_color, flex: 1 }}>
+				<PopUp
+					props={this.state.props}
+					closeModal={() => this.reset_alert()}
+					onConfirm={this.state.send_data == undefined ? undefined : () => this.send_info(this.state.send_data)} />
 				<View style={{ ...app.item_side, marginLeft: '5%' }}>
 					<Image style={app.logo_small} source={require('../img/logo.png')} />
 					<Image style={app.logo_small} source={require('../img/logo_2.png')} />
@@ -553,8 +617,7 @@ export default class Form extends Component {
 					}}>
 					<View style={app.text_wrapper}>
 						<Text style={{ ...app.text_banner, ...app.one_color }}>
-							Realize uma ação para mover-se ao
-							formulário do estabelecimento.
+							Selecione iniciar coleta para mover-se ao formulário do estabelecimento.
 						</Text>
 					</View>
 				</View>

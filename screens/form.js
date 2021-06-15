@@ -6,11 +6,13 @@ import {
   Image,
   Modal,
   TouchableOpacity,
+	Alert,
 } from 'react-native';
 import app from '../styles';
 import {heightPercentageToDP as wp} from 'react-native-responsive-screen';
 import Forms from '../components/formik.js';
 import Realm from '../service/realm';
+import { save_research_state } from './realm';
 
 export default class Form extends Component {
 	constructor(props) {
@@ -177,13 +179,19 @@ export default class Form extends Component {
 		this.get_form_info();
 	}
 
-	save_products_db = async (navigate) => {
+	save_products_db = async (replace, cancel = false) => {
+
+		if (cancel) {
+			replace('Coleta');
+		}
 
 		const realm = await Realm();
 		const prices = this.state.prices;
 		const param = this.state.param;
 		let db_prices = [];
 		let values_keys = [];
+		let true_length = 0;
+		let send = false;
 
 		prices.map((price, product_key) => {
 			// console.log(`Product Key  [${product_key}] , Prices [${price}] `);
@@ -191,10 +199,20 @@ export default class Form extends Component {
 		});
 
 		db_prices = prices.filter(function (arr) {
-			return arr != null;
+
+			if (arr.length >= 2) {
+				true_length++;
+			} else if ((arr.length == 1) && arr[0] != 'Não tem estabelecimento secundário.') {
+				true_length++;
+			}
+
+			if (arr != null)
+				return arr;
+
 		});
 
-		// console.log(JSON.stringify(db_prices));
+		console.debug("true_length = " + true_length);
+		console.debug(JSON.stringify(db_prices));
 
 		try {
 			realm.write(() => {
@@ -216,7 +234,25 @@ export default class Form extends Component {
 			console.log('Erro ao salvar o Formulario.');
 		}
 
-		navigate('Coleta');
+		send = true_length > 0 ? true : false;
+
+		await save_research_state({ id: parseInt(param.coleta_id) }, true, send).then(
+			val => {
+
+				if (val) {
+
+					replace('Coleta');
+					// console.log('salvou');
+
+				} else {
+
+					Alert.alert("Erro ao salvar fomulário.");
+
+				}
+
+			}
+		);
+
 	};
 
 	save_products = (values, secundary) => {
@@ -227,13 +263,13 @@ export default class Form extends Component {
 
 		if (secundary !== 'None' && secundary !== 'Padrão' && secundary !== undefined) {
 
-			sec = sec.filter(val => { if (val.estabelecimento_sec_id === secundary) return val });
-			values.push(sec);
+			if (values.length > 0) {
+				sec = sec.filter(val => { if (val.estabelecimento_sec_id === secundary) return val });
+				values.push(sec);
+			}
 			// console.log("Valores e estab secundario : " + values);
 
 		}
-
-		// console.log(prices);
 
 		prices[product_id] = values;
 		this.setState({ prices: prices });
@@ -241,6 +277,7 @@ export default class Form extends Component {
 
 	render() {
 		const { navigate } = this.props.navigation;
+		const { replace } = this.props.navigation;
 		const data = this.state.param;
 
 		return (
@@ -255,7 +292,7 @@ export default class Form extends Component {
 					}}>
 					<View style={app.text_wrapper}>
 						<Text style={{ ...app.text_banner, ...app.one_color }}>
-							Você está coletando no estabelecimento {data.estabelecimento_nome}. Selecione um produto para cadastrar seus preços.
+							Você está coletando no estabelecimento {data.estabelecimento_nome}. {'\n'}Selecione um produto para cadastrar seus preços.
 				</Text>
 					</View>
 				</View>
@@ -265,13 +302,13 @@ export default class Form extends Component {
 				<View style={{ ...app.container_items, marginTop: wp('-7%') }}>
 					<TouchableOpacity
 						style={app.button_menu_margin}
-						onPress={() => this.save_products_db(navigate)}>
+						onPress={() => navigate('Coleta')}>
 						<Text style={{ ...app.button_menu }}>Cancelar</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={app.button_menu_margin}
-						onPress={() => this.save_products_db(navigate)}>
-						<Text style={{ ...app.button_menu }}>Salvar</Text>
+						onPress={() => this.save_products_db(replace)}>
+						<Text style={{ ...app.button_menu }}>Concluir Coleta</Text>
 					</TouchableOpacity>
 				</View>
 				<Modal
@@ -284,7 +321,7 @@ export default class Form extends Component {
 					<View style={app.modal_view}>
 						<View style={app.modal_content}>
 							<Text style={{ ...app.modal_title, ...app.one_color }}>
-								PREÇOS DO PRODUTO - {this.state.product}
+								{this.state.param.estabelecimento_nome} - {this.state.product}
 							</Text>
 							<View
 								style={{

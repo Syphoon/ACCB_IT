@@ -27,6 +27,6 @@ export default function getRealm() {
 
 	return Realm.open({
 		schema: [Produtos, Usuarios, Coletas, Cidades, Formularios],
-		schemaVersion: 11,
+		schemaVersion: 12,
 	});
 }
