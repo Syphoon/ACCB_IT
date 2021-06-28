@@ -56,8 +56,8 @@ const app = StyleSheet.create({
 		color: '#fff',
 		textAlign: 'center',
 		fontFamily: 'ebrima',
-		paddingHorizontal: '2%',
-		paddingVertical: '4%',
+		paddingHorizontal: '1%',
+		paddingVertical: '3%',
 	},
   // Coleta
   container_items: {
@@ -277,7 +277,20 @@ const app = StyleSheet.create({
 		right: wp('5%'),
 		top: hp('2%'),
 		position: 'absolute',
-		width: wp('12%'),
+		width: wp('11%'),
+		borderRadius: 100,
+		padding: wp('2%'),
+		textAlign: 'center',
+		alignContent: 'center',
+		alignItems: 'center',
+		// backgroundColor: '#2196F3',
+		backgroundColor: '#fff',
+	},
+	info_button_login: {
+		right: wp('20%'),
+		top: hp('2%'),
+		position: 'absolute',
+		width: wp('11%'),
 		borderRadius: 100,
 		padding: wp('2%'),
 		textAlign: 'center',
@@ -383,11 +396,17 @@ const app = StyleSheet.create({
 		elevation: 1,
 	},
 	alert_message: {
-		fontSize: wp('5%'),
+		fontSize: wp('4%'),
 		fontFamily: 'Georgia',
 		marginBottom: wp('10%'),
 		marginTop: wp('5%'),
 		textAlign: 'center',
+	},
+	alert_title: {
+		fontSize: wp('4.5%'),
+		fontFamily: 'Georgia',
+		marginTop: wp('5%'),
+		// textAlign: 'left',
 	},
 });
 

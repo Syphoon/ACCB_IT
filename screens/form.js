@@ -289,11 +289,12 @@ export default class Form extends Component {
 				<View
 					style={{
 						...app.container_banner,
+						...app.one_color
 					}}>
 					<View style={app.text_wrapper}>
-						<Text style={{ ...app.text_banner, ...app.one_color }}>
-							Você está coletando no estabelecimento {data.estabelecimento_nome}. {'\n'}Selecione um produto para cadastrar seus preços.
-				</Text>
+						<Text style={{ ...app.text_banner }}>
+							Você está coletando no estabelecimento <Text style={{ fontWeight: 'bold' }}>{data.estabelecimento_nome}.</Text> {'\n'}Selecione um produto para cadastrar seus preços.
+						</Text>
 					</View>
 				</View>
 				<View style={{ ...app.container_items, marginTop: wp('4%') }}>

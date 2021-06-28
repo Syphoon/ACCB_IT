@@ -239,9 +239,9 @@ export const get_sync_data = async (type, refresh = false) => {
 
 	// console.log('sync');
 	return axios
-		.get(`https://47ddf6cb360e.ngrok.io/request_it.php/?&accb_it_sync=${sync}`,
+		.get(`http://192.168.15.17:80/request_it.php/?&accb_it_sync=${sync}`,
 			{
-				timeout: 1000 * 2,
+				timeout: 1000 * 3,
 				headers: {
 					"Content-Type": "application/json"
 				},
@@ -251,7 +251,7 @@ export const get_sync_data = async (type, refresh = false) => {
 		.then(function (response) {
 
 			let json = response.data;
-			// console.log(response.data.coletas);
+			console.log(response);
 
 			if (type == "users") {
 
@@ -327,8 +327,9 @@ export const get_sync_data = async (type, refresh = false) => {
 
 export const send_prices = async (info) => {
 
+
 	return axios
-		.post(`https://47ddf6cb360e.ngrok.io/request_it.php/?&accb_it_prices`,
+		.post(`http://192.168.15.17:80/request_it.php/?&accb_it_prices`,
 			{
 				data: info,
 			},
@@ -340,7 +341,7 @@ export const send_prices = async (info) => {
 		.then(function (response) {
 
 			let message = response.data == 1 ? true : false;
-			// console.log(response.data);
+			console.log(response.data);
 
 			return message;
 

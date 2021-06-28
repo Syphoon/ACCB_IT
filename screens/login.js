@@ -14,6 +14,7 @@ import { check_backup, loading_screen, get_sync_data, delete_db_info, list_data,
 export default Login = (props) => {
 
 	const [sync, updateSync] = React.useState(sync);
+	const [modalVisible, updateModal] = React.useState(modalVisible);
 	const [username, onChangeTextUser] = React.useState(username);
 	const [password, onChangeTextSenha] = React.useState(password);
 	const [prop, updateProps] = React.useState({
@@ -48,12 +49,9 @@ export default Login = (props) => {
 
 		// monica
 		// 12345678
-		fetch('https://demo7443497.mockable.io/stream/text')
-			.then((response) => response.json())
-			.then((response) => {
-				console.log(response);
-			});
-		// await delete_db_info();
+
+
+		await delete_db_info();
 		let user_data = await get_data('Usuarios');
 		let result = user_data.filtered(`logado == 1`);
 		let local_sync = null;
@@ -179,6 +177,16 @@ export default Login = (props) => {
 							size={hp('4%')}
 						/>
 					</TouchableOpacity>
+					<TouchableOpacity
+						style={app.info_button_login}
+						onPress={() => show_alert({ message: 'Aplicativo desenvolvido por Samuel Mendonça Vasconcelos estudante de Ciência da computação, em fase de aprendizado.', icon: 'mobile', type: 'mobile' })} >
+						<Icon
+							// color={'rgba(255,255,255,0.8)'}
+							color={'#2196F3'}
+							name={'info'}
+							size={hp('4%')}
+						/>
+					</TouchableOpacity>
 				</View>
 				<View
 					style={{ ...app.container, marginTop: hp('15%') }}>
@@ -215,7 +223,6 @@ export default Login = (props) => {
 		);
 
 	}
-
 
 	component_built();
 

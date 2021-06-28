@@ -4,7 +4,7 @@ import { Modal, View, Text, TouchableWithoutFeedback, TouchableOpacity } from 'r
 
 import app from '../styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { heightPercentageToDP, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 
 
@@ -26,8 +26,8 @@ const custom_alert = (prop) => {
 							// color: '#2196F3',
 							fontFamily: 'times',
 						}}>
-						Okay
-						</Text>
+						OK
+					</Text>
 				</TouchableOpacity>
 			);
 
@@ -44,6 +44,7 @@ const custom_alert = (prop) => {
 								textAlign: 'center',
 								// color: '#2196F3',
 								fontFamily: 'times',
+								// textTransform: 'uppercase',
 							}}>
 							Cancelar
 						</Text>
@@ -56,6 +57,7 @@ const custom_alert = (prop) => {
 								textAlign: 'center',
 								// color: '#2196F3',
 								fontFamily: 'times',
+								// textTransform: 'uppercase',
 							}}>
 							Confirmar
 						</Text>
@@ -63,11 +65,60 @@ const custom_alert = (prop) => {
 				</View>
 			);
 
+		} else if (props.type == 'mobile') {
+
+			return (
+				<TouchableOpacity
+					onPress={() => prop.closeModal()}
+					style={{ ...app.open_button }}>
+					<Text
+						style={{
+							textAlign: 'center',
+							// color: '#2196F3',
+							fontFamily: 'times',
+							fontSize: wp('3%'),
+						}}>
+						OK
+					</Text>
+				</TouchableOpacity>
+			);
+
 		}
 
 	}
 
-	return (
+
+
+	const mobile = (
+		<View>
+			<Modal
+				animationType="fade"
+				transparent={true}
+				visible={props.modalVisible}
+				onRequestClose={() => {
+					openModal(false);
+				}}>
+				<TouchableWithoutFeedback onPress={() => prop.closeModal()}>
+					<View style={app.alert_view} />
+				</TouchableWithoutFeedback >
+				<View style={app.alert_content}>
+					<Text style={app.alert_title}>ACCB Coleta</Text>
+					{/* <Icon.Button
+						style={{ marginLeft: 15 }}
+						color={'#3B9CE2'}
+						name={props.icon != undefined ? props.icon : 'info-circle'}
+						size={wp('15%')}
+						underlayColor={"rgba(0,0,0,.1)"}
+						backgroundColor={'rgba(255,255,255,0)'}
+					/> */}
+					<Text style={{ ...app.alert_message, textAlign: 'justify', fontSize: wp('3%'), marginBottom: 15 }}>{props.message} O aplicativo foi desenvolvido para auxiliar o processo de coleta do projeto de extensão Acompanhamento do Custo da Cesta Básica (ACCB). </Text>
+					{get_buttons()}
+				</View>
+			</Modal>
+		</View>
+	);
+
+	const notmobile = (
 		<View>
 			<Modal
 				animationType="fade"
@@ -94,6 +145,9 @@ const custom_alert = (prop) => {
 			</Modal>
 		</View>
 	);
+
+
+	return props.type == 'mobile' ? mobile : notmobile;
 
 }
 

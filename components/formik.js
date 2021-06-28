@@ -141,7 +141,8 @@ export default function ProductForm(prop) {
 								selectedValue={secundary}
 								style={{ ...app.picker, width: '100%' }}
 								onValueChange={(value) => updateSecundary(value)}>
-								{/* <Picker.Item key={'None'} label={'Coleta Padrão ...'} value={'Padrão'} /> */}
+								{props.values.secundary !== "Não tem estabelecimento secundário." ? <Picker.Item key={'None'} label={'Coleta Padrão ...'} value={'Padrão'} /> : null}
+
 								{
 									// console.log(props.values.secundary)
 									props.values.secundary !== "Não tem estabelecimento secundário." ?
@@ -212,7 +213,7 @@ export default function ProductForm(prop) {
 									fontSize: wp('4%'),
 								}}>
 								Cancelar
-						</Text>
+							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
 							onPress={() => props.handleSubmit()}

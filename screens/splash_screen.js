@@ -25,7 +25,7 @@ export default class Splash extends Component {
 						<Text style={{ ...app.text_small, textAlign: 'center' }} >
 							Acompanhamento do Custo da Cesta Básica {'\n'} {'\n'}
 								Coleta de Preços {'\n'} {'\n'}
-								Projeto Mobile - PIBITI 2020
+							Projeto Mobile - PIBITI 2020
 						</Text>
 					</View>
 				</View>

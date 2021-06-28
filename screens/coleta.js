@@ -614,10 +614,11 @@ export default class Form extends Component {
 					style={{
 						...app.container_banner,
 						marginTop: wp('2%'),
+						...app.one_color
 					}}>
 					<View style={app.text_wrapper}>
-						<Text style={{ ...app.text_banner, ...app.one_color }}>
-							Selecione iniciar coleta para mover-se ao formulário do estabelecimento.
+						<Text style={{ ...app.text_banner }}>
+							Selecione <Text style={{ fontWeight: 'bold' }}>Iniciar Coleta</Text> para mover-se ao formulário do estabelecimento.
 						</Text>
 					</View>
 				</View>
