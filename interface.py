@@ -300,6 +300,7 @@ class Interface:
 	def start(self, LOCALS, LOCALS_NAME):
 		""" Cria a instância da classe tread com os estabelecimentos selecionados. """
 
+		self.research = True
 		self.top.destroy()
 		local = []
 		local_name = []
@@ -332,7 +333,7 @@ class Interface:
 			self.tk.deiconify()
 			window.destroy()
 
-		elif self.research :
+		elif self.research == True:
 
 			if messagebox.askokcancel("Pesquisa em andamento ! ", "Realmente deseja encerrar o programa ? É possível que alguns arquivos sejam corrompidos se a pesquisa não for pausada antes de encerrar o programa."):
 
@@ -425,7 +426,7 @@ class Interface:
 			bg = bt_color,
 			activeforeground=fg_color,
 			activebackground=bt_color,
-			command= lambda: [self.tk.deiconify(), self.start(self.city_info[self.city_name], self.local_adress)])
+			command= lambda: [self.tk.deiconify(),self.start(self.city_info[self.city_name], self.local_adress)])
 
 			self.selected = Lstbox(top, self.local_adress, start_button)
 			start_button.pack(pady=10)

@@ -641,7 +641,6 @@ class Scrap:
 		today = date.today()
 		day = today.strftime("%d-%m-%Y")
 		dic = "{} [ {} ]".format(self.CITY, day)
-		print(dic)
 
 		self.folder_name = dic
 
