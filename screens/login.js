@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import { View, Text, SafeAreaView, Image, TouchableOpacity, Alert, TextInput } from 'react-native';
+import React, { Component, useCallback } from 'react';
+import { View, Text, SafeAreaView, Image, TouchableOpacity, Alert, TextInput, Linking } from 'react-native';
 
 import NetInfo from "@react-native-community/netinfo";
 
@@ -28,6 +28,7 @@ export default Login = (props) => {
 	})
 	const { replace } = props.navigation;
 	const { navigate } = props.navigation;
+	const url = "https://github.com/smvasconcelos";
 
 	show_alert = (info) => {
 
@@ -45,27 +46,45 @@ export default Login = (props) => {
 
 	}
 
+	const handlePress = useCallback(async () => {
+
+		const supportedURL = url;
+		const supported = await Linking.canOpenURL(url);
+
+		if (supported) {
+			await Linking.openURL(url);
+		} else {
+			Alert.alert(`Don't know how to open this URL: ${url}`);
+		}
+	}, [url]);
+
 	const component_built = async (refresh = false) => {
 
 		// monica
 		// 12345678
 
 
-		await delete_db_info();
+		// await delete_db_info();
 		let user_data = await get_data('Usuarios');
 		let result = user_data.filtered(`logado == 1`);
 		let local_sync = null;
 
-		if (result[0] != undefined) {
+		try {
 
-			// console.log(result[0].id);
-			replace("Coleta", {
-				usuario: result[0].usuario,
-				id: result[0].id,
-				senha: result[0].senha,
-			});
-			return;
+			if (result[0] != undefined) {
 
+				// console.log(result[0].id);
+				replace("Coleta", {
+					usuario: result[0].usuario,
+					id: result[0].id,
+					senha: result[0].senha,
+				});
+				return;
+
+			}
+
+		} catch (e) {
+			console.log(e);
 		}
 
 		let internet = null;
@@ -164,7 +183,9 @@ export default Login = (props) => {
 			<SafeAreaView style={{ ...app.one_color, flex: 1 }}>
 				<PopUp
 					props={prop.props}
-					closeModal={() => reset_alert()} />
+					closeModal={() => reset_alert()}
+					onConfirm={handlePress}
+				/>
 				<View style={{ ...app.item_side, marginLeft: '5%' }}></View>
 				<View>
 					<TouchableOpacity
@@ -174,17 +195,17 @@ export default Login = (props) => {
 							// color={'rgba(255,255,255,0.8)'}
 							color={'#2196F3'}
 							name={'refresh'}
-							size={hp('4%')}
+							size={hp('3.5%')}
 						/>
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={app.info_button_login}
-						onPress={() => show_alert({ message: 'Aplicativo desenvolvido por Samuel Mendonça Vasconcelos estudante de Ciência da computação, em fase de aprendizado.', icon: 'mobile', type: 'mobile' })} >
+						onPress={() => show_alert({ message: 'Aplicativo desenvolvido por Samuel Mendonça Vasconcelos estudante de Ciência da Computação e bolsista do PIBIT/CNPq.', icon: 'mobile', type: 'mobile' })} >
 						<Icon
 							// color={'rgba(255,255,255,0.8)'}
 							color={'#2196F3'}
 							name={'info'}
-							size={hp('4%')}
+							size={hp('3.5%')}
 						/>
 					</TouchableOpacity>
 				</View>

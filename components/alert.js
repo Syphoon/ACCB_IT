@@ -68,19 +68,43 @@ const custom_alert = (prop) => {
 		} else if (props.type == 'mobile') {
 
 			return (
-				<TouchableOpacity
-					onPress={() => prop.closeModal()}
-					style={{ ...app.open_button }}>
-					<Text
-						style={{
-							textAlign: 'center',
-							// color: '#2196F3',
-							fontFamily: 'times',
-							fontSize: wp('3%'),
-						}}>
-						OK
-					</Text>
-				</TouchableOpacity>
+				<View style={{ ...app.button_wrap }}>
+					<TouchableOpacity
+						onPress={() => prop.closeModal()}
+						style={{ ...app.open_button }}>
+						<Text
+							style={{
+								textAlign: 'center',
+								// color: '#2196F3',
+								fontFamily: 'times',
+								fontSize: wp('4%'),
+							}}>
+							OK
+						</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						onPress={prop.onConfirm != undefined ? () => { prop.closeModal(); prop.onConfirm(); } : () => { prop.closeModal() }}
+						style={{ ...app.open_button, marginLeft: 10, flexDirection: 'row', textAlign: 'center' }}>
+						<Icon
+							style={{ marginRight: '10%', textAlign: 'center' }}
+							// color={'#3B9CE2'}
+							color={'#000'}
+							name={'github'}
+							size={wp('6%')}
+							underlayColor={"rgba(0,0,0,.1)"}
+							backgroundColor={'rgba(255,255,255,0)'}
+						/>
+						<Text
+							style={{
+								textAlign: 'center',
+								// color: '#2196F3',
+								fontFamily: 'times',
+								fontSize: wp('4%'),
+							}}>
+							Github
+						</Text>
+					</TouchableOpacity>
+				</View>
 			);
 
 		}
@@ -111,7 +135,7 @@ const custom_alert = (prop) => {
 						underlayColor={"rgba(0,0,0,.1)"}
 						backgroundColor={'rgba(255,255,255,0)'}
 					/> */}
-					<Text style={{ ...app.alert_message, textAlign: 'justify', fontSize: wp('3%'), marginBottom: 15 }}>{props.message} O aplicativo foi desenvolvido para auxiliar o processo de coleta do projeto de extensão Acompanhamento do Custo da Cesta Básica (ACCB). </Text>
+					<Text style={{ ...app.alert_message, textAlign: 'justify', fontSize: wp('3.5%'), marginBottom: 15 }}>{props.message} O aplicativo foi desenvolvido para auxiliar o processo de coleta do projeto de extensão Acompanhamento do Custo da Cesta Básica (ACCB). </Text>
 					{get_buttons()}
 				</View>
 			</Modal>

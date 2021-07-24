@@ -15,11 +15,11 @@ import {Picker} from '@react-native-community/picker';
 import NetInfo from "@react-native-community/netinfo";
 
 import app from '../styles';
-import {heightPercentageToDP as wp} from 'react-native-responsive-screen';
+import { widthPercentageToDP as hp, heightPercentageToDP as wp } from 'react-native-responsive-screen';
 
 import PopUp from '../components/alert';
 
-import { get_data, save_user, check_backup, get_sync_data, delete_db_info, send_prices, save_research_state } from './realm'
+import { get_data, save_user, check_backup, get_sync_data, delete_db_info, send_prices, save_research_state, validate_date, delete_collect_info } from './realm'
 // import {check_backup, loading_screen, get_sync_data, delete_db_info, list_data, save_user, get_data} from './realm'
 
 
@@ -28,16 +28,25 @@ export default class Form extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			municipio: 'itabuna',
+			municipio: '',
 			estabelecimento: 'mercado',
 			coletas_status: false,
+			selected: '',
 			cities: [],
 			places: [],
 			places_all: [],
 			places_backup: [],
 			placeholder: [],
 			send_data: undefined,
+			func: () => { },
 			props: {
+				type: undefined,
+				message: undefined,
+				icon: undefined,
+				confirm: undefined,
+				modalVisible: false,
+			},
+			props_date: {
 				type: undefined,
 				message: undefined,
 				icon: undefined,
@@ -124,27 +133,58 @@ export default class Form extends Component {
 					// console.log(`array ${JSON.stringify(form_data)}`);
 					// Envia pro php e faz os testes e tratamentos e insere no banco
 					let result = await send_prices(send_data);
+					console.log(result);
+					if (result == 'Coleta Fechada.') {
+
+						await save_research_state({ id: info.coleta_id }).then(
+
+							this.setState({
+								func: () => replace('Coleta')
+							}),
+							this.show_alert({ message: 'Esta coleta se encontra fechada no banco de dados e será removida do aplicativo.', icon: 'exclamation-circle', type: 'message' }, true),
+							// this.show_alert({ message: 'Esta coleta se encontra fechada no banco de dados e será removida do aplicativo.', icon: 'exclamation-circle', type: 'message' }),
+							// replace('Coleta', {
+							// 	usuario: user_data.usuario,
+							// 	id: user_data.id,
+							// 	senha: user_data.senha,
+							// }
+							// )
+
+						);
+
+
+						return;
+
+					}
 					// Dependendo da resposta , muda o estado da coleta do aplicativo
 					if (result == true) {
-						await save_research_state({ id: info.coleta_id });
-						// Alert.alert(`Coleta enviada com sucesso.`);
-						replace('Coleta', {
-							usuario: user_data.usuario,
-							id: user_data.id,
-							senha: user_data.senha,
-						}
+						await save_research_state({ id: info.coleta_id }).then(
+
+
+							this.setState({
+								func: () => replace('Coleta')
+							}),
+							this.show_alert({ message: 'Coleta enviada com sucesso.', icon: 'check-square', type: 'message' }, true),
+							// this.show_alert({ message: 'Coleta enviada com sucesso.', icon: 'check-square', type: 'message' }),
+							// replace('Coleta', {
+							// 	usuario: user_data.usuario,
+							// 	id: user_data.id,
+							// 	senha: user_data.senha,
+							// }
+							// )
+
 						);
-						this.show_alert({ message: 'Coleta enviada com sucesso.', icon: 'check-square', type: 'message' })
+						// Alert.alert(`Coleta enviada com sucesso.`);
 
 					} else {
 						// Alert.alert('Ocorreu um erro durante a inserção, tente novamente.');
 						if (typeof result == 'string') {
 
-							this.show_alert({ message: result, icon: 'times', type: 'message' })
+							this.show_alert({ message: result, icon: 'times', type: 'message' });
 
 						} else {
 
-							this.show_alert({ message: 'Ocorreu um erro durante a inserção, tente novamente.', icon: 'times', type: 'message' })
+							this.show_alert({ message: 'Ocorreu um erro durante a inserção, tente novamente.', icon: 'times', type: 'message' });
 
 						}
 					}
@@ -152,13 +192,13 @@ export default class Form extends Component {
 				} else {
 
 					// Alert.alert('Preencha a coleta antes de sincronizar com o servidor.');
-					this.show_alert({ message: 'Preencha a coleta antes de sincronizar com o servidor.', icon: 'times', type: 'message' })
+					this.show_alert({ message: 'Preencha a coleta antes de sincronizar com o servidor.', icon: 'times', type: 'message' });
 
 				}
 
 			} else {
 
-				this.show_alert({ message: 'É necessário internet para sincronizar com o banco ACCB.', icon: 'times', type: 'message' })
+				this.show_alert({ message: 'É necessário internet para sincronizar com o banco ACCB.', icon: 'times', type: 'message' });
 				// Alert.alert("É necessário internet para sincronizar com o banco ACCB.");
 
 			}
@@ -167,62 +207,26 @@ export default class Form extends Component {
 
 	}
 
-	// render_places = ({ item }) => (
-
-	// 	<View key={item.id}>
-
-	// 		<View style={{ ...app.container_list }}>
-	// 			<View style={app.text_list_container}>
-	// 				<Text style={{ ...app.text_list_first }}>Estabelecimento  - </Text>
-	// 				<Text style={{ ...app.text_list }}>{item.estabelecimento_nome}</Text>
-	// 			</View>
-	// 			{/* <View style={app.text_list_divider} /> */}
-	// 			<View style={app.text_list_container}>
-	// 				<Text style={{ ...app.text_list_first }}>Cidade  - </Text>
-	// 				<Text style={{ ...app.text_list }}>{item.estabelecimento_cidade}</Text>
-	// 			</View>
-	// 			{/* <View style={app.text_list_divider} /> */}
-	// 			<View style={app.text_list_container}>
-	// 				<Text style={{ ...app.text_list_first }}>Bairro  - </Text>
-	// 				<Text style={{ ...app.text_list }}>{item.bairro_nome}</Text>
-	// 			</View>
-	// 			{/* <View style={app.text_list_divider} /> */}
-	// 			<View style={app.text_list_container}>
-	// 				<Text style={{ ...app.text_list_first }}>Data  - </Text>
-	// 				<Text style={{ ...app.text_list }}>{item.coleta_data}</Text>
-	// 			</View>
-	// 			{/* <View style={app.text_list_divider} /> */}
-	// 			<View style={app.text_list_container}>
-	// 				<Text style={{ ...app.text_list_first }}>Preço Médio  - </Text>
-	// 				<Text style={{ ...app.text_list }}>{item.coleta_preco_cesta == 0 ? "N/A" : item.coleta_preco_cesta}</Text>
-	// 			</View>
-	// 		</View>
-
-	// 		<View key={item.id}>
-	// 			{this.icon_list(
-	// 				{ coleta_id: item.id, pesquisa_id: item.pesquisa_id, estabelecimento_id: item.estabelecimento_id },
-	// 				{ name_1: item.coleta_fechada == 0 ? 'unlock' : 'lock', name_2: 'shopping-cart' },
-	// 				' ',
-	// 			)}
-	// 		</View>
-	// 	</View>
-
-	// );
-	show_alert = (info) => {
+	show_alert = (info, date = false,) => {
 
 		const message = info.message;
 		const icon = info.icon != undefined ? info.icon : undefined;
 		const type = info.type;
 		const send_data = info.send_data;
 
-		this.setState({ props: { message: message, icon: icon, type: type, modalVisible: true }, send_data: send_data });
+		if (date)
+			this.setState({ props_date: { message: message, icon: icon, type: type, modalVisible: true } });
+		else
+			this.setState({ props: { message: message, icon: icon, type: type, modalVisible: true }, send_data: send_data });
 
 	}
 
-	reset_alert = () => {
+	reset_alert = (date = false) => {
 
-		this.setState({ props: { message: undefined, icon: undefined, type: undefined, modalVisible: false }, send_data: undefined });
-		console.log(this.state.props);
+		if (date)
+			this.setState({ props_date: { message: undefined, icon: undefined, type: undefined, modalVisible: false }, func: () => { } });
+		else
+			this.setState({ props: { message: undefined, icon: undefined, type: undefined, modalVisible: false }, send_data: undefined, func: () => { } });
 	}
 
 	render_places = ({ item }) => {
@@ -320,7 +324,7 @@ export default class Form extends Component {
 					<Picker
 						selectedValue={this.state.estabelecimento}
 						style={app.picker}
-						itemStyle={{ backgroundColor: "white", color: "black", fontFamily: "Ebrima" }}
+						itemStyle={{ backgroundColor: "white", color: "black", fontFamily: "Ebrima", fontSize: wp('2%') }}
 						onValueChange={(value) => this.search_place(value)}>
 						<Picker.Item key={'ALL'} label={'Todos'} value={'ALL'} />
 						{place_holders.map((val) => {
@@ -404,6 +408,7 @@ export default class Form extends Component {
 							underlayColor={"rgba(0,0,0,.1)"}
 							backgroundColor={'rgba(255,255,255,0)'}
 							onPress={() => navigate('Form', {
+								municipio: this.state.municipio,
 								coleta_id: text.coleta_id,
 								pesquisa_id: text.pesquisa_id,
 								estabelecimento_id: text.estabelecimento_id,
@@ -432,13 +437,15 @@ export default class Form extends Component {
 	async componentDidMount(refresh = false) {
 
 		// Cidades
+
 		const { replace } = this.props.navigation;
-		let user_data = await get_data('Usuarios').then(user => {
+		const param = this.state.param;
+		// let user_data = await get_data('Usuarios').then(user => {
 
-			user = user.filtered('logado == 1');
-			return user[0];
+		// 	user = user.filtered('logado == 1');
+		// 	return user[0];
 
-		});
+		// });
 		let data_cities = undefined;
 		let data_estabs = undefined;
 		let all_estabs = [];
@@ -473,20 +480,41 @@ export default class Form extends Component {
 				if (internet == true) {
 
 					if (refresh) {
+						let validated = await validate_date();
+						if (!validated) {
+
+							this.setState({ func: () => { delete_collect_info().then(replace('Coleta')) } });
+							this.show_alert({ message: 'O mês da coleta mudou, deseja excluir os dados das coletas atuais ?', icon: 'question-circle', type: 'ask' }, true);
+							return;
+
+						}
 						flag = await get_sync_data("collect", true);
 					} else {
 						flag = await get_sync_data("collect");
 					}
 
+					if (typeof flag == 'string') {
+
+						this.show_alert({ message: flag, icon: 'check-square', type: 'message' });
+						return;
+
+					}
+
 					if (flag) {
 
 						// Alert.alert("Sincronização realizada com sucesso !");
-						this.show_alert({ message: 'Sincronização realizada com sucesso !', icon: 'check-square', type: 'message' })
-						replace("Coleta", {
-							usuario: user_data.usuario,
-							id: user_data.id,
-							senha: user_data.senha,
+						this.show_alert({ message: 'Sincronização realizada com sucesso !', icon: 'check-square', type: 'message' }, true);
+						this.setState({
+							func: replace('Coleta')
 						});
+						// this.setState({
+						// 	func: () => replace('Coleta', {
+						// 		usuario: user_data.usuario,
+						// 		id: user_data.id,
+						// 		senha: user_data.senha,
+						// 	}
+						// 	)
+						// });
 						// data_cities = await get_data("Cidades");
 						// data_estabs = await get_data("Coletas");
 
@@ -510,7 +538,7 @@ export default class Form extends Component {
 
 			// console.log("Não precisa sincronizar");
 			data_cities = await get_data("Cidades");
-			data_estabs = await get_data("Coletas");
+			data_estabs = await (await get_data("Coletas")).sorted(['estabelecimento_nome']);
 			this.setState({ coletas_status: true });
 
 		}
@@ -528,6 +556,7 @@ export default class Form extends Component {
 		}
 		if (flag) {
 
+			console.log("Param " + param);
 			data_cities.map(city => {
 
 				estabs_to_array = [];
@@ -551,13 +580,44 @@ export default class Form extends Component {
 			// Coletas e ou estabs
 
 			// Primeiro place holder para cidade de itabuna
-			this.set_place_holder(all_estabs[0][cities[0]]);
+			// console.log(all_estabs[0][cities[0]].length);
+			let bigger = 0;
+			all_estabs.map((arr, key) => {
+
+				if (arr[cities[key]].length > bigger) {
+					bigger = key;
+				}
+
+			});
+
+			console.log();
+
+			try {
+
+				bigger = cities.indexOf(param.municipio)
+
+			} catch (e) {
+
+				// console.log("Não veio de formulário.");
+
+			}
+
+			this.setState({ municipio: cities[bigger] });
+			this.set_place_holder(all_estabs[bigger][cities[bigger]]);
 
 			this.setState({
-				places: all_estabs[0][cities[0]],
-				places_backup: all_estabs[0][cities[0]],
+				places: all_estabs[bigger][cities[bigger]],
+				places_backup: all_estabs[bigger][cities[bigger]],
 				places_all: all_estabs,
 			});
+
+		}
+
+		let validated = await validate_date();
+		if (!validated) {
+
+			this.setState({ func: () => { delete_collect_info().then(replace('Coleta')) } });
+			this.show_alert({ message: 'O mês da coleta mudou, deseja excluir os dados das coletas atuais ?', icon: 'question-circle', type: 'ask' }, true);
 
 		}
 
@@ -574,7 +634,6 @@ export default class Form extends Component {
 
 		});
 
-		console.log(user_data);
 		save_user({ username: user_data.usuario, password: user_data.senha }, user_data.id, 0);
 
 		replace("Login");
@@ -582,12 +641,20 @@ export default class Form extends Component {
 	}
 
 	render() {
+
+		const { replace } = this.props.navigation;
+
 		return (
 			<SafeAreaView style={{ ...app.four_color, flex: 1 }}>
 				<PopUp
 					props={this.state.props}
 					closeModal={() => this.reset_alert()}
-					onConfirm={this.state.send_data == undefined ? undefined : () => this.send_info(this.state.send_data)} />
+					onConfirm={this.state.func == undefined ? undefined : () => this.send_info(this.state.send_data)} />
+				<PopUp
+					props={this.state.props_date}
+					closeModal={() => this.reset_alert(true)}
+					// Colocar função pra resetar todas as coletas e form
+					onConfirm={this.state.func} />
 				<View style={{ ...app.item_side, marginLeft: '5%' }}>
 					<Image style={app.logo_small} source={require('../img/logo.png')} />
 					<Image style={app.logo_small} source={require('../img/logo_2.png')} />
@@ -636,12 +703,12 @@ export default class Form extends Component {
 						ListEmptyComponent={() => (
 							<View
 								style={{
-									flex: 1,
 									alignItems: 'center',
 									justifyContent: 'center',
-									marginTop: 50,
+									width: hp('100%'),
+									marginTop: wp('10%'),
 								}}>
-								<Text style={{ color: '#fff', fontSize: 15, textAlign: 'center', padding: 15, ...app.one_color }}>
+								<Text style={{ color: '#fff', fontSize: hp('3.5%'), textAlign: 'center', padding: hp('3%'), ...app.one_color }}>
 									Nenhuma coleta encontrada, vá até o site do projeto ACCB e insira as coletas que deseja acessar pelo aplicativo para que seja possível sincroniza-las.
 								</Text>
 							</View>

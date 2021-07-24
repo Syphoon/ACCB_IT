@@ -9,15 +9,3 @@ export default class Produtos {
 		},
 	};
 }
-
-// export default class Formularios {
-//   static schema = {
-//     name: 'Formularios',
-//     primaryKey: 'form_id',
-//     properties: {
-//       form_id: {type: 'int', indexed: true},
-//       values: '[]',
-//       coleta_id: 'int',
-//     },
-//   };
-// }

@@ -7,9 +7,11 @@ import {
   Modal,
   TouchableOpacity,
 	Alert,
+	FlatList
 } from 'react-native';
 import app from '../styles';
-import {heightPercentageToDP as wp} from 'react-native-responsive-screen';
+import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import Forms from '../components/formik.js';
 import Realm from '../service/realm';
 import { save_research_state } from './realm';
@@ -27,66 +29,12 @@ export default class Form extends Component {
 			data: undefined,
 			param: this.props.route.params,
 			form: undefined,
+			municipio: '',
 		};
 	}
-
-	product_info = (type) => {
-		if (type == 1) {
-			return (
-				<View style={{ ...app.container_items, width: '44%' }}>
-					<Text
-						style={{
-							...app.text,
-							margin: 3,
-							backgroundColor: '#fff',
-							borderRadius: 5,
-							color: '#000',
-						}}>
-						PREÇO
-			</Text>
-					<Text
-						style={{
-							...app.text,
-							borderWidth: 1,
-							borderColor: '#fff',
-							margin: 3,
-							borderRadius: 5,
-						}}>
-						15,30R$
-			</Text>
-				</View>
-			);
-		} else {
-			return (
-				<View style={{ ...app.container_items, width: '44%' }}>
-					<Text
-						style={{
-							...app.text,
-							margin: 3,
-							backgroundColor: '#fff',
-							borderRadius: 5,
-							color: '#000',
-						}}>
-						PREÇO
-			</Text>
-					<Text
-						style={{
-							...app.text,
-							borderWidth: 1,
-							borderColor: '#fff',
-							margin: 3,
-							borderRadius: 5,
-						}}>
-						00,00 R$
-			</Text>
-				</View>
-			);
-		}
-	};
-
 	get_products = async () => {
 		const realm = await Realm();
-		const data = realm.objects('Produtos');
+		const data = realm.objects('Produtos').sorted('nome');
 		this.setState({ products: data });
 	};
 
@@ -148,41 +96,59 @@ export default class Form extends Component {
 		}
 	};
 
-	list_button = () => {
-		return this.state.products.map((product) => {
-			return (
-				<TouchableOpacity
-					key={product.id}
-					onPress={() =>
-						this.setState({
-							modalVisible: true,
-							open: product.id,
-							product: product.nome,
-						})
-					}>
-					<Text
-						key={product.nome}
-						style={{
-							...app.button_product,
-							color: 'black',
-							backgroundColor: '#fff',
-						}}>
-						{product.nome}
-					</Text>
-				</TouchableOpacity>
-			);
-		});
+	button_item = ({ item }) => {
+		let product = item;
+		let len;
+		try {
+
+			len = this.state.prices[product.id];
+			len = len.length
+
+		} catch (e) {
+
+			len = 0;
+
+		}
+		return (
+			<TouchableOpacity
+				key={product.id}
+				onPress={() =>
+					this.setState({
+						modalVisible: true,
+						open: product.id,
+						product: product.nome,
+					})
+				}>
+				<Text
+					key={product.nome}
+					style={len == 0 ? {
+						...app.button_product,
+						color: 'black',
+						backgroundColor: 'white',
+					} : {
+						...app.button_product,
+						color: 'black',
+						backgroundColor: 'rgba(255,255,255,.5)',
+					}}>
+					{product.nome}
+				</Text>
+			</TouchableOpacity>
+		);
 	};
 
 	componentDidMount() {
+		const param = this.state.param;
 		this.get_products();
 		this.get_form_info();
+		this.setState({ municipio: param.municipio, estabelecimento_id: param.estabelecimento_id });
 	}
 
 	save_products_db = async (replace, cancel = false) => {
 
 		if (cancel) {
-			replace('Coleta');
+			replace('Coleta', {
+				municipio: this.state.municipio
+			});
 		}
 
 		const realm = await Realm();
@@ -211,8 +177,8 @@ export default class Form extends Component {
 
 		});
 
-		console.debug("true_length = " + true_length);
-		console.debug(JSON.stringify(db_prices));
+		// console.debug("true_length = " + true_length);
+		// console.debug(JSON.stringify(db_prices));
 
 		try {
 			realm.write(() => {
@@ -241,7 +207,11 @@ export default class Form extends Component {
 
 				if (val) {
 
-					replace('Coleta');
+					// console.log("Voltando para coleta " + this.state.municipio + this.state.estabelecimento_id);
+					replace('Coleta', {
+						municipio: this.state.municipio,
+						estabelecimento_id: this.state.estabelecimento_id
+					});
 					// console.log('salvou');
 
 				} else {
@@ -272,11 +242,13 @@ export default class Form extends Component {
 		}
 
 		prices[product_id] = values;
+		console.debug(prices[product_id])
 		this.setState({ prices: prices });
 	};
 
 	render() {
 		const { navigate } = this.props.navigation;
+		const { goBack } = this.props.navigation;
 		const { replace } = this.props.navigation;
 		const data = this.state.param;
 
@@ -293,22 +265,46 @@ export default class Form extends Component {
 					}}>
 					<View style={app.text_wrapper}>
 						<Text style={{ ...app.text_banner }}>
-							Você está coletando no estabelecimento <Text style={{ fontWeight: 'bold' }}>{data.estabelecimento_nome}.</Text> {'\n'}Selecione um produto para cadastrar seus preços.
+							Você está coletando no estabelecimento <Text style={{ fontWeight: 'bold' }}>{data.estabelecimento_nome}.</Text>	Selecione um produto para cadastrar seus preços.
 						</Text>
 					</View>
 				</View>
-				<View style={{ ...app.container_items, marginTop: wp('4%') }}>
-					{this.list_button()}
+				<View style={{ height: hp('47%'), justifyContent: 'center', alignContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>
+					{/* {this.list_button()} */}
+					{/* {this.list_button()} */}
+					<FlatList
+						// f
+						contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}
+						data={this.state.products}
+						numColumns={2}
+						renderItem={this.button_item}
+						keyExtractor={item => item.id}
+						ListEmptyComponent={() => (
+							<View
+								style={{
+									alignItems: 'center',
+									justifyContent: 'center',
+									width: wp('100%'),
+								}}>
+								<Text style={{ color: '#fff', fontSize: wp('3%'), textAlign: 'center', padding: wp('4%'), ...app.one_color }}>
+									Nenhuma produto encontrado, vá até o site do projeto ACCB e insira os produtos que deseja inserir o preço pelo aplicativo para que seja possível sincroniza-los.
+								</Text>
+							</View>
+						)}
+					/>
 				</View>
-				<View style={{ ...app.container_items, marginTop: wp('-7%') }}>
+				<View style={{
+					height: hp('33%'), justifyContent: 'center', alignItems: 'center', flexDirection: "row", flexWrap: "wrap",
+				}}>
 					<TouchableOpacity
 						style={app.button_menu_margin}
-						onPress={() => navigate('Coleta')}>
+						// onPress={() => navigate('Coleta')}>
+						onPress={() => goBack()}>
 						<Text style={{ ...app.button_menu }}>Cancelar</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={app.button_menu_margin}
-						onPress={() => this.save_products_db(replace)}>
+						onPress={() => this.save_products_db(navigate)}>
 						<Text style={{ ...app.button_menu }}>Concluir Coleta</Text>
 					</TouchableOpacity>
 				</View>
@@ -327,9 +323,9 @@ export default class Form extends Component {
 							<View
 								style={{
 									...app.container_items,
-									marginTop: wp('0.5%'),
+									marginTop: hp('0.5%'),
 									...app.one_color,
-									// paddingVertical: wp('3%'),
+									// paddingVertical: hp('3%'),
 								}}>
 								<Forms
 									close_modal={() =>

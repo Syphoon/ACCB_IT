@@ -5,11 +5,12 @@ import Usuarios from '../schemas/Usuario';
 import Coletas from '../schemas/Coleta';
 import Cidades from '../schemas/Cidade';
 import Formularios from '../schemas/Formulario';
+import Aplicativo from '../schemas/Aplicativo';
 
 export default function getRealm() {
 	// return Realm.open({
 	// 	schema: [Produtos, Usuarios, Coletas, Cidades, Formularios],
-	// 	schemaVersion: 11, //add a version number
+	// 	schemaVersion: 13, //add a version number
 	// 	migration: (oldRealm, newRealm) => {
 
 	// 		if (oldRealm.schemaVersion < 1) {
@@ -26,7 +27,7 @@ export default function getRealm() {
 	// });
 
 	return Realm.open({
-		schema: [Produtos, Usuarios, Coletas, Cidades, Formularios],
-		schemaVersion: 12,
+		schema: [Produtos, Usuarios, Coletas, Cidades, Formularios, Aplicativo],
+		schemaVersion: 13,
 	});
 }

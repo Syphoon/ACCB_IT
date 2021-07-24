@@ -6,7 +6,6 @@ export default class Coletas {
 		primaryKey: 'id',
 		properties: {
 			id: { type: 'int', indexed: true },
-			coleta_preco_cesta: 'double',
 			estabelecimento_cidade: 'string',
 			estabelecimento_id: 'int',
 			estabelecimento_nome: 'string',
