@@ -34,10 +34,10 @@ const Home: React.FC = () => {
 			</TopMenu>
 			<Container>
 				<Logo source={require(accbLogo)} />
-				<Subtitle>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus distinctio atque, ipsam.</Subtitle>
+				<Subtitle>Bem Vindo ª, para continuar com o acesso preencha os dados abaixo.</Subtitle>
 				<InputContainer>
 					<InputWithIconComponent placeholder='Usuário' icon='user' color='#fff' value={userName} setValue={setUserName} />
-					<InputWithIconComponent placeholder='Senha' icon='lock' color='#fff' value={password} setValue={setPassword} />
+					<InputWithIconComponent secure={true} placeholder='Senha' icon='lock' color='#fff' value={password} setValue={setPassword} />
 				</InputContainer>
 				<ButtonContainer>
 					<ButtonText>Entrar</ButtonText>

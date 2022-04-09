@@ -8,9 +8,10 @@ interface IInput  {
 	value: any,
 	setValue: any,
 	placeholder: string,
+	secure?:boolean,
 }
 
-const InputWithIconComponent: React.FC<IInput> = ({icon, color, value, setValue, placeholder}) => {
+const InputWithIconComponent: React.FC<IInput> = ({icon, color, value, setValue, placeholder, secure=false}) => {
 
 	return (
 		<InputWithIcon>
@@ -21,7 +22,7 @@ const InputWithIconComponent: React.FC<IInput> = ({icon, color, value, setValue,
 					size={25}
 				/>
 			</InputIconContainer>
-			<Input placeholder={placeholder} value={value} onChangeText={(value) => setValue(value)} />
+			<Input secureTextEntry={secure} placeholder={placeholder} value={value} onChangeText={(value) => setValue(value)} />
 		</ InputWithIcon>
 	);
 };
