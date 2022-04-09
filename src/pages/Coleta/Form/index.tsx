@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const Home: React.FC = () => {
+const Form: React.FC = () => {
 
 
 	return (
@@ -9,4 +9,4 @@ const Home: React.FC = () => {
 	);
 };
 
-export default Home;
+export default Form;

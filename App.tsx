@@ -7,4 +7,5 @@ const app = require('./app.json');
 // Text.defaultProps.allowFontScaling = false;
 // TextInput.defaultProps.allowFontScaling = false;
 
-AppRegistry.registerComponent(app.name, () => App);
+AppRegistry.registerComponent("ACCB", () => App);
+export default App;

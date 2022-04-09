@@ -12,8 +12,6 @@ import Form from "src/pages/Coleta/Form";
 const App = createNativeStackNavigator ();
 
 const AppRoutes: React.FC = () => {
-
-
 	return (
 		<NavigationContainer>
 			<App.Navigator
@@ -23,10 +21,10 @@ const AppRoutes: React.FC = () => {
 				}}
 			>
 				<App.Screen name="Login" component={Login} />
-				<App.Screen name="Dashboard" component={Dashboard} />
-				<App.Screen name="Coleta" component={Coleta} />
-				<App.Screen name="Form" component={Form} />
-				<App.Screen name="Splash" component={Splash} />
+				{/* <App.Screen name="Dashboard" component={Dashboard} /> */}
+				{/* <App.Screen name="Coleta" component={Coleta} /> */}
+				{/* <App.Screen name="Form" component={Form} /> */}
+				{/* <App.Screen name="Splash" component={Splash} /> */}
 			</App.Navigator>
 		</NavigationContainer>
 	);
