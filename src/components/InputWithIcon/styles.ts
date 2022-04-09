@@ -24,7 +24,7 @@ export const InputWithIcon = styled.View`
 `
 export const InputIconContainer = styled.View`
 	background-color: ${colors.secondary}aa;
-	padding: 15px 20px;
+	padding: 13px 20px;
 	height: 100%;
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;

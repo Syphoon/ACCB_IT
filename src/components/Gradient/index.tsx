@@ -3,15 +3,21 @@ import LinearGradient from 'react-native-linear-gradient';
 
 
 interface IGradient  {
-	colors: [],
-	Children: any,
+	colors: [string, string, string],
+	children: any,
 }
 
-const Gradient: React.FC<IGradient> = ({colors ,Children,}) => {
+const Gradient: React.FC<IGradient> = ({colors ,children,}) => {
 
 	return (
-		<LinearGradient colors={colors}>
-			<Children />
+		<LinearGradient style={{
+			display: "flex",
+			flexDirection: "column",
+			justifyContent: "center",
+			alignItems: "center",
+			flex: 1,
+		}} colors={colors}>
+			{children}
 		</LinearGradient>
 	);
 };

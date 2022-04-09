@@ -29,8 +29,8 @@ export const Container = styled.View`
 	width: 100%;
 `
 export const Logo = styled.Image`
-	width: 35%;
-	height: 35%;
+	width: 30%;
+	height: 30%;
 `
 export const Subtitle = styled.Text`
 	text-align: center;
@@ -38,6 +38,7 @@ export const Subtitle = styled.Text`
 	padding: 0 10px;
 	font-weight: bold;
 	font-family: ${fonts.text};
+	color: ${colors.white};
 `
 
 export const ButtonContainer = styled.Pressable`
@@ -61,7 +62,7 @@ export const ButtonText = styled.Text`
 
 export const IconContainer = styled.Pressable`
 	/* padding: 17px 22px; */
-	background-color: ${colors.white};
+	background-color: ${colors.secondary_lighter};
 	margin: 0 5px;
 	elevation: 3;
 	${Flex}

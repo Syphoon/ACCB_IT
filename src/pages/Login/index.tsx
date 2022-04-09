@@ -5,27 +5,28 @@ import colors from 'src/config/colors';
 
 const accbLogo = "../../assets/logos/accb.png";
 import InputWithIconComponent from 'src/components/InputWithIcon';
+import Gradient from 'src/components/Gradient';
 
 const Home: React.FC = () => {
 
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 
-	return (
-		<App colors={['#4c669f', '#3b5998', '#192f6a']} >
-			<TopMenu>
+	const HomeContent = (
+		<>
+		<TopMenu>
 				<IconContainer style={{"borderRadius": 100, "paddingHorizontal": 20, "paddingVertical": 10}}>
 					<Icon
-						// color={'rgba(255,255,255,0.8)'}
-						color={'#2196F3'}
+						color={'rgba(255,255,255,1)'}
+						// color={colors.secondary_lighter}
 						name={'info'}
 						size={25}
 					/>
 				</IconContainer>
 				<IconContainer  style={{"borderRadius": 100, "padding": 13}}>
 					<Icon
-						// color={'rgba(255,255,255,0.8)'}
-						color={'#2196F3'}
+						color={'rgba(255,255,255,1)'}
+						// color={colors.secondary_lighter}
 						name={'refresh'}
 						size={25}
 					/>
@@ -42,7 +43,11 @@ const Home: React.FC = () => {
 					<ButtonText>Entrar</ButtonText>
 				</ButtonContainer>
 			</Container>
-		</App>
+		</>
+	);
+
+	return (
+		<Gradient colors={[colors.primary, colors.primary, colors.secondary_lighter]} children={HomeContent} />
 	);
 };
 
