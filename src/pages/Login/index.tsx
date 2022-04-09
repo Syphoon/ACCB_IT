@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { App, Button, Container, Icon, Input, InputContainer, Logo, Subtitle, TopMenu } from './styles';
+import { App, ButtonContainer, ButtonText, Container, IconContainer,InputContainer, Logo, Subtitle, TopMenu } from './styles';
+import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import colors from 'src/config/colors';
 
 const accbLogo = "../../assets/logos/accb.png";
-const infoIcon = "../../assets/info.svg";
-const reloadIcon = "../../assets/reload.svg";
+import InputWithIconComponent from 'src/components/InputWithIcon';
 
 const Home: React.FC = () => {
 
@@ -11,21 +12,35 @@ const Home: React.FC = () => {
 	const [password, setPassword] = useState("");
 
 	return (
-		<App>
+		<App colors={['#4c669f', '#3b5998', '#192f6a']} >
 			<TopMenu>
-				<Icon source={require(infoIcon)}/>
-				<Icon source={require(reloadIcon)}/>
+				<IconContainer style={{"borderRadius": 100, "paddingHorizontal": 20, "paddingVertical": 10}}>
+					<Icon
+						// color={'rgba(255,255,255,0.8)'}
+						color={'#2196F3'}
+						name={'info'}
+						size={25}
+					/>
+				</IconContainer>
+				<IconContainer  style={{"borderRadius": 100, "padding": 13}}>
+					<Icon
+						// color={'rgba(255,255,255,0.8)'}
+						color={'#2196F3'}
+						name={'refresh'}
+						size={25}
+					/>
+				</IconContainer>
 			</TopMenu>
 			<Container>
 				<Logo source={require(accbLogo)} />
-				<Subtitle>Bem Vindo</Subtitle>
+				<Subtitle>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus distinctio atque, ipsam.</Subtitle>
 				<InputContainer>
-					<Input placeholder="Usuário" value={userName} onChange={(e) => setUserName(e)} />
-					<Input type={"password"} value={password} onChange={(e) => setPassword(e)} placeholder="Password"/>
+					<InputWithIconComponent placeholder='Usuário' icon='user' color='#fff' value={userName} setValue={setUserName} />
+					<InputWithIconComponent placeholder='Senha' icon='lock' color='#fff' value={password} setValue={setPassword} />
 				</InputContainer>
-				{/* <Button>
-					Entrar
-				</Button> */}
+				<ButtonContainer>
+					<ButtonText>Entrar</ButtonText>
+				</ButtonContainer>
 			</Container>
 		</App>
 	);
