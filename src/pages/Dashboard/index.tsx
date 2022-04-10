@@ -5,7 +5,8 @@ import Dropdown from 'src/components/Dropdown';
 import colors from 'src/config/colors';
 import { ColetaContainer, ColetaItem, ColetaValue, Commands, CommandsContainer, CommandsIconContainer, CommandsValue, Container, IconContainer, Legend, Logo, SelectContainer, TopMenu } from './styles';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
-import { Alert, Pressable, Text, View} from 'react-native';
+import { Alert, Pressable, Text, TouchableWithoutFeedback, View} from 'react-native';
+import { Button } from 'react-native-elements';
 
 const accbLogo = "../../assets/logos/accb.png";
 const uescLogo = "../../assets/logos/uesc.png";
@@ -65,8 +66,8 @@ const Dashboard: React.FC = () => {
 		<>
 			<TopMenu >
 				<Container>
-					<Logo source={require(accbLogo)} />
 					<Logo source={require(uescLogo)} />
+					<Logo source={require(accbLogo)} />
 				</Container>
 				<Container style={{justifyContent: "flex-end"}}>
 					<IconContainer style={{"borderRadius": 100, "paddingHorizontal": 22, "paddingVertical": 13}}>
@@ -111,7 +112,7 @@ const Dashboard: React.FC = () => {
 								</ColetaValue>
 							</ColetaItem>
 							<CommandsContainer>
-								<Commands>
+								<Commands  onPress={() => navigation.navigate("Coleta")}>
 									<CommandsIconContainer>
 										<Icon
 											color={'rgba(255,255,255,1)'}
@@ -120,9 +121,11 @@ const Dashboard: React.FC = () => {
 											size={20}
 										/>
 									</CommandsIconContainer>
+
 									<CommandsValue>
 										Iniciar Coleta
 									</CommandsValue>
+
 								</Commands>
 								<Commands>
 									<CommandsIconContainer>

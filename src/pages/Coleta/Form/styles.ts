@@ -11,11 +11,24 @@ const Flex = `
 `
 
 export const IconContainer = styled.Pressable`
-	/* padding: 17px 22px; */
+	padding: 10px 20px;
 	background-color: ${colors.secondary_lighter};
 	margin: 0 5px;
 	elevation: 3;
 	${Flex};
+	border-radius: 5px;
+`
+
+export const IconText = styled.Text`
+	font-family: ${fonts.primary};
+	color: ${colors.white};
+	font-size: ${RFValue(14)}px;
+	margin: 0 10px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 `
 
 export const TopMenu = styled.View`
@@ -80,7 +93,7 @@ export const ProductWrapper = styled.ScrollView`
 	flex-wrap: wrap;
 `
 export const ProductScroll = styled.ScrollView`
-	max-height: 62%;
+	/* max-height: 60%; */
 	width: 100%;
 	flex: 2;
 `

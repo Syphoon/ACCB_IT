@@ -13,11 +13,11 @@ interface IDropdown  {
 
 const Dropdown: React.FC<IDropdown> = ({options, value, setValue, hide}) => {
 
-	const [show, setShow] = useState(true);
+	const [show, setShow] = useState(false);
 
-	// useEffect(() => {
-	// 	setShow(false);
-	// }, [hide]);
+	useEffect(() => {
+		setShow(false);
+	}, [hide]);
 
 	return (
 		<TouchableNativeFeedback onPress={() => setShow(!show)}>

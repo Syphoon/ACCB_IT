@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {Input, InputIconContainer, InputWithIcon, } from "./styles"
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import masks from 'src/lib/masks';
 
 interface IInput  {
 	icon: string,
@@ -8,10 +9,17 @@ interface IInput  {
 	value: any,
 	setValue: any,
 	placeholder: string,
-	secure?:boolean,
+	secure?: boolean,
+	type?: string,
 }
 
-const InputWithIconComponent: React.FC<IInput> = ({icon, color, value, setValue, placeholder, secure=false}) => {
+const InputWithIconComponent: React.FC<IInput> = ({icon, color, value, setValue, placeholder, secure=false, type="default"}) => {
+
+	const changeValue = (newValue: string) => {
+		if(newValue.length > 5)
+			return
+		setValue(newValue);
+	}
 
 	return (
 		<InputWithIcon>
@@ -22,7 +30,12 @@ const InputWithIconComponent: React.FC<IInput> = ({icon, color, value, setValue,
 					size={25}
 				/>
 			</InputIconContainer>
-			<Input secureTextEntry={secure} placeholder={placeholder} value={value} onChangeText={(value) => setValue(value)} />
+			<Input
+				keyboardType={type}
+				secureTextEntry={secure}
+				placeholder={placeholder}
+				value={masks.formatPrice(value)}
+				onChangeText={type != "default" ? (value) => changeValue(value) : (value) => setValue(value)} />
 		</ InputWithIcon>
 	);
 };
