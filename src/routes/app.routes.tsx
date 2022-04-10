@@ -20,9 +20,9 @@ const AppRoutes: React.FC = () => {
 					headerShown: false,
 				}}
 			>
+				<App.Screen name="Dashboard" component={Dashboard} />
 				<App.Screen name="Splash" component={Splash} />
 				<App.Screen name="Login" component={Login} />
-				{/* <App.Screen name="Dashboard" component={Dashboard} /> */}
 				{/* <App.Screen name="Coleta" component={Coleta} /> */}
 				{/* <App.Screen name="Form" component={Form} /> */}
 			</App.Navigator>

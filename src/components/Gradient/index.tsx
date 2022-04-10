@@ -5,9 +5,10 @@ import LinearGradient from 'react-native-linear-gradient';
 interface IGradient  {
 	colors: [string, string, string],
 	children: any,
+	style?: any,
 }
 
-const Gradient: React.FC<IGradient> = ({colors ,children,}) => {
+const Gradient: React.FC<IGradient> = ({colors ,children,style}) => {
 
 	return (
 		<LinearGradient style={{
@@ -16,6 +17,7 @@ const Gradient: React.FC<IGradient> = ({colors ,children,}) => {
 			justifyContent: "center",
 			alignItems: "center",
 			flex: 1,
+			...style,
 		}} colors={colors}>
 			{children}
 		</LinearGradient>

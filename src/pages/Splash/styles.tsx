@@ -4,11 +4,6 @@ import fonts from 'src/config/fonts';
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 export const LogoContainer = styled.View`
-	/* flex: 1; */
-	/* display: flex; */
-	/* flex-direction: column; */
-	/* justify-content: center; */
-	/* align-items: center; */
 	margin: 10px 0;
 	position: relative;
 	display: flex;
