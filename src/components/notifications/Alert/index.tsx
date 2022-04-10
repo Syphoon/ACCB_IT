@@ -4,6 +4,7 @@ import AlertContext from "src/contexts/Alert";
 import { AlertContainer, AlertOverlay, AlertText, BottomMenu, ButtonText, IconContainer } from "./styles";
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import colors from "src/config/colors";
+import { Keyboard } from "react-native";
 
 
 export type TypeNotification = "ask" | "message" | "github";
@@ -11,16 +12,16 @@ export type TypeNotification = "ask" | "message" | "github";
 
 const AlertItem: React.FC<any> = () => {
 
-	const { notification } = useContext(AlertContext);
+	const { notification, closeAlert } = useContext(AlertContext);
 	const [show, setShow] = useState(false);
 	const [text, setText] = useState("");
 	const [type, setType] = useState("");
 	const [icon, setIcon] = useState("");
 	const [onConfirm, setOnConfirm] = useState<any>(false);
 
-	const doNothing = () => { console.log("do nothing"); }
 	useEffect(() => {
 		if (notification.text) {
+			Keyboard.dismiss();
 			setShow(true);
 			setText(notification.text);
 			setType(notification.type);
@@ -43,7 +44,7 @@ const AlertItem: React.FC<any> = () => {
 			</IconContainer>
 			<AlertText>{text}</AlertText>
 			<BottomMenu>
-				<TouchableNativeFeedback style={{ "elevation": 10 }} onPress={() => setShow(false)}>
+				<TouchableNativeFeedback style={{ "elevation": 10 }} onPress={() => { setShow(false); closeAlert(); }}>
 					<ButtonText>
 						Ok
 					</ButtonText>
@@ -64,12 +65,12 @@ const AlertItem: React.FC<any> = () => {
 			</IconContainer>
 			<AlertText>{text}</AlertText>
 			<BottomMenu>
-				<TouchableNativeFeedback style={{ "elevation": 10 }} onPress={() => setShow(false)}>
+				<TouchableNativeFeedback style={{ "elevation": 10 }} onPress={() => { setShow(false); closeAlert(); }}>
 					<ButtonText>
 						Cancelar
 					</ButtonText>
 				</TouchableNativeFeedback>
-				<TouchableNativeFeedback onPress={onConfirm ? notification.onPress() : () => { console.log(onConfirm) }} style={{ "elevation": 10 }}>
+				<TouchableNativeFeedback onPress={onConfirm ? notification.onPress() : () => { setShow(false); closeAlert(); }} style={{ "elevation": 10 }}>
 					<ButtonText>
 						Confirmar
 					</ButtonText>
@@ -91,12 +92,12 @@ const AlertItem: React.FC<any> = () => {
 				</IconContainer>
 				<AlertText>{text}</AlertText>
 				<BottomMenu>
-					<TouchableNativeFeedback style={{ "elevation": 10 }} onPress={() => setShow(false)}>
+					<TouchableNativeFeedback style={{ "elevation": 10 }} onPress={() => { setShow(false); closeAlert(); }}>
 						<ButtonText>
 							Fechar
 						</ButtonText>
 					</TouchableNativeFeedback>
-					<TouchableNativeFeedback onPress={() => setShow(false)} style={{ "elevation": 10 }}>
+					<TouchableNativeFeedback onPress={() => { setShow(false); closeAlert(); }} style={{ "elevation": 10 }}>
 						<ButtonText >
 							Github
 						</ButtonText>

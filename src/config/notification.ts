@@ -3,4 +3,5 @@ export default {
 	info: "info-circle",
 	success: "check-circle",
 	error: "times-circle",
+	question: "question-circle",
 };

@@ -11,13 +11,22 @@ interface IDropdown  {
 	hide?: any,
 }
 
-const Dropdown: React.FC<IDropdown> = ({options, value, setValue, hide}) => {
+const Dropdown: React.FC<IDropdown> = ({ options, value, setValue, hide }) => {
 
 	const [show, setShow] = useState(false);
+	const [all, setAll] = useState(false);
 
 	useEffect(() => {
 		setShow(false);
 	}, [hide]);
+
+	useEffect(() => {
+		options.every((item) => {
+			if (typeof item == "object") {
+				setAll(true);
+			}
+		});
+	}, []);
 
 	return (
 		<TouchableNativeFeedback onPress={() => setShow(!show)}>
@@ -39,20 +48,33 @@ const Dropdown: React.FC<IDropdown> = ({options, value, setValue, hide}) => {
 					<TouchableNativeFeedback onPress={() => setShow(!show)}>
 						<View style={{flex: 1, backgroundColor: "rgba(0,0,0,.6)"}}>
 							<DropdownList>
-							{
+								{
+									all && (
+										<TouchableNativeFeedback onPress={() => {
+											setShow(false);
+											setValue("All");
+										}}>
+											<DropdownListValue>
+												Todos
+											</DropdownListValue>
+										</TouchableNativeFeedback>
+									)
+								}
+								{
 								options.map((val, index) => {
 									return (
 										<TouchableNativeFeedback  key={index} onPress={() => {
 											setShow(false);
-											setValue(val);
+											setValue(typeof val == "object" ? val.estabelecimento_nome : val);
 										}}>
 											<DropdownListValue>
-												{val}
+												{typeof val == "object" ? val.estabelecimento_nome : val}
 											</DropdownListValue>
 										</TouchableNativeFeedback>
 									);
 								})
 							}
+
 						</DropdownList>
 						</View>
 					</TouchableNativeFeedback>

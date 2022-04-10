@@ -106,8 +106,8 @@ export const CommandsContainer = styled.View`
 	width: 100%;
 `
 export const CommandsIconContainer = styled.View`
-	background-color: rgba(255,255,255,.2);
-	/* background-color: ${colors.primary_darker}; */
+	/* background-color: rgba(255,255,255,.2); */
+	background-color: ${colors.blue};
 	/* padding: 13px 20px; */
 	height: 100%;
 	border-top-left-radius: 5px;

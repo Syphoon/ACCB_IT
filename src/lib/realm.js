@@ -216,9 +216,9 @@ export const delete_collect_info = async () => {
 export const delete_db_info = async () => {
 	const realm = await Realm();
 
-	realm.write(() => {
-		realm.deleteAll();
-	});
+	// realm.write(() => {
+	// 	realm.deleteAll();
+	// });
 };
 
 export const validate_date = async () => {

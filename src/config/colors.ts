@@ -4,7 +4,8 @@ export default {
 	secondary: '#043659',
 	secondary_lighter: '#14537e',
 	white: '#FCFEFF',
-	gray:'#D1E2EE',
+	gray:'#ccc',
 	terciary:'#A3D2F4',
 	black: "#000",
+	blue: "#377fb0",
 };

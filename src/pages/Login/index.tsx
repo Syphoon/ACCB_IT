@@ -134,11 +134,12 @@ const Home: React.FC = () => {
 
 					// ATT USER LOGGED INFO TO TRUE
 					save_user({ userName: result[0].usuario, password: result[0].senha }, result[0].id, 1);
-					navigation.replace("Dashboard", {
-						usuario: result[0].usuario,
-						id: result[0].id,
-						senha: result[0].senha,
-					});
+					// navigation.replace("Dashboard", {
+					// 	usuario: result[0].usuario,
+					// 	id: result[0].id,
+					// 	senha: result[0].senha,
+					// });
+					navigation.replace("Dashboard");
 
 				} else {
 
