@@ -18,7 +18,7 @@ const Splash: React.FC = () => {
 	useEffect(() => {
 
 		openAlert(
-			"ask",
+			"message",
 			"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur culpa totam soluta officia iste modi aut dolorem officiis omnis vel, ducimus quae ab sint labore nostrum aliquam sapiente unde! At.",
 			"warning",
 		);

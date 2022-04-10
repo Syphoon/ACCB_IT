@@ -27,6 +27,27 @@ const AlertItem: React.FC<any> = ({
 	}, [notification]);
 
 
+	const AlertMessage = () => (
+		<AlertContainer>
+			<IconContainer>
+				<Icon
+					color={colors.primary_darker}
+					// color={colors.secondary_lighter}
+					name={icon}
+					size={45}
+				/>
+			</IconContainer>
+			<AlertText>{text}</AlertText>
+			<BottomMenu>
+				<TouchableNativeFeedback style={{ "elevation": 10 }} onPress={() => setShow(false)}>
+					<ButtonText>
+						Ok
+					</ButtonText>
+				</TouchableNativeFeedback>
+
+			</BottomMenu>
+		</AlertContainer>
+	);
 	const AlertAsk = () => (
 		<AlertContainer>
 			<IconContainer>
@@ -88,6 +109,8 @@ const AlertItem: React.FC<any> = ({
 			return <AlertGithub />;
 		if (type == "ask")
 			return <AlertAsk />;
+		if (type == "message")
+			return <AlertMessage />;
 	}
 
 	return (
