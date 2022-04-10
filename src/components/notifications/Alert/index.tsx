@@ -9,21 +9,25 @@ import colors from "src/config/colors";
 export type TypeNotification = "ask" | "message" | "github";
 
 
-const AlertItem: React.FC<any> = ({
-	onConfirm,
-}) => {
+const AlertItem: React.FC<any> = () => {
 
 	const { notification } = useContext(AlertContext);
 	const [show, setShow] = useState(false);
 	const [text, setText] = useState("");
 	const [type, setType] = useState("");
 	const [icon, setIcon] = useState("");
+	const [onConfirm, setOnConfirm] = useState<any>(false);
 
+	const doNothing = () => { console.log("do nothing"); }
 	useEffect(() => {
-		setShow(true);
-		setText(notification.text);
-		setType(notification.type);
-		setIcon(notification.icon);
+		if (notification.text) {
+			setShow(true);
+			setText(notification.text);
+			setType(notification.type);
+			setIcon(notification.icon);
+			if ("onPress" in notification)
+				setOnConfirm(true);
+		}
 	}, [notification]);
 
 
@@ -65,7 +69,7 @@ const AlertItem: React.FC<any> = ({
 						Cancelar
 					</ButtonText>
 				</TouchableNativeFeedback>
-				<TouchableNativeFeedback onPress={() => { setShow(false); onConfirm() }} style={{ "elevation": 10 }}>
+				<TouchableNativeFeedback onPress={onConfirm ? notification.onPress() : () => { console.log(onConfirm) }} style={{ "elevation": 10 }}>
 					<ButtonText>
 						Confirmar
 					</ButtonText>
@@ -125,7 +129,6 @@ const AlertItem: React.FC<any> = ({
 
 
 const Alert: React.FC = () => {
-
 	return (
 		<AlertItem />
 	);

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert, ActivityIndicator } from 'react-native';
-import Realm from '../service/realm';
+import Realm from 'src/services/realm';
 import * as axios from 'axios';
+
+
+const apiUrl = "http://192.168.15.17:80";
 
 export const check_backup = async type => {
 	const realm = await Realm();
@@ -242,7 +245,7 @@ export const validate_date = async () => {
 export const get_date_sync = async (save = true) => {
 	return (
 		axios
-			.get('https://accbit-teste-estagiaria.loca.lt/request_it.php/?&accb_it_date', {
+			.get(`${apiUrl}/request_it.php/?&accb_it_date`, {
 				timeout: 1000 * 0.5,
 				headers: {
 					'Content-Type': 'application/json',
@@ -283,7 +286,7 @@ export const get_sync_data = async (type, refresh = false) => {
 	return (
 		axios
 			.get(
-				`https://accbit-teste-estagiaria.loca.lt/request_it.php/?&accb_it_sync=${sync}`,
+				`${apiUrl}/request_it.php/?&accb_it_sync=${sync}`,
 				{
 					timeout: 1000 * 2,
 					headers: {
@@ -362,7 +365,7 @@ export const send_prices = async info => {
 	return (
 		axios
 			.post(
-				'https://accbit-teste-estagiaria.loca.lt/request_it.php/?&accb_it_prices',
+				`${apiUrl}/request_it.php/?&accb_it_prices`,
 				{
 					data: info,
 				},
@@ -387,30 +390,12 @@ export const send_prices = async info => {
 	);
 };
 
-export const loading_screen = props => {
+export const loading_screen = (
 	// delete_db_info();
-	return (
-		<View style={styles.container}>
-			<Text style={styles.message}>
-				Sincronizando App com o Banco de Dados ACCB
-			</Text>
-			<ActivityIndicator size="large" color="#fff" />
-		</View>
-	);
-};
-
-const styles = StyleSheet.create({
-	container: {
-		justifyContent: 'center',
-		height: '100%',
-		width: '100%',
-		backgroundColor: '#3B9CE2',
-		position: 'absolute',
-	},
-	message: {
-		color: '#fff',
-		marginBottom: 15,
-		textAlign: 'center',
-		fontSize: 15,
-	},
-});
+	<View >
+		<Text>
+			Sincronizando App com o Banco de Dados ACCB
+		</Text>
+		<ActivityIndicator size="large" color="#fff" />
+	</View>
+);

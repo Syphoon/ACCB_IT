@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
+import Alert from "src/components/notifications/Alert";
 
 
 interface IGradient  {
@@ -19,6 +20,7 @@ const Gradient: React.FC<IGradient> = ({colors ,children,style}) => {
 			flex: 1,
 			...style,
 		}} colors={colors}>
+			<Alert />
 			{children}
 		</LinearGradient>
 	);

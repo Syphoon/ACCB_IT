@@ -27,7 +27,7 @@ export const AlertOverlay = styled.View`
 export const AlertContainer = styled.View`
 	${Flex};
 	width: 90%;
-	height: 40%;
+	height: 35%;
 	justify-content: space-between;
 	background-color: rgba(255,255,255,.9);
 	border-radius: 5px;

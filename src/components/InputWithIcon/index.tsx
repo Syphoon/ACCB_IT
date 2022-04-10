@@ -34,7 +34,7 @@ const InputWithIconComponent: React.FC<IInput> = ({icon, color, value, setValue,
 				keyboardType={type}
 				secureTextEntry={secure}
 				placeholder={placeholder}
-				value={masks.formatPrice(value)}
+				value={type != "default" ? masks.formatPrice(value) : value}
 				onChangeText={type != "default" ? (value) => changeValue(value) : (value) => setValue(value)} />
 		</ InputWithIcon>
 	);

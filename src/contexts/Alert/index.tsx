@@ -8,6 +8,7 @@ interface IAlert {
 		text: string,
 		type: TypeNotification,
 		icon: string,
+		onPress: any,
 	},
 }
 const AlertContext = createContext<IAlert>({
@@ -17,6 +18,7 @@ const AlertContext = createContext<IAlert>({
 		text: "",
 		type: "warning",
 		icon: "string",
+		onPress: "",
 	},
 });
 
@@ -24,11 +26,12 @@ const AlertContext = createContext<IAlert>({
 export const AlertProvider: React.FC<IAlert> = ({ children }) => {
 	const [notification, setNotification] = useState<any>({});
 
-	const openAlert = (type: TypeNotification, text: string, icon?: string) => {
+	const openAlert = (type: TypeNotification, text: string, icon?: string, onPress?: any) => {
 		setNotification({
 			text: text,
 			type: type,
 			icon: icon || "",
+			onPress: onPress || undefined,
 		});
 	};
 
@@ -37,6 +40,7 @@ export const AlertProvider: React.FC<IAlert> = ({ children }) => {
 			text: "",
 			icon: "string",
 			type: "warning",
+			onPress: undefined,
 		});
 	};
 
