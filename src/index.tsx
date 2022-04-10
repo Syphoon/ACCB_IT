@@ -1,11 +1,13 @@
 import React from 'react';
 import { SafeAreaView, StatusBar } from 'react-native';
 
-// import AppProvider from './hooks';
+import { AlertProvider } from "src/contexts/Alert";
 import Routes from './routes';
 
 const App: React.FC = () => (
-	<Routes />
+	<AlertProvider>
+		<Routes />
+	</AlertProvider>
 );
 
 export default App;

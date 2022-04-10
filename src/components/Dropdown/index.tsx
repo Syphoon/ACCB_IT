@@ -29,7 +29,7 @@ const Dropdown: React.FC<IDropdown> = ({options, value, setValue, hide}) => {
 				</DropdownContainer>
 				<Modal
 
-					animationType="fade"
+					animationType="slide"
 					transparent={true}
 					visible={show}
 					onRequestClose={() => {

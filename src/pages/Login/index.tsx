@@ -6,11 +6,17 @@ import colors from 'src/config/colors';
 const accbLogo = "../../assets/logos/accb.png";
 import InputWithIconComponent from 'src/components/InputWithIcon';
 import Gradient from 'src/components/Gradient';
+import { useNavigation } from '@react-navigation/native';
 
 const Home: React.FC = () => {
 
 	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
+	const navigation = useNavigation();
+
+	const login = () => {
+		navigation.replace("Dashboard");
+	}
 
 	const HomeContent = (
 		<>
@@ -39,8 +45,8 @@ const Home: React.FC = () => {
 					<InputWithIconComponent placeholder='Usuário' icon='user' color='#fff' value={userName} setValue={setUserName} />
 					<InputWithIconComponent secure={true} placeholder='Senha' icon='lock' color='#fff' value={password} setValue={setPassword} />
 				</InputContainer>
-				<ButtonContainer>
-					<ButtonText>Entrar</ButtonText>
+				<ButtonContainer onPress={login}>
+					<ButtonText >Entrar</ButtonText>
 				</ButtonContainer>
 			</Container>
 		</>

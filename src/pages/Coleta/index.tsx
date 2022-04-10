@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Gradient from 'src/components/Gradient';
 import colors from 'src/config/colors';
 import { BottomMenu, ButtonText, Container,  Legend, Logo, Product, ProductScroll, TopMenu } from './styles';
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
-import {FlatList, Pressable, Text, TouchableNativeFeedback, View} from 'react-native';
+import {Text, TouchableNativeFeedback } from 'react-native';
 
 const accbLogo = "../../assets/logos/accb.png";
 const uescLogo = "../../assets/logos/uesc.png";
@@ -58,9 +57,11 @@ const Coleta: React.FC = () => {
 
 	const renderItem = ({ item, idx }) => {
 		return (
-			<Product key={item.estab + idx}>
-				{item.estab}
-			</Product>
+			<TouchableNativeFeedback onPress={() => navigation.navigate("Form", {state: item})}>
+				<Product key={item.estab + idx}>
+					{item.estab}
+				</Product>
+			</TouchableNativeFeedback>
 		);
 	};
 

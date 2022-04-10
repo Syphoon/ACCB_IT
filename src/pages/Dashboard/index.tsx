@@ -78,11 +78,11 @@ const Dashboard: React.FC = () => {
 							size={25}
 						/>
 					</IconContainer>
-					<IconContainer  style={{"borderRadius": 100, "padding": 13}}>
+					<IconContainer  style={{"borderRadius": 100, "paddingHorizontal": 15, "paddingVertical": 13}}>
 						<Icon
 							color={'rgba(255,255,255,1)'}
 							// color={colors.secondary_lighter}
-							name={'refresh'}
+							name={'sign-out'}
 							size={25}
 						/>
 					</IconContainer>
