@@ -5,7 +5,7 @@ import { DropdownContainer, DropdownList, DropdownListValue, DropdownValue } fro
 
 
 interface IDropdown  {
-	options: [any],
+	options: any,
 	value: string,
 	setValue: any,
 	hide?: any,

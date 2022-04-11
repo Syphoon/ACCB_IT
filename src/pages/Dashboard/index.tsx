@@ -148,8 +148,8 @@ const Dashboard: React.FC = () => {
 	}
 
 	const search_place = (value) => {
-
-		if (value == 'ALL') {
+		console.log({ value });
+		if (value == 'Todos') {
 			setEstabList(estabBackup);
 			setEstab("Todos");
 		} else {
@@ -160,6 +160,7 @@ const Dashboard: React.FC = () => {
 
 				return lower_place.indexOf(lower_filter) > -1;
 			});
+			// new_places.push("Todos");
 			setEstabList(new_places);
 			setEstab(value);
 		}
@@ -176,7 +177,8 @@ const Dashboard: React.FC = () => {
 			}
 		});
 
-		setEstab(places[0].estabelecimento_nome);
+		setEstab("Todos");
+		setEstabListDrop(places);
 		setEstabList(places);
 
 		// this.setState({ places: places, places_backup: places, municipio: value });
@@ -372,14 +374,12 @@ const Dashboard: React.FC = () => {
 				Selecione <Text style={{ fontWeight: 'bold', color: colors.green }}>Iniciar Coleta</Text> para mover-se ao formulário do estabelecimento.
 			</Legend>
 			<SelectContainer>
-				<Dropdown hide={hideDropdown} options={estabListDrop} value={estab} setValue={search_place} />
+				<Dropdown hide={hideDropdown} options={["Todos", ...estabListDrop]} value={estab} setValue={search_place} />
 				<Dropdown hide={hideDropdown} options={municipioList} value={municipio} setValue={search_city} />
 			</SelectContainer>
 			<ColetaContainer>
 				{
 					estabList.map((item, index) => {
-						console.log(item.estabelecimento_nome);
-						console.log(item.enviar);
 						if (item.coleta_fechada == 1) {
 							return
 						}
