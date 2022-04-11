@@ -40,11 +40,8 @@ const Coleta: React.FC = () => {
 	};
 
 	const saveColeta = async () => {
-		// Descobre como formata a coleta final e ta feito
-		console.log({ prices });
-		console.log({ savePrices });
-		// saveForm(navigation, params);
-		// clearForm()
+		saveForm(navigation, params);
+		clearForm();
 	}
 
 	const ColetaContent = (
@@ -76,7 +73,7 @@ const Coleta: React.FC = () => {
 								onPress={() => navigation.navigate("Form", {
 									product: item.nome,
 									product_id: item.id,
-									...params
+									state: params,
 								})}>
 								<Product >
 									{item.nome}

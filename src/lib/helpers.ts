@@ -19,7 +19,9 @@ const helpers = {
 		return text
 	},
 	formatPriceForm: (text: string) => {
-		return text.replace(",", "");
+		if(text)
+			return text.replace(",", "");
+		return text
 	}
 }
 

@@ -378,8 +378,11 @@ const Dashboard: React.FC = () => {
 			<ColetaContainer>
 				{
 					estabList.map((item, index) => {
-						if (item.coleta_fechada == 1)
+						console.log(item.estabelecimento_nome);
+						console.log(item.enviar);
+						if (item.coleta_fechada == 1) {
 							return
+						}
 						return (
 							<View key={index + "col"}>
 								<ColetaItem >
@@ -420,12 +423,12 @@ const Dashboard: React.FC = () => {
 										onPress={item.enviar ?
 											() => {
 												openAlert("ask", 'Realmente deseja enviar a coleta ? Todos os dados serão removidos do aplicativo após envio', notification.question, () => {
-													send_info({
-														coleta_id: item.id,
-														pesquisa_id: item.pesquisa_id,
-														estabelecimento_id: item.estabelecimento_id,
-														estabelecimento_nome: item.estabelecimento_nome
-													})
+													// send_info({
+													// 	coleta_id: item.id,
+													// 	pesquisa_id: item.pesquisa_id,
+													// 	estabelecimento_id: item.estabelecimento_id,
+													// 	estabelecimento_nome: item.estabelecimento_nome
+													// })
 												})
 											} :
 											() => {
@@ -436,12 +439,12 @@ const Dashboard: React.FC = () => {
 											<Icon
 												color={'rgba(255,255,255,1)'}
 												// color={colors.secondary_lighter}
-												name={item.eviar ? 'send' : 'lock'}
+												name={item.enviar ? 'send' : 'lock'}
 												size={20}
 											/>
 										</CommandsIconContainer>
 										<CommandsValue>
-											Enviar Coleta
+											{item.enviar ? "Enviar Coleta" : "Em espera"}
 										</CommandsValue>
 									</Commands>
 								</CommandsContainer>

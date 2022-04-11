@@ -1,5 +1,7 @@
 const masks = {
 	formatPrice: (price: string) => {
+		if (!price)
+			return price
 		const value = price.replace(",", "");
 		if(value.length == 4)
 			return value.replace(/^(\d{2})(\d{2})*/, '$1,$2');

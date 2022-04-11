@@ -16,28 +16,23 @@ const uescLogo = "../../../assets/logos/uesc.png";
 
 const Coleta: React.FC = () => {
 
-	const [price1, setPrice1] = useState("");
-	const [price2, setPrice2] = useState("");
-	const [price3, setPrice3] = useState("");
-	const [price4, setPrice4] = useState("");
-	const [price5, setPrice5] = useState("");
+	const [price, setPrice] = useState(["", "", "", "", ""]);
 	const navigation = useNavigation();
 	const route = useRoute();
 	const params: any = route.params;
 	const [secundaryList, setSecundaryList] = useState<any>([]);
 	const [secundary, setSecundary] = useState<any>([]);
 	const [secundaryInfo, setSecundaryInfo] = useState<any>();
-	const [productId, setProductId] = useState(0);
 	const { saveProduct, getForm, prices } = useContext(FormContext);
 
 	useEffect(() => {
 		let arr: any = [];
 		let info: any = [];
-		info["Padrão"] = "Não tem estabelecimento secundário";
+		info["Padrão"] = "Não tem estabelecimento secundário.";
 		arr.push("Padrão");
 		try {
 
-			let list = JSON.parse(params.estabelecimento_secundario);
+			let list = JSON.parse(params.state.estabelecimento_secundario);
 			list.map((item: any) => {
 				let nome = item.estabelecimento_sec_nome;
 				info[nome] = item;
@@ -49,51 +44,56 @@ const Coleta: React.FC = () => {
 
 
 		} catch (e) {
-			setSecundaryList([params.estabelecimento_secundario]);
-			setSecundary(params.estabelecimento_secundario);
+			setSecundaryList([params.state.estabelecimento_secundario]);
+			setSecundary(params.state.estabelecimento_secundario);
 			setSecundaryInfo(info);
 		}
 		// console.log(params);
-		getForm(navigation, params);
-		setProductId(params.prodct_id);
+		getForm(navigation, params.state);
+
+		const id = params.product_id;
+		if (id in prices) {
+			prices[id].map((item, idx) => {
+				console.log({ item });
+				if (item.length <= 4)
+					setPrice((prevPrice) => ({
+						...prevPrice,
+						[idx]: item
+					}))
+				else if (item === "Não tem estabelecimento secundário.") {
+					setSecundary("Padrão");
+				} else {
+					setSecundary(item.estabelecimento_sec_nome);
+				}
+			});
+			console.log()
+		}
 
 	}, [params]);
 
-	useEffect(() => {
-		if (productId in prices) {
-			setPrice1(prices[productId][0]);
-			setPrice2(prices[productId][1]);
-			setPrice3(prices[productId][2]);
-			setPrice4(prices[productId][3]);
-			setPrice5(prices[productId][4]);
-			if (String(prices[productId][5]) === "Não tem estabelecimento secundário") {
-				setSecundary("Padrão");
-			}
-			else {
-				setSecundary(prices[productId][5]);
-			}
-		}
-	}, [productId]);
-
-	const savePrices = () => {
-		if (price1 || price2 || price3 || price4 || price5) {
-
-			let prices = [
-				helpers.formatPriceForm(price1),
-				helpers.formatPriceForm(price2),
-				helpers.formatPriceForm(price3),
-				helpers.formatPriceForm(price4),
-				helpers.formatPriceForm(price5),
-				secundaryInfo[secundary]
-			];
-			saveProduct(productId, prices);
-			navigation.navigate("Coleta", { ...params });
-
-		} else {
-			navigation.goBack();
-		}
+	const setPriceCustom = (idx, val) => {
+		setPrice((prevPrice) => ({
+			...prevPrice,
+			[idx]: val
+		}))
 	}
 
+	const savePrices = () => {
+
+		const id = params.product_id;
+		let filtered: any = [];
+		for (var key in price) {
+			if (price[key] != "")
+				filtered.push(helpers.formatPriceForm(price[key]));
+		}
+		let local_prices = [
+			...filtered,
+			secundaryInfo[secundary]
+		];
+		saveProduct(id, local_prices);
+		navigation.navigate("Coleta", { ...params.state });
+
+	}
 
 	const ColetaContent = (
 		<>
@@ -127,11 +127,11 @@ const Coleta: React.FC = () => {
 					alignItems: "center",
 					width: "100%"
 				}}>
-				<InputWithIconComponent type={"numeric"} value={price1} setValue={setPrice1} icon={"money"} color={"#fff"} placeholder={"00,00"} />
-				<InputWithIconComponent type={"numeric"} value={price2} setValue={setPrice2} icon={"money"} color={"#fff"} placeholder={"00,00"} />
-				<InputWithIconComponent type={"numeric"} value={price3} setValue={setPrice3} icon={"money"} color={"#fff"} placeholder={"00,00"} />
-				<InputWithIconComponent type={"numeric"} value={price4} setValue={setPrice4} icon={"money"} color={"#fff"} placeholder={"00,00"} />
-				<InputWithIconComponent type={"numeric"} value={price5} setValue={setPrice5} icon={"money"} color={"#fff"} placeholder={"00,00"} />
+				<InputWithIconComponent type={"numeric"} value={price[0]} setValue={(val) => setPriceCustom(0, val)} icon={"money"} color={"#fff"} placeholder={"00,00"} />
+				<InputWithIconComponent type={"numeric"} value={price[1]} setValue={(val) => setPriceCustom(1, val)} icon={"money"} color={"#fff"} placeholder={"00,00"} />
+				<InputWithIconComponent type={"numeric"} value={price[2]} setValue={(val) => setPriceCustom(2, val)} icon={"money"} color={"#fff"} placeholder={"00,00"} />
+				<InputWithIconComponent type={"numeric"} value={price[3]} setValue={(val) => setPriceCustom(3, val)} icon={"money"} color={"#fff"} placeholder={"00,00"} />
+				<InputWithIconComponent type={"numeric"} value={price[4]} setValue={(val) => setPriceCustom(4, val)} icon={"money"} color={"#fff"} placeholder={"00,00"} />
 			</ProductScroll>
 			<BottomMenu>
 				<TouchableNativeFeedback style={{"elevation": 10}} onPress={() => navigation.goBack()}>

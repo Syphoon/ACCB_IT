@@ -26,38 +26,37 @@ export const FormProvider: React.FC<IForm> = ({ children }) => {
 	const { openAlert } = useContext(AlertContext);
 
 	const saveProduct = (id: number, data: any) => {
-		let prevPrices: any;
-		prevPrices = prices;
-		prevPrices[id] = data;
-		setPrices(prevPrices);
+		setPrices((prevState) => ({
+			...prevState,
+			[id]: data,
+		}));
 	}
 
 	const saveForm = async (navigation: any, param: any) => {
 
 		const realm = await Realm();
-		let db_prices = [];
-		let values_keys = [];
+		let db_prices: any = [];
+		let values_keys: any = [];
 		let true_length = 0;
 		let send = false;
 
-		prices.map((price, product_key) => {
-			console.log(`Product Key  [${product_key}] , Prices [${price}] `);
-			values_keys.push(product_key);
-		});
+		for (var product_key in prices) {
 
+			console.log(prices[product_key]);
 
-		db_prices = prices.map(function (arr) {
-
-			if (arr.length >= 2) {
+			if (prices[product_key].length >= 2) {
 				true_length++;
-			} else if ((arr.length == 1) && arr[0] != 'Não tem estabelecimento secundário.') {
+			} else if ((prices[product_key].length == 1) && prices[product_key][0] != 'Não tem estabelecimento secundário.') {
+				true_length++;
+			} else if (prices[product_key].length == 1 && typeof prices[product_key][0] != "object") {
 				true_length++;
 			}
 
-			if (arr != null)
-				return arr;
-
-		});
+			if (prices[product_key] != null && prices[product_key][0] != 'Não tem estabelecimento secundário.' && typeof prices[product_key][0] != "object") {
+				values_keys.push(parseInt(product_key));
+				db_prices.push(prices[product_key]);
+			}
+		}
 
 		send = true_length > 0 ? true : false;
 
@@ -66,48 +65,48 @@ export const FormProvider: React.FC<IForm> = ({ children }) => {
 			return;
 		}
 
-		console.log({ db_prices });
-		console.log({ param });
+		console.log({ values_keys });
+		// console.log({ send });
+		// console.log({ values_keys });
+		// console.log({ db_prices });
 		// console.debug("true_length = " + true_length);
 		// console.debug(JSON.stringify(db_prices));
 
 		try {
-			// realm.write(() => {
-			// 	realm.create(
-			// 		"Formularios",
-			// 		{
-			// 			form_id: parseInt(param.estabelecimento_id),
-			// 			values: JSON.stringify(db_prices),
-			// 			values_keys: values_keys,
-			// 			coleta_id: parseInt(param.coleta_id),
-			// 			pesquisa_id: parseInt(param.pesquisa_id),
-			// 			estabelecimento_id: parseInt(param.estabelecimento_id),
-			// 		},
-			// 		'modified',
-			// 	);
-			// });
+			realm.write(() => {
+				realm.create(
+					"Formularios",
+					{
+						form_id: parseInt(param.estabelecimento_id),
+						values: JSON.stringify(db_prices),
+						values_keys: values_keys,
+						coleta_id: parseInt(param.coleta_id),
+						pesquisa_id: parseInt(param.pesquisa_id),
+						estabelecimento_id: parseInt(param.estabelecimento_id),
+					},
+					'modified',
+				);
+			});
 		} catch (e) {
 			console.log(e);
 			openAlert("message", 'Erro ao salvar o Formulario', notification.error);
 		}
 
+		await save_research_state({ id: parseInt(param.coleta_id) }, true, send).then(
+			val => {
 
-		console.log({ send });
-		// await save_research_state({ id: parseInt(param.coleta_id) }, true, send).then(
-		// 	val => {
+				if (val)
+					// console.log("Voltando para coleta " + this.state.municipio + this.state.estabelecimento_id);
+					navigation.replace('Dashboard', {
+						municipio: param.estabelecimento_nome,
+						estabelecimento_id: param.estabelecimento_id
+					});
+				// console.log('salvou');
+				else
+					openAlert("message", 'Erro ao salvar o Formulario', notification.error);
 
-		// 		if (val)
-		// 			// console.log("Voltando para coleta " + this.state.municipio + this.state.estabelecimento_id);
-		// 			// navigation.replace('Coleta', {
-		// 			// 	municipio: param.estabelecimento_nome,
-		// 			// 	estabelecimento_id: param.estabelecimento_id
-		// 			// });
-		// 			console.log('salvou');
-		// 		else
-		// 			openAlert("message", 'Erro ao salvar o Formulario', notification.error);
-
-		// 	}
-		// );
+			}
+		);
 
 	}
 
