@@ -49,27 +49,30 @@ const Coleta: React.FC = () => {
 			setSecundaryInfo(info);
 		}
 		// console.log(params);
-		getForm(navigation, params.state);
 
-		const id = params.product_id;
-		if (id in prices) {
-			prices[id].map((item, idx) => {
-				console.log({ item });
-				if (item.length <= 4)
-					setPrice((prevPrice) => ({
-						...prevPrice,
-						[idx]: item
-					}))
-				else if (item === "Não tem estabelecimento secundário.") {
-					setSecundary("Padrão");
-				} else {
-					setSecundary(item.estabelecimento_sec_nome);
-				}
-			});
-			console.log()
-		}
 
 	}, [params]);
+
+	useEffect(() => {
+		const id = params.product_id;
+		if (id in prices) {
+			console.log({ prices });
+			prices[id].map((item, idx) => {
+				if (item) {
+					if (item.length <= 4)
+						setPrice((prevPrice) => ({
+							...prevPrice,
+							[idx]: item
+						}))
+					else if (item === "Não tem estabelecimento secundário.") {
+						setSecundary("Padrão");
+					} else {
+						setSecundary(item.estabelecimento_sec_nome);
+					}
+				}
+			});
+		}
+	}, []);
 
 	const setPriceCustom = (idx, val) => {
 		setPrice((prevPrice) => ({
@@ -83,13 +86,14 @@ const Coleta: React.FC = () => {
 		const id = params.product_id;
 		let filtered: any = [];
 		for (var key in price) {
-			if (price[key] != "")
+			if (price[key])
 				filtered.push(helpers.formatPriceForm(price[key]));
 		}
 		let local_prices = [
 			...filtered,
 			secundaryInfo[secundary]
 		];
+		console.log({ local_prices });
 		saveProduct(id, local_prices);
 		navigation.navigate("Coleta", { ...params.state });
 

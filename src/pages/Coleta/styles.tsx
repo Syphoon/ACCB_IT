@@ -59,7 +59,7 @@ export const Product = styled.Text`
 	elevation: 10;
 	width: 40%;
 	margin: 10px;
-	background-color: ${colors.primary_darker};
+	background-color: ${colors.secondary};
 	text-align: center;
 	font-size: ${RFValue(12)}px;
 	font-weight: bold;
@@ -99,7 +99,8 @@ export const ButtonText = styled.Text`
 	flex-direction: column;
 	width: 40%;
 	margin: 10px 0;
-	background-color: rgba(0,0,0,.2);
+	/* background-color: rgba(0,0,0,.2); */
+	background-color: ${colors.secondary};
 	/* background-color: ${colors.white}; */
 	text-align: center;
 	font-size: ${RFValue(12)}px;

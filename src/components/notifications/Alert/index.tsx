@@ -70,7 +70,12 @@ const AlertItem: React.FC<any> = () => {
 						Cancelar
 					</ButtonText>
 				</TouchableNativeFeedback>
-				<TouchableNativeFeedback onPress={onConfirm ? notification.onPress() : () => { setShow(false); closeAlert(); }} style={{ "elevation": 10 }}>
+				<TouchableNativeFeedback
+					onPress={() => {
+						onConfirm && notification?.onPress();
+						setShow(false); closeAlert();
+					}}
+					style={{ "elevation": 10 }}>
 					<ButtonText>
 						Confirmar
 					</ButtonText>
@@ -97,7 +102,11 @@ const AlertItem: React.FC<any> = () => {
 							Fechar
 						</ButtonText>
 					</TouchableNativeFeedback>
-					<TouchableNativeFeedback onPress={() => { setShow(false); closeAlert(); }} style={{ "elevation": 10 }}>
+					<TouchableNativeFeedback
+						onPress={() => {
+							onConfirm && notification?.onPress();
+							setShow(false); closeAlert();
+						}} style={{ "elevation": 10 }}>
 						<ButtonText >
 							Github
 						</ButtonText>
@@ -109,7 +118,7 @@ const AlertItem: React.FC<any> = () => {
 
 
 	const getAlertContent = () => {
-		console.log(type);
+		// console.log(type);
 		if (type == "github")
 			return <AlertGithub />;
 		if (type == "ask")

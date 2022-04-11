@@ -28,13 +28,14 @@ const Dashboard: React.FC = () => {
 	const [municipioList, setMunicipioList] = useState<any>([]);
 	const [sendData, setSendData] = useState<any>("");
 	const [estab, setEstab] = useState<any>("");
-	const [estabList, setEstabList] = useState<any>([]);
+	const [estabList, setEstabList] = useState<any>(undefined);
 	const [estabListDrop, setEstabListDrop] = useState<any>([]);
 	const [estabAll, setEstabAll] = useState<any>({});
 	const [estabBackup, setEstabBackup] = useState<any>({});
 	const [hideDropdown, setHideDropdown] = useState(false);
 	const navigation = useNavigation();
 	const route = useRoute();
+	const params = route.params;
 
 	const send_info = async (info) => {
 
@@ -53,20 +54,20 @@ const Dashboard: React.FC = () => {
 		let flag = false;
 		let internet: any = null;
 
-		// CHECAR ACESSO COM REDE PARA ENVIAR AS INFO
+		// ** CHECAR ACESSO COM REDE PARA ENVIAR AS INFO
 		NetInfo.fetch().then(async state => {
 
 			internet = state.isConnected;
 
 			if (internet == true) {
 
-				// Informações da coleta salvas no banco de dados, {id,cidade, etc...}
+				// ** Informações da coleta salvas no banco de dados, {id,cidade, etc...}
 				coleta_info = coleta_info.filtered(
 					`id == "${info.coleta_id}" && pesquisa_id == "${info.pesquisa_id}" && estabelecimento_id == "${info.estabelecimento_id}"`
 				);
 				if (form_data[0] != undefined) {
 
-					// Informações do formulário preenchido da coleta, os seja, todos os preços e seus respectivos valores
+					// ** Informações do formulário preenchido da coleta, os seja, todos os preços e seus respectivos valores
 					let result = form_data.filtered(
 						`coleta_id == "${info.coleta_id}" && pesquisa_id == "${info.pesquisa_id}" && estabelecimento_id == "${info.estabelecimento_id}"`,
 					);
@@ -109,23 +110,27 @@ const Dashboard: React.FC = () => {
 					send_data['prices'] = JSON.stringify(form_data);
 					send_data['products_id'] = product_id;
 					// console.log(`array ${JSON.stringify(form_data)}`);
-					// Envia pro php e faz os testes e tratamentos e insere no banco
+					// ** Envia pro php e faz os testes e tratamentos e insere no banco
 					let result = await send_prices(send_data);
 					console.log(result);
 					if (result == 'Coleta Fechada.') {
 
 						await save_research_state({ id: info.coleta_id }).then(
 
-							openAlert("message", "Esta coleta se encontra fechada no banco de dados e será removida do aplicativo", notification.info, () => navigation.replace('Coleta')
-
+							openAlert("message", "Esta coleta se encontra fechada no banco de dados e será removida do aplicativo", notification.info,
+								() => setTimeout(() => {
+									() => navigation.replace('Dashboard')
+								}, 2000)
 							)
 						);
 						return;
 					}
-					// Dependendo da resposta , muda o estado da coleta do aplicativo
+					// ** Dependendo da resposta , muda o estado da coleta do aplicativo
 					if (result == true) {
 						await save_research_state({ id: info.coleta_id }).then(
-							openAlert("message", 'Coleta enviada com sucesso.', notification.success, navigation.replace('Coleta'))
+							openAlert("message", 'Coleta enviada com sucesso.', notification.success, () => setTimeout(() => {
+								() => navigation.replace('Dashboard')
+							}, 2000))
 						);
 
 					} else {
@@ -379,7 +384,7 @@ const Dashboard: React.FC = () => {
 			</SelectContainer>
 			<ColetaContainer>
 				{
-					estabList.map((item, index) => {
+					estabList ? estabList.map((item, index) => {
 						if (item.coleta_fechada == 1) {
 							return
 						}
@@ -423,12 +428,12 @@ const Dashboard: React.FC = () => {
 										onPress={item.enviar ?
 											() => {
 												openAlert("ask", 'Realmente deseja enviar a coleta ? Todos os dados serão removidos do aplicativo após envio', notification.question, () => {
-													// send_info({
-													// 	coleta_id: item.id,
-													// 	pesquisa_id: item.pesquisa_id,
-													// 	estabelecimento_id: item.estabelecimento_id,
-													// 	estabelecimento_nome: item.estabelecimento_nome
-													// })
+													send_info({
+														coleta_id: item.id,
+														pesquisa_id: item.pesquisa_id,
+														estabelecimento_id: item.estabelecimento_id,
+														estabelecimento_nome: item.estabelecimento_nome
+													})
 												})
 											} :
 											() => {
@@ -450,7 +455,11 @@ const Dashboard: React.FC = () => {
 								</CommandsContainer>
 							</View>
 						)
-					})
+					}) :
+						<ColetaItem >
+							<Text style={{ color: colors.black, fontWeight: "bold" }} >Nenhuma coleta encontrada para este múnicipio, dirija-se até a plataforma do ACCB e cadastre
+								coletas aos seus respectivos municipios.</Text>
+						</ColetaItem>
 				}
 			</ColetaContainer>
 		</>

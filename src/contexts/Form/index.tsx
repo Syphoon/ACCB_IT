@@ -58,14 +58,14 @@ export const FormProvider: React.FC<IForm> = ({ children }) => {
 			}
 		}
 
-		send = true_length > 0 ? true : false;
+		send = (true_length > 0) && (db_prices.length > 0) && (values_keys.length > 0) ? true : false;
 
 		if (true_length == 0) {
 			openAlert("message", "Preencha a coleta antes de salva-la.", "warning");
 			return;
 		}
 
-		console.log({ values_keys });
+		// console.log({ values_keys });
 		// console.log({ send });
 		// console.log({ values_keys });
 		// console.log({ db_prices });

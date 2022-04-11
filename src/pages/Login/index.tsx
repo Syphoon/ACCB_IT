@@ -168,7 +168,6 @@ const Home: React.FC = () => {
 
 
 	const LoadingScreen = (
-		// delete_db_info();
 		<>
 			<Subtitle style={{ marginBottom: 30 }}>Sincronizando App com o Banco de Dados ACCB</Subtitle>
 			<ActivityIndicator size="large" color="#fff" />

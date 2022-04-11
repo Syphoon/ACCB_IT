@@ -31,7 +31,7 @@ export const AlertProvider: React.FC<IAlert> = ({ children }) => {
 			text: text,
 			type: type,
 			icon: icon || "",
-			onPress: onPress || undefined,
+			onPress: onPress,
 		});
 	};
 

@@ -20,7 +20,7 @@ const Coleta: React.FC = () => {
 	const [estab, setEstab] = useState<any>("");
 	const navigation = useNavigation();
 	const [savePrices, setSavePrices] = useState<any>();
-	const { saveForm, clearForm, prices } = useContext(FormContext);
+	const { saveForm, clearForm, prices, getForm } = useContext(FormContext);
 
 	useEffect(() => {
 		setEstab(params.estabelecimento_nome);
@@ -28,11 +28,8 @@ const Coleta: React.FC = () => {
 
 	useEffect(() => {
 		get_products();
+		getForm(navigation, params);
 	}, []);
-
-	useEffect(() => {
-		setSavePrices(prices);
-	}, [prices]);
 
 	const get_products = async () => {
 		const data = await get_data("Produtos");
@@ -43,6 +40,17 @@ const Coleta: React.FC = () => {
 		saveForm(navigation, params);
 		clearForm();
 	}
+
+	const checkProduct = (idx: number) => {
+		for (var product_key in prices) {
+			if (prices[product_key] != null && prices[product_key][0] != 'Não tem estabelecimento secundário.' && typeof prices[product_key][0] != "object") {
+				// console.log(prices[product_key]);
+				if (parseInt(product_key) == idx)
+					return true;
+			}
+		}
+		return false;
+	};
 
 	const ColetaContent = (
 		<>
@@ -75,7 +83,7 @@ const Coleta: React.FC = () => {
 									product_id: item.id,
 									state: params,
 								})}>
-								<Product >
+								<Product style={checkProduct(item.id) && { backgroundColor: colors.primary_darker }} >
 									{item.nome}
 								</Product>
 							</TouchableNativeFeedback>
