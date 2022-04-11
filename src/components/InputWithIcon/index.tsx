@@ -31,6 +31,7 @@ const InputWithIconComponent: React.FC<IInput> = ({icon, color, value, setValue,
 				/>
 			</InputIconContainer>
 			<Input
+				underlineColorAndroid="transparent"
 				keyboardType={type}
 				secureTextEntry={secure}
 				placeholder={placeholder}

@@ -7,6 +7,9 @@ const helpers = {
 		if (text) {
 			if (text.length >= 20) {
 				dots = "..."
+				stop = 15;
+			} else if (text.length >= 22) {
+				dots = "..."
 				stop = 19;
 			}
  			return text.length >= 11 ? `${text.slice(0, stop)} ${dots}` : text;

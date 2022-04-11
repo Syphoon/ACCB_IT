@@ -47,7 +47,7 @@ const Dropdown: React.FC<IDropdown> = ({ options, value, setValue, hide, full })
 					}}
 					>
 					<TouchableNativeFeedback onPress={() => setShow(!show)}>
-						<View style={{flex: 1, backgroundColor: "rgba(0,0,0,.6)"}}>
+						<View style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "flex-end", backgroundColor: "rgba(0,0,0,.6)" }}>
 							<DropdownList>
 								{
 									all && (

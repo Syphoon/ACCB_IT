@@ -39,18 +39,9 @@ export const DropdownValue = styled.Text`
 `
 
 export const DropdownList = styled.ScrollView`
-	/* display: flex; */
-	/* justify-content: center; */
-	/* flex-direction: column; */
 	background-color: ${colors.primary_darker};
-	/* background-color: ${colors.white}; */
 	border-radius: 5px;
-	/* position: absolute; */
-	elevation: 20;
-	/* width: 42%; */
-	/* left: 5%; */
-	/* top: 38%; */
-	bottom: -${RFValue(425)}px;
+	bottom: 0;
 	flex-grow: 1;
 	max-height: 300px;
 `
@@ -58,12 +49,10 @@ export const DropdownList = styled.ScrollView`
 export const DropdownListValue = styled.Text`
 	display: flex;
 	width: 100%;
-	/* background-color: black; */
 	text-align: center;
 	font-size: ${RFValue(14)}px;
 	font-weight: bold;
 	color: ${colors.white};
-	/* color: ${colors.black}; */
 	padding: 15px;
 	font-family: ${fonts.primary};
 	border-bottom-color: rgba(255,255,255,.1);

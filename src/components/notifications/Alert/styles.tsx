@@ -38,7 +38,6 @@ export const AlertText = styled.Text`
 	width: 100%;
 	text-align: center;
 	font-size: ${RFValue(13)}px;
-	font-weight: bold;
 	color: ${colors.black};
 	padding: 10px;
 	font-family: ${fonts.text};

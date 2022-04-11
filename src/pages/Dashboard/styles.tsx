@@ -136,11 +136,11 @@ export const CommandsValue = styled.Text`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	width: 50%;
 	/* font-family: ${fonts.primary}; */
 	padding-left: 10px;
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
 	height: 100%;
-	font-size: ${RFValue(13)}px;
+	font-size: ${RFValue(12.5)}px;
+	width: 100%;
 `

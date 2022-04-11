@@ -119,7 +119,7 @@ const Coleta: React.FC = () => {
 				</Container>
 			</TopMenu>
 			<Legend>
-				Você está coletando o produto <Text style={{ fontWeight: 'bold', color: colors.green }}>{params.product}</Text> no estabelecimento <Text style={{ fontWeight: 'bold', color: colors.green }}>{params.estabelecimento_nome}.</Text> Preencha os dados e pressione  <Text style={{ fontWeight: 'bold', color: colors.green }}>Salvar Preços</Text> para continuar com a coleta.
+				Você está coletando o produto <Text style={{ fontWeight: 'bold', color: colors.green }}>{params.product}</Text> no estabelecimento <Text style={{ fontWeight: 'bold', color: colors.green }}>{params.state.estabelecimento_nome}.</Text> Preencha os dados e pressione  <Text style={{ fontWeight: 'bold', color: colors.green }}>Salvar Preços</Text> para continuar com a coleta.
 			</Legend>
 			<Dropdown full={true} options={secundaryList} value={secundary} setValue={setSecundary} />
 

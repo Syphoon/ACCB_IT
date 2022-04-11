@@ -30,8 +30,8 @@ export const Container = styled.View`
 	width: 100%;
 `
 export const Logo = styled.Image`
-	width: 30%;
-	height: 30%;
+	width: 27%;
+	height: 27%;
 `
 export const Subtitle = styled.Text`
 	text-align: center;
@@ -40,7 +40,7 @@ export const Subtitle = styled.Text`
 	font-weight: bold;
 	font-family: ${fonts.text};
 	color: ${colors.white};
-	font-size: ${RFValue(16)}px;
+	font-size: ${RFValue(14)}px;
 `
 
 export const ButtonContainer = styled.Pressable`
@@ -61,7 +61,7 @@ export const ButtonText = styled.Text`
 	/* font-family: ${fonts.primary}; */
 	font-weight: bold;
 	font-size: ${RFValue(15)}px;
-	elevation: 10;
+	elevation: 5;
 	color: ${colors.black};
 `
 

@@ -159,6 +159,7 @@ const Dashboard: React.FC = () => {
 			setEstab("Todos");
 		} else {
 			const new_places = estabBackup.filter((place) => {
+				console.log(place.estabelecimento_nome);
 				let lower_place = place.estabelecimento_nome.toLowerCase();
 
 				let lower_filter = value.toLowerCase();
@@ -184,6 +185,7 @@ const Dashboard: React.FC = () => {
 
 		setEstab("Todos");
 		setEstabListDrop(places);
+		setEstabBackup(places);
 		setEstabList(places);
 
 		// this.setState({ places: places, places_backup: places, municipio: value });

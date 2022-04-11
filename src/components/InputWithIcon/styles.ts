@@ -18,7 +18,6 @@ export const InputWithIcon = styled.View`
 	flex-direction: row;
 	/* background-color: ${colors.white}; */
 	border-radius: 5px;
-	elevation: 20;
 	border: none;
 	margin: 10px 0;
 `
@@ -33,6 +32,7 @@ export const InputIconContainer = styled.View`
 
 export const Input = styled.TextInput`
 	width: 65%;
+	line-height: 14px;
 	font-family: ${fonts.text};
 	padding-left: 10px;
 	border-top-right-radius: 5px;
@@ -40,6 +40,7 @@ export const Input = styled.TextInput`
 	/* text-indent: 10px; */
 	/* padding: 10px; */
 	/* border-radius: 5px; */
+	elevation: 5;
 	height: 100%;
 	/* margin: 10px 0; */
 	background-color: ${colors.white};
