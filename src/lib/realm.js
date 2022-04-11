@@ -6,7 +6,7 @@ import * as axios from 'axios';
 
 const apiUrl = "http://192.168.15.17:80";
 
-export const check_backup = async type => {
+export const check_backup = async (type) => {
 	const realm = await Realm();
 	const data = realm.objects(type);
 	try {
@@ -41,7 +41,7 @@ export const save_app = async (month, year, active = 0) => {
 	}
 };
 
-export const save_product = async product => {
+export const save_product = async (product) => {
 	const realm = await Realm();
 	try {
 		realm.write(() => {
@@ -56,7 +56,7 @@ export const save_product = async product => {
 	}
 };
 
-export const save_city = async city => {
+export const save_city = async (city) => {
 	const realm = await Realm();
 	try {
 		realm.write(() => {
@@ -135,7 +135,7 @@ export const save_research_state = async (
 	return true;
 };
 
-export const save_research = async research => {
+export const save_research = async (research) => {
 	const realm = await Realm();
 	try {
 		realm.write(() => {
@@ -172,7 +172,7 @@ export const save_research = async research => {
 	}
 };
 
-export const list_data = async data_name => {
+export const list_data = async (data_name) => {
 	const realm = await Realm();
 	console.log('list_data');
 	const data = realm.objects(data_name);
@@ -190,11 +190,9 @@ export const list_data = async data_name => {
 	});
 };
 
-export const get_data = async data_name => {
+export const get_data = async (data_name) => {
 	const realm = await Realm();
-	// console.log('get_data');
 	const data = realm.objects(data_name);
-
 	return data;
 };
 
@@ -216,9 +214,9 @@ export const delete_collect_info = async () => {
 export const delete_db_info = async () => {
 	const realm = await Realm();
 
-	// realm.write(() => {
-	// 	realm.deleteAll();
-	// });
+	realm.write(() => {
+		realm.deleteAll();
+	});
 };
 
 export const validate_date = async () => {
@@ -361,7 +359,7 @@ export const get_sync_data = async (type, refresh = false) => {
 	);
 };
 
-export const send_prices = async info => {
+export const send_prices = async (info) => {
 	return (
 		axios
 			.post(

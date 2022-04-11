@@ -8,4 +8,5 @@ export default {
 	terciary:'#A3D2F4',
 	black: "#000",
 	blue: "#377fb0",
+	green: "#8dfa5b",
 };

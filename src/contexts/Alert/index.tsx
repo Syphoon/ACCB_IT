@@ -2,9 +2,9 @@ import React, { createContext, useEffect, useState } from "react";
 export type TypeNotification = "ask" | "message" | "warning";
 
 interface IAlert {
-	openAlert: any,
-	closeAlert: any,
-	notification: {
+	openAlert?: any,
+	closeAlert?: any,
+	notification?: {
 		text: string,
 		type: TypeNotification,
 		icon: string,

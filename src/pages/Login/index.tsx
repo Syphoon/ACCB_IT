@@ -127,13 +127,14 @@ const Home: React.FC = () => {
 		if (userName != undefined && password != undefined) {
 
 			let user_data = await get_data('Usuarios');
-			let result = user_data.filtered(`(usuario == "${userName}") && (senha == "${password}")`);
+			let result = user_data.filtered(`(usuario == '${userName}') && (senha == '${password}')`);
+
 			try {
 
 				if (result[0].usuario != undefined) {
 
 					// ATT USER LOGGED INFO TO TRUE
-					save_user({ userName: result[0].usuario, password: result[0].senha }, result[0].id, 1);
+					save_user({ username: result[0].usuario, password: result[0].senha }, result[0].id, 1);
 					// navigation.replace("Dashboard", {
 					// 	usuario: result[0].usuario,
 					// 	id: result[0].id,

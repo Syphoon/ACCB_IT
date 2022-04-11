@@ -1,9 +1,12 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useContext, useEffect, useState } from 'react';
 import Gradient from 'src/components/Gradient';
 import colors from 'src/config/colors';
 import { BottomMenu, ButtonText, Container,  Legend, Logo, Product, ProductScroll, TopMenu } from './styles';
-import {Text, TouchableNativeFeedback } from 'react-native';
+import { Text, TouchableNativeFeedback } from 'react-native';
+
+import { get_data } from 'src/lib/realm';
+import FormContext from 'src/contexts/Form';
 
 const accbLogo = "../../assets/logos/accb.png";
 const uescLogo = "../../assets/logos/uesc.png";
@@ -11,59 +14,38 @@ const uescLogo = "../../assets/logos/uesc.png";
 
 const Coleta: React.FC = () => {
 
+	const [products, setProducts] = useState<any>([]);
+	const route = useRoute();
+	const params: any = route.params;
+	const [estab, setEstab] = useState<any>("");
 	const navigation = useNavigation();
+	const [savePrices, setSavePrices] = useState<any>();
+	const { saveForm, clearForm, prices } = useContext(FormContext);
 
-	const coleta = [
-		{
-			estab: "askodasssp",
-		},
-		{
-			estab: "aasfasfa",
-		},
-		{
-			estab: "askofffffdasp",
-		},
-		{
-			estab: "askodfffaasp",
-		},
-		{
-			estab: "askodasffafasp",
-		},
-		{
-			estab: "askodgasssp",
-		},
-		{
-			estab: "aasfahsfa",
-		},
-		{
-			estab: "askoffaffdasp",
-		},
-		{
-			estab: "askodzffaasp",
-		},
-		{
-			estab: "askodafxfafasp",
-		},
-		{
-			estab: "askofffcfdasp",
-		},
-		{
-			estab: "askodffvaasp",
-		},
-		{
-			estab: "askodaffbafasp",
-		},
-	]
+	useEffect(() => {
+		setEstab(params.estabelecimento_nome);
+	}, [params]);
 
-	const renderItem = ({ item, idx }) => {
-		return (
-			<TouchableNativeFeedback onPress={() => navigation.navigate("Form", {state: item})}>
-				<Product key={item.estab + idx}>
-					{item.estab}
-				</Product>
-			</TouchableNativeFeedback>
-		);
+	useEffect(() => {
+		get_products();
+	}, []);
+
+	useEffect(() => {
+		setSavePrices(prices);
+	}, [prices]);
+
+	const get_products = async () => {
+		const data = await get_data("Produtos");
+		setProducts(data);
 	};
+
+	const saveColeta = async () => {
+		// Descobre como formata a coleta final e ta feito
+		console.log({ prices });
+		console.log({ savePrices });
+		// saveForm(navigation, params);
+		// clearForm()
+	}
 
 	const ColetaContent = (
 		<>
@@ -75,7 +57,7 @@ const Coleta: React.FC = () => {
 				<Container />
 			</TopMenu>
 			<Legend>
-				Você está coletando no estabelecimento <Text style={{ fontWeight: 'bold' }}>{'data.estabelecimento_nome'}.</Text>	Selecione um produto para cadastrar seus preços.
+				Você está coletando no estabelecimento <Text style={{ color: "#8dfa5b", fontWeight: "bold" }}>{estab}.</Text>	Selecione um produto para cadastrar seus preços.
 			</Legend>
 			<ProductScroll
 				contentContainerStyle={{
@@ -87,8 +69,20 @@ const Coleta: React.FC = () => {
 					width: "100%"
 				}}>
 				{
-					coleta.map((item, idx) => {
-						return renderItem({item, idx})
+					products.map((item, idx) => {
+						return (
+							<TouchableNativeFeedback
+								key={item.nome + idx}
+								onPress={() => navigation.navigate("Form", {
+									product: item.nome,
+									product_id: item.id,
+									...params
+								})}>
+								<Product >
+									{item.nome}
+								</Product>
+							</TouchableNativeFeedback>
+						)
 					})
 				}
 			</ProductScroll>
@@ -98,7 +92,7 @@ const Coleta: React.FC = () => {
 						Cancelar
 					</ButtonText>
 				</TouchableNativeFeedback>
-				<TouchableNativeFeedback onPress={() => {}} style={{"elevation": 10}}>
+				<TouchableNativeFeedback onPress={saveColeta} style={{ "elevation": 10 }}>
 					<ButtonText>
 						Confirmar Coleta
 					</ButtonText>

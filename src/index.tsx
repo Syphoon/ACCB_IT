@@ -2,11 +2,14 @@ import React from 'react';
 import { SafeAreaView, StatusBar } from 'react-native';
 
 import { AlertProvider } from "src/contexts/Alert";
+import { FormProvider } from './contexts/Form';
 import Routes from './routes';
 
 const App: React.FC = () => (
 	<AlertProvider>
-		<Routes />
+		<FormProvider>
+			<Routes />
+		</FormProvider>
 	</AlertProvider>
 );
 

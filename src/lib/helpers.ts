@@ -2,10 +2,24 @@
 
 const helpers = {
 	formatSelect: (text: string) => {
-		return text.length >= 11 ? `${text.slice(0, 12)} ...` : text;
+		let dots = "";
+		let stop = 12;
+		if (text) {
+			if (text.length >= 20) {
+				dots = "..."
+				stop = 19;
+			}
+ 			return text.length >= 11 ? `${text.slice(0, stop)} ${dots}` : text;
+		}
+		return text
 	},
 	formatDate: (text: string) => {
-		return text.split("-").reverse().join("-");
+		if(text.length > 0)
+			return text.split("-").reverse().join("-");
+		return text
+	},
+	formatPriceForm: (text: string) => {
+		return text.replace(",", "");
 	}
 }
 

@@ -193,7 +193,7 @@ const Dashboard: React.FC = () => {
 		let flag = true;
 		let internet: any = null;
 		let local_sync: any = null;
-		let param = route.params;
+		let param: any = route.params;
 
 		if (refresh) {
 
@@ -237,8 +237,10 @@ const Dashboard: React.FC = () => {
 
 					}
 
-					if (flag)
+					if (flag) {
 						openAlert("message", 'Sincronização realizada com sucesso !', notification.success)
+						navigation.replace("Dashboard");
+					}
 					else
 						openAlert("message", 'Não foi possível se comunicar com o Banco de Dados ACCB', notification.error)
 
@@ -264,7 +266,6 @@ const Dashboard: React.FC = () => {
 		} catch (error) {
 
 			flag = false;
-			return;
 
 		}
 
@@ -298,9 +299,10 @@ const Dashboard: React.FC = () => {
 
 			});
 
+			// !! TENTAR CORRIGIR PRA TSX
 			// try {
 
-			// 	bigger = cities.indexOf("param.municipio")
+			// 	bigger = cities.indexOf(param.municipio || "");
 
 			// } catch (e) { }
 
@@ -325,16 +327,8 @@ const Dashboard: React.FC = () => {
 
 	const logout = async () => {
 
-		let user_data = await get_data('Usuarios').then(user => {
-
-			user = user.filtered('logado == 1');
-			return user[0];
-
-		});
-
-
+		let user_data: any = await (await get_data('Usuarios')).filtered(`logado == 1`)[0];
 		save_user({ username: user_data.usuario, password: user_data.senha }, user_data.id, 0);
-
 		navigation.replace("Login");
 
 	}
@@ -375,7 +369,7 @@ const Dashboard: React.FC = () => {
 				</Container>
 			</TopMenu>
 			<Legend>
-				Selecione <Text style={{ fontWeight: 'bold' }}>Iniciar Coleta</Text> para mover-se ao formulário do estabelecimento.
+				Selecione <Text style={{ fontWeight: 'bold', color: colors.green }}>Iniciar Coleta</Text> para mover-se ao formulário do estabelecimento.
 			</Legend>
 			<SelectContainer>
 				<Dropdown hide={hideDropdown} options={estabListDrop} value={estab} setValue={search_place} />
@@ -400,7 +394,14 @@ const Dashboard: React.FC = () => {
 									</ColetaValue>
 								</ColetaItem>
 								<CommandsContainer>
-									<Commands onPress={() => navigation.navigate("Coleta")}>
+									<Commands onPress={() => navigation.navigate('Coleta', {
+										municipio: municipio,
+										coleta_id: item.id,
+										pesquisa_id: item.pesquisa_id,
+										estabelecimento_id: item.estabelecimento_id,
+										estabelecimento_nome: item.estabelecimento_nome,
+										estabelecimento_secundario: item.estabelecimento_secundario
+									})}>
 										<CommandsIconContainer>
 											<Icon
 												color={'rgba(255,255,255,1)'}
