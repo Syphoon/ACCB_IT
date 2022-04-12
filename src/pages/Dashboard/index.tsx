@@ -22,11 +22,10 @@ const uescLogo = "../../assets/logos/uesc.png";
 const Dashboard: React.FC = () => {
 
 	const { openAlert } = useContext(AlertContext);
-	const [coletas, setColetas] = useState<any>({});
+	const [loading, setLoading] = useState(false);
 	const [status, setStatus] = useState<Boolean>(false);
 	const [municipio, setMunicipio] = useState<any>("");
 	const [municipioList, setMunicipioList] = useState<any>([]);
-	const [sendData, setSendData] = useState<any>("");
 	const [estab, setEstab] = useState<any>("");
 	const [estabList, setEstabList] = useState<any>(undefined);
 	const [estabListDrop, setEstabListDrop] = useState<any>([]);
@@ -60,6 +59,8 @@ const Dashboard: React.FC = () => {
 			internet = state.isConnected;
 
 			if (internet == true) {
+
+				setLoading(true);
 
 				// ** Informações da coleta salvas no banco de dados, {id,cidade, etc...}
 				coleta_info = coleta_info.filtered(
@@ -148,6 +149,8 @@ const Dashboard: React.FC = () => {
 
 				openAlert("message", 'É necessário internet para sincronizar com o banco ACCB', notification.error);
 
+			setLoading(false);
+
 		});
 
 	}
@@ -226,12 +229,14 @@ const Dashboard: React.FC = () => {
 
 				if (internet == true) {
 
+					setLoading(true);
+
 					if (refresh) {
 						let validated = await validate_date();
 						if (!validated) {
 
 							openAlert("ask", 'O mês da coleta mudou, deseja excluir os dados das coletas atuais ?', notification.question, () => { delete_collect_info().then(navigation.replace('Coleta')) })
-
+							setLoading(false);
 							return;
 
 						}
@@ -242,11 +247,13 @@ const Dashboard: React.FC = () => {
 					if (typeof flag == 'string') {
 
 						openAlert("message", flag, notification.success)
+						setLoading(false);
 						return;
 
 					}
 
 					if (flag) {
+						setLoading(false);
 						openAlert("message", 'Sincronização realizada com sucesso !', notification.success)
 						navigation.replace("Dashboard");
 					}
@@ -331,6 +338,7 @@ const Dashboard: React.FC = () => {
 		if (!validated)
 			openAlert("ask", 'O mês da coleta mudou, deseja excluir os dados das coletas atuais ?', notification.question, () => { delete_collect_info().then(navigation.replace('Coleta')) })
 
+		setLoading(false);
 
 	}
 
@@ -470,7 +478,8 @@ const Dashboard: React.FC = () => {
 	return (
 
 		<Gradient
-			style={{ justifyContent: "flex-start", zIndex: -2 }}
+			loading={loading}
+			style={{ justifyContent: loading ? "center" : "flex-start", zIndex: -2 }}
 			colors={[colors.primary, colors.primary, colors.secondary_lighter]}
 			children={DashboardContent} />
 

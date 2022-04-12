@@ -15,11 +15,13 @@ import { check_backup, get_sync_data, delete_db_info, list_data, save_user, get_
 import NetInfo from "@react-native-community/netinfo";
 import { ActivityIndicator, Linking, Text } from 'react-native';
 import notification from 'src/config/notification';
+import LoadingScreen from 'src/components/Loading';
 
 const Home: React.FC = () => {
 
 	const [sync, updateSync] = useState<any>(undefined);
 	const [userName, setUserName] = useState("");
+	const [loading, setLoading] = useState(false);
 	const [password, setPassword] = useState("");
 	const navigation = useNavigation();
 	// Integrating
@@ -43,7 +45,7 @@ const Home: React.FC = () => {
 		// monica
 		// 12345678
 
-		// await delete_db_info();
+		await delete_db_info();
 		let user_data = await get_data('Usuarios');
 		let result = user_data.filtered(`logado == 1`);
 		let local_sync: any = "";
@@ -94,12 +96,14 @@ const Home: React.FC = () => {
 							openAlert("message", 'Não foi possível se comunicar com o Banco de Dados ACCB .', notification.error)
 
 						updateSync(false);
+						setLoading(false);
 
 
 					} else {
 
 						openAlert("message", 'É necessário internet para sincronizar com o banco ACCB.', notification.warning)
 						updateSync(false);
+						setLoading(false);
 
 					}
 
@@ -110,6 +114,7 @@ const Home: React.FC = () => {
 
 				// param => user_data
 				updateSync(false);
+				setLoading(false);
 
 			}
 
@@ -167,15 +172,6 @@ const Home: React.FC = () => {
 	}, []);
 
 
-	const LoadingScreen = (
-		<>
-			<Subtitle style={{ marginBottom: 30 }} allowFontScaling={true}>Sincronizando App com o Banco de Dados ACCB</Subtitle>
-			<ActivityIndicator size="large" color="#fff" />
-		</>
-	);
-
-
-
 	const HomeContent = (
 		<>
 		<TopMenu>
@@ -195,7 +191,7 @@ const Home: React.FC = () => {
 					/>
 				</IconContainer>
 				<IconContainer
-					onPress={() => component_built(true)}
+					onPress={() => { component_built(true); setLoading(true); }}
 					style={{ "borderRadius": 100, "padding": 13 }}>
 					<Icon
 						color={'rgba(255,255,255,1)'}
@@ -221,8 +217,9 @@ const Home: React.FC = () => {
 
 	return (
 		<Gradient
+			loading={sync == undefined || loading}
 			colors={[colors.primary, colors.primary, colors.secondary_lighter]}
-			children={sync == undefined ? LoadingScreen : HomeContent} />
+			children={HomeContent} />
 	);
 };
 
