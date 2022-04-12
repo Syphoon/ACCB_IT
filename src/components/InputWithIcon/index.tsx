@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {Input, InputIconContainer, InputWithIcon, } from "./styles"
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import masks from 'src/lib/masks';
+import colors from 'src/config/colors';
 
 interface IInput  {
 	icon: string,
@@ -31,6 +32,7 @@ const InputWithIconComponent: React.FC<IInput> = ({icon, color, value, setValue,
 				/>
 			</InputIconContainer>
 			<Input
+				placeholderTextColor={colors.gray}
 				underlineColorAndroid="transparent"
 				keyboardType={type}
 				secureTextEntry={secure}

@@ -3,8 +3,30 @@ import { View, Text, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import Realm from 'src/services/realm';
 import * as axios from 'axios';
 
+var apiUrl = "http://192.168.15.17:80";
 
-const apiUrl = "http://192.168.15.17:80";
+const get_url_api = async () => {
+	const api = "https://otakuheavenserver.herokuapp.com/accb_url";
+	var return_value = "";
+	await axios.get(
+		api,
+		{
+			timeout: 1000 * 2,
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		},
+	).then(function (response) {
+		console.log(response.data);
+		return_value = response.data.url;
+	}).catch(function (error) {
+		if (error) {
+			console.log({ error });
+		}
+		return false;
+	});
+	return return_value;
+}
 
 export const check_backup = async (type) => {
 	const realm = await Realm();
@@ -241,8 +263,10 @@ export const validate_date = async () => {
 };
 
 export const get_date_sync = async (save = true) => {
+	if (!__DEV__)
+		apiUrl = await get_url_api();
 	return (
-		axios
+		await axios
 			.get(`${apiUrl}/request_it.php/?&accb_it_date`, {
 				timeout: 1000 * 0.5,
 				headers: {
@@ -281,8 +305,10 @@ export const get_sync_data = async (type, refresh = false) => {
 	}
 
 	// console.log('sync');
+	if (!__DEV__)
+		apiUrl = await get_url_api();
 	return (
-		axios
+		await axios
 			.get(
 				`${apiUrl}/request_it.php/?&accb_it_sync=${sync}`,
 				{
@@ -360,8 +386,10 @@ export const get_sync_data = async (type, refresh = false) => {
 };
 
 export const send_prices = async (info) => {
+	if (!__DEV__)
+		apiUrl = await get_url_api();
 	return (
-		axios
+		await axios
 			.post(
 				`${apiUrl}/request_it.php/?&accb_it_prices`,
 				{

@@ -2,7 +2,6 @@
 import styled from 'styled-components/native';
 import colors from 'src/config/colors';
 import fonts from 'src/config/fonts';
-import { RFValue } from 'react-native-responsive-fontsize';
 
 
 const Flex = `
@@ -28,10 +27,10 @@ export const DropdownValue = styled.Text`
 	display: flex;
 	width: 100%;
 	text-align: center;
-	font-size: ${RFValue(14)}px;
+	font-size: 14.5px;
 	font-weight: bold;
 	color: ${colors.white};
-	padding: ${RFValue(15)}px;
+	padding: 15px;
 	font-family: ${fonts.primary};
 	background-color: ${colors.primary_darker};
 	/* background-color: ${colors.white}; */
@@ -50,7 +49,7 @@ export const DropdownListValue = styled.Text`
 	display: flex;
 	width: 100%;
 	text-align: center;
-	font-size: ${RFValue(14)}px;
+	font-size: 14px;
 	font-weight: bold;
 	color: ${colors.white};
 	padding: 15px;

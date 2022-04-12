@@ -1,7 +1,6 @@
 import styled from 'styled-components/native';
 import colors from 'src/config/colors';
 import fonts from 'src/config/fonts';
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const Flex = `
 	display: flex;
@@ -40,7 +39,7 @@ export const Subtitle = styled.Text`
 	font-weight: bold;
 	font-family: ${fonts.text};
 	color: ${colors.white};
-	font-size: ${RFValue(14)}px;
+	font-size: 14px;
 `
 
 export const ButtonContainer = styled.Pressable`
@@ -59,8 +58,8 @@ export const ButtonText = styled.Text`
 	padding: 13px 15px;
 	width: 80%;
 	/* font-family: ${fonts.primary}; */
-	font-weight: bold;
-	font-size: ${RFValue(15)}px;
+	/* font-weight: bold; */
+	font-size: 14px;
 	elevation: 5;
 	color: ${colors.black};
 `

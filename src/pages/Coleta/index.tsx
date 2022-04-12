@@ -61,7 +61,7 @@ const Coleta: React.FC = () => {
 				</Container>
 				<Container />
 			</TopMenu>
-			<Legend>
+			<Legend allowFontScaling={true}>
 				Você está coletando no estabelecimento <Text style={{ color: "#8dfa5b", fontWeight: "bold" }}>{estab}.</Text>	Selecione um produto para cadastrar seus preços.
 			</Legend>
 			<ProductScroll
@@ -83,7 +83,7 @@ const Coleta: React.FC = () => {
 									product_id: item.id,
 									state: params,
 								})}>
-								<Product style={checkProduct(item.id) && { backgroundColor: colors.primary_darker }} >
+								<Product allowFontScaling={true} style={checkProduct(item.id) && { backgroundColor: colors.secondary }} >
 									{item.nome}
 								</Product>
 							</TouchableNativeFeedback>
@@ -93,13 +93,13 @@ const Coleta: React.FC = () => {
 			</ProductScroll>
 			<BottomMenu>
 				<TouchableNativeFeedback style={{"elevation": 10}} onPress={() => navigation.goBack()}>
-					<ButtonText>
+					<ButtonText allowFontScaling={true}>
 						Cancelar
 					</ButtonText>
 				</TouchableNativeFeedback>
 				<TouchableNativeFeedback onPress={saveColeta} style={{ "elevation": 10 }}>
-					<ButtonText>
-						Confirmar Coleta
+					<ButtonText allowFontScaling={true}>
+						Fechar Coleta
 					</ButtonText>
 				</TouchableNativeFeedback>
 			</BottomMenu>

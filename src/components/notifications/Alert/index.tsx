@@ -42,10 +42,10 @@ const AlertItem: React.FC<any> = () => {
 					size={45}
 				/>
 			</IconContainer>
-			<AlertText>{text}</AlertText>
+			<AlertText allowFontScaling={true}>{text}</AlertText>
 			<BottomMenu>
 				<TouchableNativeFeedback style={{ "elevation": 10 }} onPress={() => { setShow(false); closeAlert(); }}>
-					<ButtonText>
+					<ButtonText allowFontScaling={true}>
 						Ok
 					</ButtonText>
 				</TouchableNativeFeedback>
@@ -63,10 +63,10 @@ const AlertItem: React.FC<any> = () => {
 					size={45}
 				/>
 			</IconContainer>
-			<AlertText>{text}</AlertText>
+			<AlertText allowFontScaling={true}>{text}</AlertText>
 			<BottomMenu>
 				<TouchableNativeFeedback style={{ "elevation": 10 }} onPress={() => { setShow(false); closeAlert(); }}>
-					<ButtonText>
+					<ButtonText allowFontScaling={true}>
 						Cancelar
 					</ButtonText>
 				</TouchableNativeFeedback>
@@ -76,7 +76,7 @@ const AlertItem: React.FC<any> = () => {
 						setShow(false); closeAlert();
 					}}
 					style={{ "elevation": 10 }}>
-					<ButtonText>
+					<ButtonText allowFontScaling={true}>
 						Confirmar
 					</ButtonText>
 				</TouchableNativeFeedback>
@@ -95,10 +95,10 @@ const AlertItem: React.FC<any> = () => {
 						size={55}
 					/>
 				</IconContainer>
-				<AlertText>{text}</AlertText>
+				<AlertText allowFontScaling={true}>{text}</AlertText>
 				<BottomMenu>
 					<TouchableNativeFeedback style={{ "elevation": 10 }} onPress={() => { setShow(false); closeAlert(); }}>
-						<ButtonText>
+						<ButtonText allowFontScaling={true}>
 							Fechar
 						</ButtonText>
 					</TouchableNativeFeedback>
@@ -107,7 +107,7 @@ const AlertItem: React.FC<any> = () => {
 							onConfirm && notification?.onPress();
 							setShow(false); closeAlert();
 						}} style={{ "elevation": 10 }}>
-						<ButtonText >
+						<ButtonText allowFontScaling={true}>
 							Github
 						</ButtonText>
 					</TouchableNativeFeedback>

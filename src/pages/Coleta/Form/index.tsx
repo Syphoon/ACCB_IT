@@ -118,7 +118,7 @@ const Coleta: React.FC = () => {
 					<Logo source={require(accbLogo)} />
 				</Container>
 			</TopMenu>
-			<Legend>
+			<Legend allowFontScaling={true}>
 				Você está coletando o produto <Text style={{ fontWeight: 'bold', color: colors.green }}>{params.product}</Text> no estabelecimento <Text style={{ fontWeight: 'bold', color: colors.green }}>{params.state.estabelecimento_nome}.</Text> Preencha os dados e pressione  <Text style={{ fontWeight: 'bold', color: colors.green }}>Salvar Preços</Text> para continuar com a coleta.
 			</Legend>
 			<Dropdown full={true} options={secundaryList} value={secundary} setValue={setSecundary} />
@@ -139,12 +139,12 @@ const Coleta: React.FC = () => {
 			</ProductScroll>
 			<BottomMenu>
 				<TouchableNativeFeedback style={{"elevation": 10}} onPress={() => navigation.goBack()}>
-					<ButtonText>
+					<ButtonText allowFontScaling={true}>
 						Cancelar
 					</ButtonText>
 				</TouchableNativeFeedback>
 				<TouchableNativeFeedback onPress={savePrices} style={{ "elevation": 10 }}>
-					<ButtonText>
+					<ButtonText allowFontScaling={true}>
 						Salvar Preços
 					</ButtonText>
 				</TouchableNativeFeedback>

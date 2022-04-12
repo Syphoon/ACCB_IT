@@ -12,7 +12,7 @@ interface IDropdown  {
 	full?: boolean,
 }
 
-const Dropdown: React.FC<IDropdown> = ({ options, value, setValue, hide, full }) => {
+const Dropdown: React.FC<IDropdown> = ({ options, value, setValue, hide, full = false }) => {
 
 	const [show, setShow] = useState(false);
 	const [all, setAll] = useState(false);
@@ -33,8 +33,8 @@ const Dropdown: React.FC<IDropdown> = ({ options, value, setValue, hide, full })
 		<TouchableNativeFeedback onPress={() => setShow(!show)}>
 			<>
 				<DropdownContainer style={full && { width: '82%' }} onPress={() => setShow(!show)}>
-					<DropdownValue>
-						{helpers.formatSelect(value)}
+					<DropdownValue allowFontScaling={true}>
+						{helpers.formatSelect(value, full)}
 					</DropdownValue>
 				</DropdownContainer>
 				<Modal
@@ -55,7 +55,7 @@ const Dropdown: React.FC<IDropdown> = ({ options, value, setValue, hide, full })
 											setShow(false);
 											setValue("All");
 										}}>
-											<DropdownListValue>
+											<DropdownListValue allowFontScaling={true}>
 												Todos
 											</DropdownListValue>
 										</TouchableNativeFeedback>
@@ -68,7 +68,7 @@ const Dropdown: React.FC<IDropdown> = ({ options, value, setValue, hide, full })
 											setShow(false);
 											setValue(typeof val == "object" ? val.estabelecimento_nome : val);
 										}}>
-											<DropdownListValue>
+											<DropdownListValue allowFontScaling={true}>
 												{typeof val == "object" ? val.estabelecimento_nome : val}
 											</DropdownListValue>
 										</TouchableNativeFeedback>

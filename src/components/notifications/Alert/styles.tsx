@@ -1,5 +1,4 @@
 import React from "react";
-import { RFValue } from "react-native-responsive-fontsize";
 import colors from "src/config/colors";
 import fonts from "src/config/fonts";
 import styled, { css } from "styled-components";
@@ -27,7 +26,7 @@ export const AlertOverlay = styled.View`
 export const AlertContainer = styled.View`
 	${Flex};
 	width: 90%;
-	height: 35%;
+	/* height: 35%; */
 	justify-content: space-between;
 	background-color: rgba(255,255,255,.9);
 	border-radius: 5px;
@@ -37,7 +36,7 @@ export const AlertText = styled.Text`
 	${Flex};
 	width: 100%;
 	text-align: center;
-	font-size: ${RFValue(13)}px;
+	font-size: 12px;
 	color: ${colors.black};
 	padding: 10px;
 	font-family: ${fonts.text};
@@ -68,7 +67,7 @@ export const ButtonText = styled.Text`
 	background-color: ${colors.primary_darker};
 	/* background-color: ${colors.white}; */
 	text-align: center;
-	font-size: ${RFValue(12)}px;
+	font-size: 12px;
 	font-weight: bold;
 	color: ${colors.white};
 	padding: 15px 25px;

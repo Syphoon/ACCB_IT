@@ -393,13 +393,13 @@ const Dashboard: React.FC = () => {
 						return (
 							<View key={index + "col"}>
 								<ColetaItem >
-									<ColetaValue>
+									<ColetaValue allowFontScaling={true}>
 										Local :	{item.estabelecimento_nome}
 									</ColetaValue>
-									<ColetaValue style={{ marginTop: 5 }}>
+									<ColetaValue allowFontScaling={true} style={{ marginTop: 5 }}>
 										Bairro : {item.bairro_nome}
 									</ColetaValue>
-									<ColetaValue style={{ marginTop: 5 }}>
+									<ColetaValue allowFontScaling={true} style={{ marginTop: 5 }}>
 										Data : {helpers.formatDate(item.coleta_data)}
 									</ColetaValue>
 								</ColetaItem>
@@ -421,7 +421,7 @@ const Dashboard: React.FC = () => {
 											/>
 										</CommandsIconContainer>
 
-										<CommandsValue>
+										<CommandsValue allowFontScaling={true}>
 											Iniciar Coleta
 										</CommandsValue>
 
@@ -450,8 +450,8 @@ const Dashboard: React.FC = () => {
 												size={20}
 											/>
 										</CommandsIconContainer>
-										<CommandsValue>
-											{item.enviar ? "Enviar Coleta" : "Em espera"}
+										<CommandsValue allowFontScaling={true}>
+											{item.enviar ? "Enviar Coleta" : "Coleta Vazia"}
 										</CommandsValue>
 									</Commands>
 								</CommandsContainer>
@@ -459,7 +459,7 @@ const Dashboard: React.FC = () => {
 						)
 					}) :
 						<ColetaItem >
-							<Text style={{ color: colors.black, fontWeight: "bold" }} >Nenhuma coleta encontrada para este múnicipio, dirija-se até a plataforma do ACCB e cadastre
+							<Text allowFontScaling={true} style={{ color: colors.black, fontWeight: "bold" }} >Nenhuma coleta encontrada para este múnicipio, dirija-se até a plataforma do ACCB e cadastre
 								coletas aos seus respectivos municipios.</Text>
 						</ColetaItem>
 				}

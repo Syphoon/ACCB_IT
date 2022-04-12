@@ -1,7 +1,6 @@
 import styled, {css} from 'styled-components/native';
 import colors from 'src/config/colors';
 import fonts from 'src/config/fonts';
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const Flex = `
 	display: flex;
@@ -43,12 +42,12 @@ export const Legend = styled.Text`
 	/* background-color: ${colors.primary}; */
 	background-color: rgba(0,0,0,.2);
 	text-align: center;
-	font-size: ${RFValue(14)}px;
+	font-size: 12.5px;
 	font-weight: bold;
 	color: ${colors.white};
 	padding: 20px;
 	font-family: ${fonts.text};
-	margin: ${RFValue(25)}px;
+	margin: 25px;
 `
 export const Logo = styled.Image`
 	width: 55px;
@@ -87,7 +86,7 @@ export const ColetaValue = styled.Text`
 	width: 100%;
 	background-color: ${colors.primary_darker};
 	text-align: center;
-	font-size: ${RFValue(12)}px;
+	font-size: 12px;
 	font-weight: bold;
 	color: ${colors.white};
 	padding: 5px;
@@ -141,6 +140,6 @@ export const CommandsValue = styled.Text`
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
 	height: 100%;
-	font-size: ${RFValue(12.5)}px;
+	font-size: 12.5px;
 	width: 100%;
 `

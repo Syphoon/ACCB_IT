@@ -1,7 +1,6 @@
 import styled, {css} from 'styled-components/native';
 import colors from 'src/config/colors';
 import fonts from 'src/config/fonts';
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 const Flex = `
 	display: flex;
@@ -43,12 +42,12 @@ export const Legend = styled.Text`
 	/* background-color: ${colors.primary}; */
 	background-color: rgba(0,0,0,.2);
 	text-align: center;
-	font-size: ${RFValue(14)}px;
+	font-size: 12px;
 	font-weight: bold;
 	color: ${colors.white};
 	padding: 20px;
 	font-family: ${fonts.text};
-	margin: ${RFValue(25)}px;
+	margin: 25px;
 `
 export const Logo = styled.Image`
 	width: 55px;
@@ -59,9 +58,9 @@ export const Product = styled.Text`
 	elevation: 10;
 	width: 40%;
 	margin: 10px;
-	background-color: ${colors.secondary};
+	background-color: ${colors.primary_darker};
 	text-align: center;
-	font-size: ${RFValue(12)}px;
+	font-size: 12px;
 	font-weight: bold;
 	color: ${colors.white};
 	padding: 15px 25px;
@@ -100,10 +99,10 @@ export const ButtonText = styled.Text`
 	width: 40%;
 	margin: 10px 0;
 	/* background-color: rgba(0,0,0,.2); */
-	background-color: ${colors.secondary};
+	background-color: ${colors.secondary_lighter};
 	/* background-color: ${colors.white}; */
 	text-align: center;
-	font-size: ${RFValue(12)}px;
+	font-size: 12px;
 	font-weight: bold;
 	color: ${colors.white};
 	padding: 15px 25px;

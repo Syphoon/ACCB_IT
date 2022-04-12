@@ -169,7 +169,7 @@ const Home: React.FC = () => {
 
 	const LoadingScreen = (
 		<>
-			<Subtitle style={{ marginBottom: 30 }}>Sincronizando App com o Banco de Dados ACCB</Subtitle>
+			<Subtitle style={{ marginBottom: 30 }} allowFontScaling={true}>Sincronizando App com o Banco de Dados ACCB</Subtitle>
 			<ActivityIndicator size="large" color="#fff" />
 		</>
 	);
@@ -207,13 +207,13 @@ const Home: React.FC = () => {
 			</TopMenu>
 			<Container>
 				<Logo source={require(accbLogo)} />
-				<Subtitle>Bem Vindo ª, para continuar com o acesso preencha os dados abaixo.</Subtitle>
+				<Subtitle allowFontScaling={true}>Bem Vindo ª, para continuar com o acesso preencha os dados abaixo.</Subtitle>
 				<InputContainer>
 					<InputWithIconComponent type='default' placeholder='Usuário' icon='user' color='#fff' value={userName} setValue={setUserName} />
 					<InputWithIconComponent type='default' secure={true} placeholder='Senha' icon='lock' color='#fff' value={password} setValue={setPassword} />
 				</InputContainer>
 				<ButtonContainer onPress={login}>
-					<ButtonText >Entrar</ButtonText>
+					<ButtonText allowFontScaling={true} >Entrar</ButtonText>
 				</ButtonContainer>
 			</Container>
 		</>

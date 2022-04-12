@@ -24,7 +24,7 @@ const Splash: React.FC = () => {
 				<Logo source={require(accbLogo)} />
 				<Logo source={require(uescLogo)} />
 			</LogoContainer>
-			<Legend>
+			<Legend allowFontScaling={true}>
 				Acompanhamento do Custo da Cesta Básica {'\n'} {'\n'}
 				Coleta de Preços {'\n'} {'\n'}
 				Projeto Mobile - PIBITI 2020

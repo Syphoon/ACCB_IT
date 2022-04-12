@@ -1,13 +1,15 @@
 {
   "name": "accb",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+	"explorer": "explorer D:\\Uesc\\accb\\android\\app\\build\\outputs\\apk\\debug\\",
+	"generate": "npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res"
   },
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.17.9",
