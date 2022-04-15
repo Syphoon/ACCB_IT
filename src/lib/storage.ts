@@ -25,7 +25,7 @@ export const getStoreState = async () => {
 		const params = await getStoreData(storage.params);
 		const price = await getStoreData(storage.price);
 
-		console.log({ page, params, price });
+		// console.log({ page, params, price });
 		return [page, params, price];
 }
 

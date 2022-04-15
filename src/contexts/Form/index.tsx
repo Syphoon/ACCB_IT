@@ -29,10 +29,6 @@ export const FormProvider: React.FC<IForm> = ({ children }) => {
 	const [prices, setPrices] = useState<any>([]);
 	const { openAlert } = useContext(AlertContext);
 
-	useEffect(() => {
-		console.log("aopsdkopas s");
-	}, []);
-
 	const saveProduct = (id: number, data: any) => {
 		setPrices((prevState) => ({
 			...prevState,

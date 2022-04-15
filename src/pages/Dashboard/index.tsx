@@ -14,7 +14,7 @@ import NetInfo from "@react-native-community/netinfo";
 import AlertContext from 'src/contexts/Alert';
 import notification from 'src/config/notification';
 import helpers from 'src/lib/helpers';
-import { getStoreData, setStoreData } from 'src/lib/storage';
+import { getStoreData, resetStore, setStoreData } from 'src/lib/storage';
 import storage from 'src/config/storage';
 
 const accbLogo = "../../assets/logos/accb.png";
@@ -349,6 +349,7 @@ const Dashboard: React.FC = () => {
 
 		let user_data: any = await (await get_data('Usuarios')).filtered(`logado == 1`)[0];
 		save_user({ username: user_data.usuario, password: user_data.senha }, user_data.id, 0);
+		await resetStore();
 		navigation.replace("Login");
 
 	}

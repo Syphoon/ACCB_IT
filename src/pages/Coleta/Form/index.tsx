@@ -50,14 +50,8 @@ const Coleta: React.FC = () => {
 			setSecundary(params.state.estabelecimento_secundario);
 			setSecundaryInfo(info);
 		}
-		// console.log(params);
-
-
-	}, [params]);
-
-	useEffect(() => {
 		const id = params.product_id;
-		if (id in prices) {
+		if (prices[id]) {
 			prices[id].map((item, idx) => {
 				if (item) {
 					if (item.length <= 4 && typeof item == "string")
@@ -72,31 +66,39 @@ const Coleta: React.FC = () => {
 					}
 				}
 			});
+		} else {
+			setPrice([]);
 		}
 		const setData = async () => {
 			await setStoreData("Form", storage.page);
 			await setStoreData(params, storage.params);
 		}
 		setData();
-	}, []);
+
+	}, [params]);
 
 	const setPriceCustom = async (idx, val) => {
-		setPrice((prevPrice) => ({
+		await setPrice((prevPrice) => ({
 			...prevPrice,
-			[idx]: val
+			[idx]: val,
 		}));
-		savePrices(false);
+		savePrices(false, idx, val?.replace(",", ""));
 		await setStoreData(prices, storage.price);
 	};
 
-	const savePrices = (nav = true) => {
+	const savePrices = (nav = true, idx?: string, val?: string) => {
 
 		const id = params.product_id;
 		let filtered: any = [];
 		for (var key in price) {
-			if (price[key])
+			if (price[key] && key != idx)
 				filtered.push(helpers.formatPriceForm(price[key]));
 		}
+
+		if (!nav) {
+			filtered[idx || ""] = val;
+		}
+
 		let local_prices = [
 			...filtered,
 			[secundaryInfo[secundary]]
@@ -119,7 +121,7 @@ const Coleta: React.FC = () => {
 		<>
 			<TopMenu >
 				<Container>
-					<IconContainer onPress={() => navigation.goBack()}>
+					<IconContainer onPress={async () => await cancelColeta()}>
 						<Icon
 							color={'rgba(255,255,255,1)'}
 							// color={colors.secondary_lighter}
