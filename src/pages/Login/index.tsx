@@ -45,7 +45,7 @@ const Home: React.FC = () => {
 		// monica
 		// 12345678
 
-		await delete_db_info();
+		// await delete_db_info();
 		let user_data = await get_data('Usuarios');
 		let result = user_data.filtered(`logado == 1`);
 		let local_sync: any = "";

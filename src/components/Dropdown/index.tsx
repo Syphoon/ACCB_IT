@@ -10,9 +10,10 @@ interface IDropdown  {
 	setValue: any,
 	hide?: any,
 	full?: boolean,
+	style?: any,
 }
 
-const Dropdown: React.FC<IDropdown> = ({ options, value, setValue, hide, full = false }) => {
+const Dropdown: React.FC<IDropdown> = ({ options, value, setValue, hide, style, full = false }) => {
 
 	const [show, setShow] = useState(false);
 	const [all, setAll] = useState(false);
@@ -32,7 +33,7 @@ const Dropdown: React.FC<IDropdown> = ({ options, value, setValue, hide, full = 
 	return (
 		<TouchableNativeFeedback onPress={() => setShow(!show)}>
 			<>
-				<DropdownContainer style={full && { width: '82%' }} onPress={() => setShow(!show)}>
+				<DropdownContainer style={full && { width: '82%', ...style }} onPress={() => setShow(!show)}>
 					<DropdownValue allowFontScaling={true}>
 						{helpers.formatSelect(value, full)}
 					</DropdownValue>

@@ -8,12 +8,16 @@ interface IForm {
 	saveForm?: any,
 	clearForm?: any,
 	saveProduct?: any,
+	removeProduct?: any,
+	savePrices?: any,
 	getForm?: any,
 	prices?: any,
 }
 const FormContext = createContext<IForm>({
 	saveProduct: "",
 	getForm: "",
+	removeProduct: "",
+	savePrices: "",
 	saveForm: "",
 	clearForm: "",
 	prices: "",
@@ -25,12 +29,26 @@ export const FormProvider: React.FC<IForm> = ({ children }) => {
 	const [prices, setPrices] = useState<any>([]);
 	const { openAlert } = useContext(AlertContext);
 
+	useEffect(() => {
+		console.log("aopsdkopas s");
+	}, []);
+
 	const saveProduct = (id: number, data: any) => {
 		setPrices((prevState) => ({
 			...prevState,
 			[id]: data,
 		}));
 	}
+
+	const removeProduct = (id: number) => {
+		const new_prices = prices;
+		delete new_prices[id];
+		setPrices(new_prices);
+	}
+
+	const savePrices = async (value: any) => {
+		setPrices(value);
+	};
 
 	const saveForm = async (navigation: any, param: any) => {
 
@@ -176,10 +194,12 @@ export const FormProvider: React.FC<IForm> = ({ children }) => {
 		<FormContext.Provider
 			value={{
 				saveProduct,
+				removeProduct,
 				saveForm,
 				getForm,
 				clearForm,
 				prices,
+				savePrices,
 			}}>
 			{children}
 		</FormContext.Provider>

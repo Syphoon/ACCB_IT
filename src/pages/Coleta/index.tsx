@@ -7,6 +7,8 @@ import { Text, TouchableNativeFeedback } from 'react-native';
 
 import { get_data } from 'src/lib/realm';
 import FormContext from 'src/contexts/Form';
+import { resetStore, setStoreData } from 'src/lib/storage';
+import storage from 'src/config/storage';
 
 const accbLogo = "../../assets/logos/accb.png";
 const uescLogo = "../../assets/logos/uesc.png";
@@ -19,7 +21,6 @@ const Coleta: React.FC = () => {
 	const params: any = route.params;
 	const [estab, setEstab] = useState<any>("");
 	const navigation = useNavigation();
-	const [savePrices, setSavePrices] = useState<any>();
 	const { saveForm, clearForm, prices, getForm } = useContext(FormContext);
 
 	useEffect(() => {
@@ -29,6 +30,12 @@ const Coleta: React.FC = () => {
 	useEffect(() => {
 		get_products();
 		getForm(navigation, params);
+		const setData = async () => {
+			await setStoreData("Coleta", storage.page);
+			await setStoreData(params, storage.params);
+			await setStoreData(prices, storage.price);
+		}
+		setData();
 	}, []);
 
 	const get_products = async () => {
@@ -39,6 +46,7 @@ const Coleta: React.FC = () => {
 	const saveColeta = async () => {
 		saveForm(navigation, params);
 		clearForm();
+		await resetStore();
 	}
 
 	const checkProduct = (idx: number) => {
@@ -50,6 +58,12 @@ const Coleta: React.FC = () => {
 			}
 		}
 		return false;
+	};
+
+	const cancelColeta = async () => {
+		clearForm();
+		await resetStore();
+		navigation.replace("Dashboard");
 	};
 
 	const ColetaContent = (
@@ -92,14 +106,14 @@ const Coleta: React.FC = () => {
 				}
 			</ProductScroll>
 			<BottomMenu>
-				<TouchableNativeFeedback style={{"elevation": 10}} onPress={() => navigation.goBack()}>
+				<TouchableNativeFeedback style={{ "elevation": 10 }} onPress={async () => await cancelColeta()}>
 					<ButtonText allowFontScaling={true}>
 						Cancelar
 					</ButtonText>
 				</TouchableNativeFeedback>
 				<TouchableNativeFeedback onPress={saveColeta} style={{ "elevation": 10 }}>
 					<ButtonText allowFontScaling={true}>
-						Fechar Coleta
+						Salvar Coleta
 					</ButtonText>
 				</TouchableNativeFeedback>
 			</BottomMenu>

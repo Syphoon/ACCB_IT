@@ -9,6 +9,8 @@ import InputWithIconComponent from 'src/components/InputWithIcon';
 import Dropdown from 'src/components/Dropdown';
 import FormContext from 'src/contexts/Form';
 import helpers from 'src/lib/helpers';
+import { getStoreData, setStoreData } from 'src/lib/storage';
+import storage from 'src/config/storage';
 
 const accbLogo = "../../../assets/logos/accb.png";
 const uescLogo = "../../../assets/logos/uesc.png";
@@ -23,7 +25,7 @@ const Coleta: React.FC = () => {
 	const [secundaryList, setSecundaryList] = useState<any>([]);
 	const [secundary, setSecundary] = useState<any>([]);
 	const [secundaryInfo, setSecundaryInfo] = useState<any>();
-	const { saveProduct, getForm, prices } = useContext(FormContext);
+	const { saveProduct, removeProduct, prices } = useContext(FormContext);
 
 	useEffect(() => {
 		let arr: any = [];
@@ -56,15 +58,14 @@ const Coleta: React.FC = () => {
 	useEffect(() => {
 		const id = params.product_id;
 		if (id in prices) {
-			console.log({ prices });
 			prices[id].map((item, idx) => {
 				if (item) {
-					if (item.length <= 4)
+					if (item.length <= 4 && typeof item == "string")
 						setPrice((prevPrice) => ({
 							...prevPrice,
 							[idx]: item
 						}))
-					else if (item === "Não tem estabelecimento secundário.") {
+					else if (item[0] === "Não tem estabelecimento secundário.") {
 						setSecundary("Padrão");
 					} else {
 						setSecundary(item.estabelecimento_sec_nome);
@@ -72,16 +73,23 @@ const Coleta: React.FC = () => {
 				}
 			});
 		}
+		const setData = async () => {
+			await setStoreData("Form", storage.page);
+			await setStoreData(params, storage.params);
+		}
+		setData();
 	}, []);
 
-	const setPriceCustom = (idx, val) => {
+	const setPriceCustom = async (idx, val) => {
 		setPrice((prevPrice) => ({
 			...prevPrice,
 			[idx]: val
-		}))
-	}
+		}));
+		savePrices(false);
+		await setStoreData(prices, storage.price);
+	};
 
-	const savePrices = () => {
+	const savePrices = (nav = true) => {
 
 		const id = params.product_id;
 		let filtered: any = [];
@@ -91,12 +99,20 @@ const Coleta: React.FC = () => {
 		}
 		let local_prices = [
 			...filtered,
-			secundaryInfo[secundary]
+			[secundaryInfo[secundary]]
 		];
-		console.log({ local_prices });
+		// console.log({ local_prices });
 		saveProduct(id, local_prices);
-		navigation.navigate("Coleta", { ...params.state });
+		if (nav) {
+			navigation.navigate("Coleta", { ...params.state });
+		}
+	}
 
+	const cancelColeta = async () => {
+		const id = params.product_id;
+		removeProduct(id);
+		await setStoreData(prices, storage.price);
+		navigation.navigate("Coleta", { ...params.state });
 	}
 
 	const ColetaContent = (
@@ -121,7 +137,7 @@ const Coleta: React.FC = () => {
 			<Legend allowFontScaling={true}>
 				Você está coletando o produto <Text style={{ fontWeight: 'bold', color: colors.green }}>{params.product}</Text> no estabelecimento <Text style={{ fontWeight: 'bold', color: colors.green }}>{params.state.estabelecimento_nome}.</Text> Preencha os dados e pressione  <Text style={{ fontWeight: 'bold', color: colors.green }}>Salvar Preços</Text> para continuar com a coleta.
 			</Legend>
-			<Dropdown full={true} options={secundaryList} value={secundary} setValue={setSecundary} />
+			<Dropdown style={secundaryList.length == 1 ? { "display": "none" } : ""} full={true} options={secundaryList} value={secundary} setValue={setSecundary} />
 
 			<ProductScroll
 				contentContainerStyle={{
@@ -131,14 +147,14 @@ const Coleta: React.FC = () => {
 					alignItems: "center",
 					width: "100%"
 				}}>
-				<InputWithIconComponent type={"numeric"} value={price[0]} setValue={(val) => setPriceCustom(0, val)} icon={"money"} color={"#fff"} placeholder={"00,00"} />
-				<InputWithIconComponent type={"numeric"} value={price[1]} setValue={(val) => setPriceCustom(1, val)} icon={"money"} color={"#fff"} placeholder={"00,00"} />
-				<InputWithIconComponent type={"numeric"} value={price[2]} setValue={(val) => setPriceCustom(2, val)} icon={"money"} color={"#fff"} placeholder={"00,00"} />
-				<InputWithIconComponent type={"numeric"} value={price[3]} setValue={(val) => setPriceCustom(3, val)} icon={"money"} color={"#fff"} placeholder={"00,00"} />
-				<InputWithIconComponent type={"numeric"} value={price[4]} setValue={(val) => setPriceCustom(4, val)} icon={"money"} color={"#fff"} placeholder={"00,00"} />
+				<InputWithIconComponent type={"numeric"} value={price[0]} setValue={async (val) => await setPriceCustom(0, val)} icon={"money"} color={"#fff"} placeholder={"00,00"} />
+				<InputWithIconComponent type={"numeric"} value={price[1]} setValue={async (val) => await setPriceCustom(1, val)} icon={"money"} color={"#fff"} placeholder={"00,00"} />
+				<InputWithIconComponent type={"numeric"} value={price[2]} setValue={async (val) => await setPriceCustom(2, val)} icon={"money"} color={"#fff"} placeholder={"00,00"} />
+				<InputWithIconComponent type={"numeric"} value={price[3]} setValue={async (val) => await setPriceCustom(3, val)} icon={"money"} color={"#fff"} placeholder={"00,00"} />
+				<InputWithIconComponent type={"numeric"} value={price[4]} setValue={async (val) => await setPriceCustom(4, val)} icon={"money"} color={"#fff"} placeholder={"00,00"} />
 			</ProductScroll>
 			<BottomMenu>
-				<TouchableNativeFeedback style={{"elevation": 10}} onPress={() => navigation.goBack()}>
+				<TouchableNativeFeedback style={{ "elevation": 10 }} onPress={async () => { await cancelColeta(); }}>
 					<ButtonText allowFontScaling={true}>
 						Cancelar
 					</ButtonText>

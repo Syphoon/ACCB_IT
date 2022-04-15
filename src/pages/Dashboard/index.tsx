@@ -14,6 +14,8 @@ import NetInfo from "@react-native-community/netinfo";
 import AlertContext from 'src/contexts/Alert';
 import notification from 'src/config/notification';
 import helpers from 'src/lib/helpers';
+import { getStoreData, setStoreData } from 'src/lib/storage';
+import storage from 'src/config/storage';
 
 const accbLogo = "../../assets/logos/accb.png";
 const uescLogo = "../../assets/logos/uesc.png";
@@ -112,8 +114,9 @@ const Dashboard: React.FC = () => {
 					send_data['products_id'] = product_id;
 					// console.log(`array ${JSON.stringify(form_data)}`);
 					// ** Envia pro php e faz os testes e tratamentos e insere no banco
+					console.log({ send_data });
 					let result = await send_prices(send_data);
-					console.log(result);
+					// console.log(result);
 					if (result == 'Coleta Fechada.') {
 
 						await save_research_state({ id: info.coleta_id }).then(
@@ -352,6 +355,10 @@ const Dashboard: React.FC = () => {
 
 	useEffect(() => {
 		componentDidMount();
+		const setData = async () => {
+			await setStoreData("Dashboard", storage.page);
+		}
+		setData();
 	}, []);
 
 
