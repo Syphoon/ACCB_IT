@@ -16,6 +16,7 @@ import NetInfo from "@react-native-community/netinfo";
 import { ActivityIndicator, Linking, Text } from 'react-native';
 import notification from 'src/config/notification';
 import LoadingScreen from 'src/components/Loading';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 const Home: React.FC = () => {
 
@@ -175,6 +176,16 @@ const Home: React.FC = () => {
 	const HomeContent = (
 		<>
 		<TopMenu>
+				{/* <IconContainer
+					onPress={() => { crashlytics().crash(); }}
+					style={{ "borderRadius": 100, "padding": 13 }}>
+					<Icon
+						color={'rgba(255,255,255,1)'}
+						// color={colors.secondary_lighter}
+						name={'bug'}
+						size={25}
+					/>
+				</IconContainer> */}
 				<IconContainer
 					onPress={() => openAlert(
 						"github",

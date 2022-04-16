@@ -26,7 +26,7 @@ const FormContext = createContext<IForm>({
 
 export const FormProvider: React.FC<IForm> = ({ children }) => {
 
-	const [prices, setPrices] = useState<any>([]);
+	const [prices, setPrices] = useState<any>({});
 	const { openAlert } = useContext(AlertContext);
 
 	const saveProduct = (id: number, data: any) => {
@@ -183,7 +183,7 @@ export const FormProvider: React.FC<IForm> = ({ children }) => {
 	}
 
 	const clearForm = () => {
-		setPrices([]);
+		setPrices({});
 	}
 
 	return (

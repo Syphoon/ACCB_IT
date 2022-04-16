@@ -23,7 +23,7 @@ const Splash: React.FC = () => {
 			const page = storeState[0];
 			const params = storeState[1];
 			const price = storeState[2];
-			savePrices(price);
+			savePrices(price || {});
 
 			if (page)
 				setTimeout(() => {

@@ -2,9 +2,9 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useContext, useEffect, useState } from 'react';
 import Gradient from 'src/components/Gradient';
 import colors from 'src/config/colors';
-import { BottomMenu, ButtonText, Container,  IconContainer,  IconText,  Legend, Logo, Product, ProductScroll, TopMenu } from './styles';
+import { BottomMenu, ButtonText, Container, IconContainer, IconText, Legend, Logo, Product, ProductScroll, TopMenu } from './styles';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
-import {FlatList, Pressable, Text, TouchableNativeFeedback, View} from 'react-native';
+import { FlatList, Pressable, Text, TouchableNativeFeedback, View } from 'react-native';
 import InputWithIconComponent from 'src/components/InputWithIcon';
 import Dropdown from 'src/components/Dropdown';
 import FormContext from 'src/contexts/Form';
@@ -50,15 +50,16 @@ const Coleta: React.FC = () => {
 			setSecundary(params.state.estabelecimento_secundario);
 			setSecundaryInfo(info);
 		}
+
 		const id = params.product_id;
-		if (prices[id]) {
+		if (id in prices)
 			prices[id].map((item, idx) => {
 				if (item) {
 					if (item.length <= 4 && typeof item == "string")
 						setPrice((prevPrice) => ({
 							...prevPrice,
 							[idx]: item
-						}))
+						}));
 					else if (item[0] === "Não tem estabelecimento secundário.") {
 						setSecundary("Padrão");
 					} else {
@@ -66,9 +67,9 @@ const Coleta: React.FC = () => {
 					}
 				}
 			});
-		} else {
-			setPrice([]);
-		}
+		else
+			setPrice([""]);
+
 		const setData = async () => {
 			await setStoreData("Form", storage.page);
 			await setStoreData(params, storage.params);
@@ -83,27 +84,35 @@ const Coleta: React.FC = () => {
 			[idx]: val,
 		}));
 		savePrices(false, idx, val?.replace(",", ""));
-		await setStoreData(prices, storage.price);
 	};
+
+	useEffect(() => {
+		const setData = async () => {
+			await setStoreData(prices, storage.price);
+			console.log(await getStoreData(storage.price));
+		}
+		setData();
+	}, [prices]);
 
 	const savePrices = (nav = true, idx?: string, val?: string) => {
 
 		const id = params.product_id;
 		let filtered: any = [];
+
 		for (var key in price) {
 			if (price[key] && key != idx)
 				filtered.push(helpers.formatPriceForm(price[key]));
 		}
 
 		if (!nav) {
-			filtered[idx || ""] = val;
+			filtered.push(val);
 		}
 
 		let local_prices = [
 			...filtered,
 			[secundaryInfo[secundary]]
 		];
-		// console.log({ local_prices });
+
 		saveProduct(id, local_prices);
 		if (nav) {
 			navigation.navigate("Coleta", { ...params.state });
@@ -131,7 +140,7 @@ const Coleta: React.FC = () => {
 						{/* <IconText> Voltar </IconText> */}
 					</IconContainer>
 				</Container>
-				<Container style={{justifyContent: "flex-end"}}>
+				<Container style={{ justifyContent: "flex-end" }}>
 					<Logo source={require(uescLogo)} />
 					<Logo source={require(accbLogo)} />
 				</Container>
@@ -161,7 +170,7 @@ const Coleta: React.FC = () => {
 						Cancelar
 					</ButtonText>
 				</TouchableNativeFeedback>
-				<TouchableNativeFeedback onPress={savePrices} style={{ "elevation": 10 }}>
+				<TouchableNativeFeedback onPress={async () => savePrices()} style={{ "elevation": 10 }}>
 					<ButtonText allowFontScaling={true}>
 						Salvar Preços
 					</ButtonText>
@@ -173,9 +182,9 @@ const Coleta: React.FC = () => {
 	return (
 
 		<Gradient
-		style={{ justifyContent: "flex-start", zIndex: -2 }}
-		colors={[colors.primary, colors.primary, colors.secondary_lighter]}
-		children={ColetaContent} />
+			style={{ justifyContent: "flex-start", zIndex: -2 }}
+			colors={[colors.primary, colors.primary, colors.secondary_lighter]}
+			children={ColetaContent} />
 
 	);
 };
