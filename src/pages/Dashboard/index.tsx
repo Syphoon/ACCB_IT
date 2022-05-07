@@ -348,7 +348,7 @@ const Dashboard: React.FC = () => {
 	const logout = async () => {
 
 		let user_data: any = await (await get_data('Usuarios')).filtered(`logado == 1`)[0];
-		save_user({ username: user_data.usuario, password: user_data.senha }, user_data.id, 0);
+		await save_user({ username: user_data.usuario, password: user_data.senha }, user_data.id, 0);
 		await resetStore();
 		navigation.replace("Login");
 

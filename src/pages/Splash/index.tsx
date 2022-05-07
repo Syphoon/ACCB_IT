@@ -4,7 +4,7 @@ import Gradient from 'src/components/Gradient';
 import colors from 'src/config/colors';
 import storage from 'src/config/storage';
 import FormContext from 'src/contexts/Form';
-import { setStoreData, getStoreData, getStoreState } from 'src/lib/storage';
+import { setStoreData, getStoreData, getStoreState, resetStore } from 'src/lib/storage';
 import { Legend, Logo, LogoContainer } from './styles';
 
 const accbLogo = "../../assets/logos/accb.png";

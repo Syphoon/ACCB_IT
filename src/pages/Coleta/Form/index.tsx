@@ -19,6 +19,7 @@ const uescLogo = "../../../assets/logos/uesc.png";
 const Coleta: React.FC = () => {
 
 	const [price, setPrice] = useState(["", "", "", "", ""]);
+	const [oldPrices, setOldPrices] = useState<any>([]);
 	const navigation = useNavigation();
 	const route = useRoute();
 	const params: any = route.params;
@@ -52,7 +53,9 @@ const Coleta: React.FC = () => {
 		}
 
 		const id = params.product_id;
-		if (id in prices)
+		if (id in prices) {
+
+			setOldPrices(prices[id]);
 			prices[id].map((item, idx) => {
 				if (item) {
 					if (item.length <= 4 && typeof item == "string")
@@ -67,6 +70,7 @@ const Coleta: React.FC = () => {
 					}
 				}
 			});
+		}
 		else
 			setPrice([""]);
 
@@ -121,8 +125,11 @@ const Coleta: React.FC = () => {
 
 	const cancelColeta = async () => {
 		const id = params.product_id;
-		removeProduct(id);
-		await setStoreData(prices, storage.price);
+		if (oldPrices) {
+			await removeProduct(id);
+			await saveProduct(id, oldPrices);
+			await setStoreData(oldPrices, storage.price);
+		}
 		navigation.navigate("Coleta", { ...params.state });
 	}
 
