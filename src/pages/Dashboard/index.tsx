@@ -396,26 +396,27 @@ const Dashboard: React.FC = () => {
 	const showTypeFilter = () => {
 
 	};
-	// useEffect(() => {
-	// 	if (showType == "month") {
-	// 		search_place("Todos");
-	// 		return;
-	// 	}
-	// 	var today = new Date();
-	// 	console.log({ estabBackup });
-	// 	// const date = today.getDate().toString();
-	// 	const date = '06';
-	// 	const new_places = estabBackup.filter((place) => {
-	// 		console.log(place.coleta_data, date);
-	// 		if (place.coleta_data.split("-")[2] == date)
-	// 			return place
-	// 		// 	return lower_place.indexOf(lower_filter) > -1;
-	// 	});
-	// 	try {
-	// 		setEstabList(new_places || []);
-	// 		setEstab(new_places[0].estabelecimento_nome || "Todos");
-	// 	} catch (e) { }
-	// }, [showType]);
+	useEffect(() => {
+		console.log({ showType });
+		if (showType == "month") {
+			search_place("Todos");
+			return;
+		}
+		var today = new Date();
+		console.log({ estabBackup });
+		// const date = today.getDate().toString();
+		const date = '09';
+		const new_places = estabBackup.filter((place) => {
+			console.log(place.coleta_data, date, showType);
+			if (place.coleta_data.split("-")[2] == date)
+				return place
+			// 	return lower_place.indexOf(lower_filter) > -1;
+		});
+		try {
+			setEstabList(new_places || []);
+			setEstab(new_places[0].estabelecimento_nome || "Todos");
+		} catch (e) { }
+	}, [showType]);
 
 
 	const DashboardContent = (
