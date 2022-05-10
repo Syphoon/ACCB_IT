@@ -47,7 +47,7 @@ export const Legend = styled.Text`
 	color: ${colors.white};
 	padding: 20px;
 	font-family: ${fonts.text};
-	margin: 25px;
+	margin: 10px 0;
 `
 export const Logo = styled.Image`
 	width: 55px;
@@ -128,7 +128,37 @@ export const Commands = styled.Pressable`
 	border-radius: 5px;
 	background-color: ${colors.primary_darker};
 `
+export const ShowType = styled.Pressable`
+	${Flex}
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	margin: 5px 0;
+	elevation: 5;
+	width: 90%;
+	padding: 10px;
+	border-radius: 5px;
+	background-color: ${colors.primary_darker};
+`
 
+
+export const ShowValue = styled.Text`
+	color: ${colors.white};
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	/* font-family: ${fonts.primary}; */
+	padding-left: 10px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	height: 100%;
+	font-size: 12.5px;
+	width: 100%;
+	font-weight: bold;
+	text-align: center;
+`
 export const CommandsValue = styled.Text`
 	color: ${colors.white};
 	display: flex;

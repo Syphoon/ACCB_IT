@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Gradient from 'src/components/Gradient';
 import Dropdown from 'src/components/Dropdown';
 import colors from 'src/config/colors';
-import { ColetaContainer, ColetaItem, ColetaValue, Commands, CommandsContainer, CommandsIconContainer, CommandsValue, Container, IconContainer, Legend, Logo, SelectContainer, TopMenu } from './styles';
+import { ColetaContainer, ColetaItem, ColetaValue, Commands, CommandsContainer, CommandsIconContainer, CommandsValue, Container, IconContainer, Legend, Logo, SelectContainer, ShowType, ShowValue, TopMenu } from './styles';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 import { Alert, Pressable, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { Button } from 'react-native-elements';
@@ -23,8 +23,9 @@ const uescLogo = "../../assets/logos/uesc.png";
 
 const Dashboard: React.FC = () => {
 
-	const { openAlert } = useContext(AlertContext);
+	const { openAlert, closeAlert } = useContext(AlertContext);
 	const [loading, setLoading] = useState(false);
+	const [showType, setShowType] = useState("month");
 	const [status, setStatus] = useState<Boolean>(false);
 	const [municipio, setMunicipio] = useState<any>("");
 	const [municipioList, setMunicipioList] = useState<any>([]);
@@ -37,6 +38,44 @@ const Dashboard: React.FC = () => {
 	const navigation = useNavigation();
 	const route = useRoute();
 	const params = route.params;
+
+	const validate_coletas = async (message?: string, onpress?: any) => {
+		let data_estabs = await get_data("Coletas");
+		let filtered_estabs = data_estabs.filtered(`enviar == true`);
+		console.log("validate_coletas");
+
+		let validated = await validate_date();
+		const question_date = async () => {
+			// closeAlert();
+			try {
+				if (filtered_estabs[0].enviar)
+					setTimeout(() => {
+						openAlert(
+							"ask",
+							"Existem coletas preenchidas que não foram enviadas, ainda deseja continuar ? Todas as coletas preenchidas serão de deletadas do aplicativo permanentemente.",
+							notification.question, async () => {
+								await delete_collect_info().then(navigation.replace('Dashboard'))
+							});
+
+					}, 300);
+			} catch (e) {
+				await delete_collect_info().then(navigation.replace('Dashboard'))
+				console.log({
+					e
+				});
+			}
+		};
+		if (!validated) {
+			openAlert(
+				"ask",
+				message || 'O mês da coleta mudou, deseja excluir os dados das coletas atuais ?',
+				notification.question, onpress ? onpress : async () => await question_date());
+			return true;
+		}
+		if (onpress)
+			onpress()
+		return false;
+	};
 
 	const send_info = async (info) => {
 
@@ -235,13 +274,8 @@ const Dashboard: React.FC = () => {
 					setLoading(true);
 
 					if (refresh) {
-						let validated = await validate_date();
-						if (!validated) {
-
-							openAlert("ask", 'O mês da coleta mudou, deseja excluir os dados das coletas atuais ?', notification.question, () => { delete_collect_info().then(navigation.replace('Coleta')) })
-							setLoading(false);
+						if (await validate_coletas()) {
 							return;
-
 						}
 						flag = await get_sync_data("collect", true);
 					} else
@@ -328,7 +362,7 @@ const Dashboard: React.FC = () => {
 			setMunicipio(cities[bigger]);
 			setMunicipioList(cities);
 			// setEstab(all_estabs[bigger][cities[bigger]][0].estabelecimento_nome)
-			setEstab("Todos")
+			setEstab("Todos");
 
 			setEstabList(all_estabs[bigger][cities[bigger]]);
 			setEstabListDrop(all_estabs[bigger][cities[bigger]]);
@@ -337,10 +371,7 @@ const Dashboard: React.FC = () => {
 
 		}
 
-		let validated = await validate_date();
-		if (!validated)
-			openAlert("ask", 'O mês da coleta mudou, deseja excluir os dados das coletas atuais ?', notification.question, () => { delete_collect_info().then(navigation.replace('Coleta')) })
-
+		await validate_coletas();
 		setLoading(false);
 
 	}
@@ -361,6 +392,30 @@ const Dashboard: React.FC = () => {
 		}
 		setData();
 	}, []);
+
+	const showTypeFilter = () => {
+
+	};
+	// useEffect(() => {
+	// 	if (showType == "month") {
+	// 		search_place("Todos");
+	// 		return;
+	// 	}
+	// 	var today = new Date();
+	// 	console.log({ estabBackup });
+	// 	// const date = today.getDate().toString();
+	// 	const date = '06';
+	// 	const new_places = estabBackup.filter((place) => {
+	// 		console.log(place.coleta_data, date);
+	// 		if (place.coleta_data.split("-")[2] == date)
+	// 			return place
+	// 		// 	return lower_place.indexOf(lower_filter) > -1;
+	// 	});
+	// 	try {
+	// 		setEstabList(new_places || []);
+	// 		setEstab(new_places[0].estabelecimento_nome || "Todos");
+	// 	} catch (e) { }
+	// }, [showType]);
 
 
 	const DashboardContent = (
@@ -396,13 +451,18 @@ const Dashboard: React.FC = () => {
 			<Legend>
 				Selecione <Text style={{ fontWeight: 'bold', color: colors.green }}>Iniciar Coleta</Text> para mover-se ao formulário do estabelecimento.
 			</Legend>
+			<ShowType onPress={() => setShowType(showType == "month" ? "day" : "month")}>
+				<ShowValue>
+					{showType == "month" ? "Mostrar coletas do dia" : "Mostrar coletas do mês"}
+				</ShowValue>
+			</ShowType>
 			<SelectContainer>
 				<Dropdown hide={hideDropdown} options={["Todos", ...estabListDrop]} value={estab} setValue={search_place} />
 				<Dropdown hide={hideDropdown} options={municipioList} value={municipio} setValue={search_city} />
 			</SelectContainer>
 			<ColetaContainer>
 				{
-					estabList ? estabList.map((item, index) => {
+					estabList ? estabList.length > 0 ? estabList.map((item, index) => {
 						if (item.coleta_fechada == 1) {
 							return
 						}
@@ -444,15 +504,22 @@ const Dashboard: React.FC = () => {
 									</Commands>
 									<Commands
 										onPress={item.enviar ?
-											() => {
-												openAlert("ask", 'Realmente deseja enviar a coleta ? Todos os dados serão removidos do aplicativo após envio', notification.question, () => {
-													send_info({
-														coleta_id: item.id,
-														pesquisa_id: item.pesquisa_id,
-														estabelecimento_id: item.estabelecimento_id,
-														estabelecimento_nome: item.estabelecimento_nome
-													})
-												})
+											async () => {
+												await validate_coletas("O mês da coleta mudou, ainda deseja enviar esta coleta?",
+													() =>
+														setTimeout(() => {
+
+															openAlert("ask", 'Realmente deseja enviar a coleta ? Todos os dados serão removidos do aplicativo após envio', notification.question, () => {
+																send_info({
+																	coleta_id: item.id,
+																	pesquisa_id: item.pesquisa_id,
+																	estabelecimento_id: item.estabelecimento_id,
+																	estabelecimento_nome: item.estabelecimento_nome
+																})
+															}, 300);
+
+														})
+												);
 											} :
 											() => {
 												openAlert("message", "Preencha a coleta antes de envia-la", notification.warning)
@@ -473,7 +540,10 @@ const Dashboard: React.FC = () => {
 								</CommandsContainer>
 							</View>
 						)
-					}) :
+					}) : <ColetaItem >
+						<Text allowFontScaling={true} style={{ color: colors.black, fontWeight: "bold" }} >Nenhuma coleta encontrada para este múnicipio, dirija-se até a plataforma do ACCB e cadastre novas
+							coletas ao seu respectivo municipio.</Text>
+					</ColetaItem> :
 						<ColetaItem >
 							<Text allowFontScaling={true} style={{ color: colors.black, fontWeight: "bold" }} >Nenhuma coleta encontrada para este múnicipio, dirija-se até a plataforma do ACCB e cadastre
 								coletas aos seus respectivos municipios.</Text>
