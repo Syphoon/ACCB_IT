@@ -198,7 +198,7 @@ const Dashboard: React.FC = () => {
 	}
 
 	const search_place = (value) => {
-		console.log({ value });
+		// console.log({ value });
 		if (value == 'Todos') {
 			setEstabList(estabBackup);
 			setEstab("Todos");
@@ -232,6 +232,7 @@ const Dashboard: React.FC = () => {
 		setEstabListDrop(places);
 		setEstabBackup(places);
 		setEstabList(places);
+		setShowType("month");
 
 		// this.setState({ places: places, places_backup: places, municipio: value });
 	};
@@ -393,9 +394,6 @@ const Dashboard: React.FC = () => {
 		setData();
 	}, []);
 
-	const showTypeFilter = () => {
-
-	};
 	useEffect(() => {
 		console.log({ showType });
 		if (showType == "month") {
@@ -454,7 +452,7 @@ const Dashboard: React.FC = () => {
 			</Legend>
 			<ShowType onPress={() => setShowType(showType == "month" ? "day" : "month")}>
 				<ShowValue>
-					{showType == "month" ? "Mostrar coletas do dia" : "Mostrar coletas do mês"}
+					{showType == "month" ? "Exibir coletas do dia" : "Exibir coletas do mês"}
 				</ShowValue>
 			</ShowType>
 			<SelectContainer>
